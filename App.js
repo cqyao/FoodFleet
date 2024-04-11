@@ -10,6 +10,7 @@ import RestaurantMain from "./assets/screens/Restaurant/RestaurantMain";
 import GenerateReport from "./assets/screens/Restaurant/GenerateReport";
 import RestaurantProfile from "./assets/screens/Restaurant/RestaurantProfile";
 import OrderManagement from "./assets/screens/Restaurant/OrderManagement";
+import ForgotPassword from "./assets/screens/login/ForgotPassword";
 
 
 const Stack = createStackNavigator();
@@ -44,9 +45,13 @@ function App() {
           name="Restaurant Profile"
           component={RestaurantProfile}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Order Management"
           component={OrderManagement}
+        /> */}
+        <Stack.Screen
+          name="Forgot Password"
+          component={ForgotPassword}
         />
       </Stack.Navigator>
     </NavigationContainer>
