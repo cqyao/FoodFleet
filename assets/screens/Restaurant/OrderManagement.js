@@ -39,7 +39,7 @@ const OrderManagement = () => {
                 address="70 Throsby Dr"
             />
         </ScrollView>
-        <View style={{flex:1, backgroundColor: 'yellow'}} />
+        <View style={{flex:1,}} />
     </View>
   )
 };

@@ -9,7 +9,7 @@ const SignUpOption = ({ navigation }) => {
 
   const handleOwnerSignup = () => {
     // Navigate to the Restaurant Owner Signup Screen
-    console.log("Navigate to Owner Signup");
+    navigation.navigate('CreateRestaurantAccount')
   };
 
   return (
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    width: 150, // Adjust to fit your logo's aspect ratio
-    height: 150, // Adjust to fit your logo's aspect ratio
+    width: 250, // Adjust to fit your logo's aspect ratio
+    height: 250, // Adjust to fit your logo's aspect ratio
     resizeMode: "contain",
     marginBottom: 30,
   },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFD700", // Golden yellow color
     paddingVertical: 15,
     paddingHorizontal: 30,
-    borderRadius: 30,
+    borderRadius: 15,
     marginVertical: 10,
     width: "80%",
     alignItems: "center",

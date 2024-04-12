@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { CreateRestaurant } from '../../../database';
 
-const CreateRestaurant = () => {
-  const [fullName, setFullName] = useState('');
+const CreateRestaurantPage = () => {
+  const [name, setName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [restaurantName, setRestaurantName] = useState('');
   const [email, setEmail] = useState('');
+  const [postcode, setPostcode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     // Submit the data or navigate to next screen
+    await CreateRestaurant(name, dateOfBirth, restaurantName, email, postcode, password)
+    console.log(name, dateOfBirth, restaurantName, email, postcode, password)
     console.log("Account Created")
   };
 
@@ -22,8 +26,8 @@ const CreateRestaurant = () => {
       <TextInput
         style={styles.input}
         placeholder="Full Name"
-        onChangeText={setFullName}
-        value={fullName}
+        onChangeText={setName}
+        value={name}
       />
       
       <TextInput
@@ -47,13 +51,20 @@ const CreateRestaurant = () => {
         value={email}
         keyboardType="email-address"
       />
+
+      <TextInput 
+        style={styles.input}
+        placeholder="Postcode"
+        onChangeText={setPostcode}
+        value={postcode}
+      />
+
       
       <TextInput
         style={styles.input}
         placeholder="Password"
         onChangeText={setPassword}
         value={password}
-        secureTextEntry
       />
       
       <TextInput
@@ -61,10 +72,10 @@ const CreateRestaurant = () => {
         placeholder="Confirm Password"
         onChangeText={setConfirmPassword}
         value={confirmPassword}
-        secureTextEntry
       />
+
       
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.button} onPress={ () => handleSubmit(name, dateOfBirth, restaurantName, email, postcode, password)}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -108,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateRestaurant;
+export default CreateRestaurantPage;

@@ -26,9 +26,9 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
+      {/* <View style={styles.logoContainer}>
         <Image source={logo} style={styles.logo} />
-      </View>
+      </View> */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     marginVertical: 10,
-    backgroundColor: "blue",
+    backgroundColor: "#9BA5B7",
     borderRadius: 5,
     alignItems: "center",
   },

@@ -1,22 +1,26 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const RestaurantMain = () => {
+const RestaurantMain = ( {navigation} ) => {
     const navOrder = () => {
         // Submit the data or navigate to next screen
         console.log("Go to Order Management")
+        navigation.navigate('Order Management')
       };
       const navFeedback = () => {
         // Submit the data or navigate to next screen
         console.log("Go to Feedback")
+        navigation.navigate('Feedback and Ratings')
       };
       const navRevenue = () => {
         // Submit the data or navigate to next screen
         console.log("Go to Revenue Report")
+        navigation.navigate('Revenue Report')
       };
       const navProfile = () => {
         // Submit the data or navigate to next screen
         console.log("Go to profile")
+        navigation.navigate('Restaurant Profile')
       };
 
   return (

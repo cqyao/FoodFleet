@@ -50,12 +50,11 @@ const GetCustomer = async function(customerId) {
 
 
 //Done
-const CreateRestaurant = async function(name, address, state, postcode, city, rating, contactEmail, contactNumber, accountNumber, bsb) {
+const CreateRestaurant = async function(name) {
 	const { data, error } = await supabase
 	  .from('Restaurants')
 	  .insert([
-	    { "name": name, "address": address, "state": state, "postcode": postcode,
-	      "city": city, "rating": rating, "contactEmail": contactEmail, "contactNumber": contactNumber, "accountNumber": accountNumber, "bsb": bsb },
+	    { "name": name },
 	  ])
 	  .select()
 	  
@@ -188,12 +187,6 @@ const GetSubscriptions = async function(memberId) {
 }
 
 
-
-
-
-
-
-
 const main = async function() {
 	const customer1 = await GetCustomer(7);
 	console.log("Customer1: ", customer1)
@@ -215,3 +208,5 @@ const main = async function() {
 }
 
 main()
+
+export { CreateRestaurant, };

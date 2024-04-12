@@ -106,9 +106,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 200,
-    alignSelf: 'center',
-    position: 'absolute',
-    bottom:35,
+    alignSelf: "center",
   },
   logoutButtonText: {
     fontSize: 18,
