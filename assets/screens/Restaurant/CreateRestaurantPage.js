@@ -4,17 +4,16 @@ import { CreateRestaurant } from '../../../database';
 
 const CreateRestaurantPage = () => {
   const [name, setName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
   const [restaurantName, setRestaurantName] = useState('');
   const [email, setEmail] = useState('');
   const [postcode, setPostcode] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSubmit = async() => {
     // Submit the data or navigate to next screen
-    await CreateRestaurant(name, dateOfBirth, restaurantName, email, postcode, password)
-    console.log(name, dateOfBirth, restaurantName, email, postcode, password)
+    await CreateRestaurant(restaurantName, email, postcode, password, category)
+    //console.log(restaurantName, email, postcode, password, category)
     console.log("Account Created")
   };
 
@@ -28,13 +27,6 @@ const CreateRestaurantPage = () => {
         placeholder="Full Name"
         onChangeText={setName}
         value={name}
-      />
-      
-      <TextInput
-        style={styles.input}
-        placeholder="Date of birth"
-        onChangeText={setDateOfBirth}
-        value={dateOfBirth}
       />
       
       <TextInput
@@ -66,16 +58,17 @@ const CreateRestaurantPage = () => {
         onChangeText={setPassword}
         value={password}
       />
-      
-      <TextInput
+
+      <TextInput 
         style={styles.input}
-        placeholder="Confirm Password"
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
+        placeholder="Category"
+        onChangeText={setCategory}
+        value={category}
       />
+      
 
       
-      <TouchableOpacity style={styles.button} onPress={ () => handleSubmit(name, dateOfBirth, restaurantName, email, postcode, password)}>
+      <TouchableOpacity style={styles.button} onPress={ () => handleSubmit(name, restaurantName, email, postcode, password, category)}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>

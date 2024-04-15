@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { GetRestaurant } from "../../../database";
+import { RestaurantLogin } from "../../../database";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -17,9 +17,13 @@ const Login = ({ navigation }) => {
 
   const handleSignIn = async() => {
     // Implement your sign-in logic here
-    const cust1 = await GetRestaurant(email, password)
+    const restUser = await RestaurantLogin(email, password)
+    if (!restUser) {
+      console.log("No such user")
+    }
     console.log("Sign in with:", email, password);
-    console.log(cust1[0].name)
+    console.log(cust1.id)
+    navigation.navigate( "Restaurant Main")
   };
 
   const handleForgotPassword = () => {

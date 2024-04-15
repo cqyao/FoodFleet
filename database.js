@@ -19,14 +19,6 @@ function groupBy(list, keyGetter) {
     return map;
 }
 
-
-
-
-
-
-
-
-
 //CUSTOMER QUERIES
 
 //Done
@@ -150,11 +142,12 @@ const GetRestaurant = async function(restaurantId) {
 
 
 //Done
-const CreateRestaurant = async function(name, address, state, postcode, city, rating, contactEmail, contactNumber, accountNumber, bsb) {
+const CreateRestaurant = async function(restaurantName, email, postcode, password, category) {
+	console.log("email =", email)
 	const { data, error } = await supabase
 	  .from('Restaurants')
 	  .insert([
-	    { "name": name }
+	    { "name": restaurantName, "contactEmail": email, "postcode": postcode, "password": password, "category": category }
 	  ])
 	  .select()
 	  
@@ -365,5 +358,7 @@ const main = async function() {
 	const result = await GetRestaurantRatings(1)
 	console.log(result)
 }
+
+export {RestaurantLogin, CreateRestaurant}
 
 main()

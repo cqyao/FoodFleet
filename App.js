@@ -36,11 +36,11 @@ function App() {
           name="SignUpOption"
           component={SignUpOption}
           options={{ title: "SignUpOption" }}
-        />
+        /> */}
         <Stack.Screen
           name="CreateRestaurantAccount"
           component={CreateRestaurant}
-        /> */}
+        />
         <Stack.Screen
           name="Revenue Report"
           component={GenerateReport}
