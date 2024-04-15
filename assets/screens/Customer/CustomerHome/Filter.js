@@ -5,8 +5,8 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Slider,
 } from "react-native";
+import Slider from "@react-native-community/slider"; // Slider import 수정
 import { Ionicons } from "@expo/vector-icons";
 
 const Filter = () => {
@@ -53,7 +53,7 @@ const Filter = () => {
           placeholder="Search for lunch"
           // 이 부분에 검색 로직을 연결하세요.
         />
-        <Ionicons name="qr-code" size={24} style={styles.qrIcon} />
+        <Ionicons name="filter" size={24} style={styles.filterIcon} />
       </View>
 
       <View style={styles.filterSection}>
@@ -131,8 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   slider: {
-    width: "100%",
-    height: 40,
+    marginTop: 10, // Slider에 상단 여백 추가
   },
   starRating: {
     flexDirection: "row",

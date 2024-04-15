@@ -6,7 +6,7 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
-import OrderCard from "../../../../assets/components/OrderCard";
+import OrderCard from "../../../Components/OrderCard";
 
 const OrderManagement = () => {
   return (

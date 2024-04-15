@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const categories = [
   {
@@ -34,21 +42,26 @@ const categories = [
   },
 ];
 
-const CategoryItem = ({ name, imageUri }) => (
-  <View style={styles.itemContainer}>
-    <Image source={imageUri} style={styles.itemImage} />
-    <Text style={styles.itemText}>{name}</Text>
-  </View>
-);
-
 const CategoriesMain = () => {
+  const navigation = useNavigation();
+
+  const handleCategoryPress = (categoryName) => {
+    navigation.navigate(`${categoryName}Category`);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Categories</Text>
       <FlatList
         data={categories}
         renderItem={({ item }) => (
-          <CategoryItem name={item.name} imageUri={item.imageUri} />
+          <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => handleCategoryPress(item.name)}
+          >
+            <Image source={item.imageUri} style={styles.itemImage} />
+            <Text style={styles.itemText}>{item.name}</Text>
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
         numColumns={2}

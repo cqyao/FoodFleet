@@ -8,9 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Slider } from "@react-native-community/slider";
+import { useNavigation } from "@react-navigation/native";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigation = useNavigation();
 
   const recentSearches = [
     "Cafe",
@@ -22,11 +25,14 @@ const Search = () => {
     "Burger",
     "Chicken",
   ];
-  // 여기에 실제 검색어 목록을 API 호출 등을 통해 가져오세요.
 
   const handleSearch = (query) => {
-    // 검색 실행 로직을 구현하세요.
     console.log("Searching for:", query);
+    // 검색 실행 로직을 구현할 수 있습니다.
+  };
+
+  const handleFilterPress = () => {
+    navigation.navigate("Filter"); // Filter 화면으로 이동합니다.
   };
 
   const SearchItem = ({ title }) => (
@@ -51,7 +57,9 @@ const Search = () => {
           returnKeyType="search"
           onSubmitEditing={() => handleSearch(searchQuery)}
         />
-        <Ionicons name="qr-code" size={24} style={styles.qrIcon} />
+        <TouchableOpacity onPress={handleFilterPress}>
+          <Ionicons name="filter" size={24} style={styles.filterIcon} />
+        </TouchableOpacity>
       </View>
 
       <Text style={styles.subheader}>Recent searches</Text>
@@ -60,9 +68,6 @@ const Search = () => {
         renderItem={({ item }) => <SearchItem title={item} />}
         keyExtractor={(item, index) => item + index}
       />
-
-      <Text style={styles.subheader}>Top Categories</Text>
-      {/* Top categories list here - similar to recent searches list */}
     </View>
   );
 };
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
   searchIcon: {
     marginRight: 10,
   },
-  qrIcon: {
+  filterIcon: {
     marginLeft: "auto",
   },
   searchInput: {

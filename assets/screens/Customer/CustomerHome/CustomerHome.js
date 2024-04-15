@@ -9,6 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const categoriesData = [
   {
@@ -36,7 +37,7 @@ const categoriesData = [
     title: "Asian food",
     image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/AsianFood.png"),
   },
-  // 더 많은 카테고리 데이터를 추가하세요.
+  // Add more category data here.
 ];
 
 const restaurantsData = [
@@ -67,7 +68,7 @@ const restaurantsData = [
     deliveryTime: "20 min",
     image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RoseGarden.png"),
   },
-  // 더 많은 레스토랑 데이터를 추가하세요.
+  // Add more restaurant data here.
 ];
 
 const CategoryItem = ({ title, image }) => (
@@ -100,6 +101,16 @@ const RestaurantItem = ({
 );
 
 const CustomerHome = () => {
+  const navigation = useNavigation();
+
+  const handleMorePress = () => {
+    navigation.navigate("CategoriesMain");
+  };
+
+  const handleSearchPress = () => {
+    navigation.navigate("Search");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.locationContainer}>
@@ -109,18 +120,30 @@ const CustomerHome = () => {
 
       <Text style={styles.greetingText}>Good Morning, Jacob</Text>
 
-      <View style={styles.searchContainer}>
-        <TextInput placeholder="Search for lunch" style={styles.searchInput} />
-        <Ionicons name="search" size={24} color="grey" />
+      <TouchableOpacity onPress={handleSearchPress}>
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Search for lunch"
+            style={styles.searchInput}
+            editable={false}
+          />
+          <Ionicons name="search" size={24} color="grey" />
+        </View>
+      </TouchableOpacity>
+
+      <View style={styles.sectionTitleContainer}>
+        <Text style={styles.sectionTitle}>Categories</Text>
+        <TouchableOpacity onPress={handleMorePress}>
+          <Text style={styles.moreText}>More</Text>
+        </TouchableOpacity>
       </View>
 
-      <Text style={styles.sectionTitle}>Categories</Text>
       <FlatList
         horizontal
         data={categoriesData}
         renderItem={({ item }) => <CategoryItem {...item} />}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 20 }} // 여백을 조정해보세요
+        contentContainerStyle={{ paddingBottom: 20 }} // Adjust the spacing as needed
       />
 
       <View style={styles.sectionHeader}>
@@ -171,11 +194,20 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 10,
   },
+  sectionTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    marginTop: 10, // Adjust the top margin of Categories
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginLeft: 15,
-    marginBottom: 10,
+  },
+  moreText: {
+    color: "green",
+    fontWeight: "bold",
   },
   sectionHeader: {
     flexDirection: "row",
@@ -196,8 +228,8 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   categoryTitle: {
-    marginTop: 10, // 값을 조정해보세요
-    flex: 1, // 필요하다면 추가
+    marginTop: 10,
+    flex: 1,
     textAlign: "center",
   },
   restaurantItem: {

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import MenuItem from "../../../../assets/components/MenuItem";
+import MenuItem from "../../../Components/MenuItem";
 
 const RestaurantProfile = () => {
   return (

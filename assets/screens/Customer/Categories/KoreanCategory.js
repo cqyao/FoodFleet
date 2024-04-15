@@ -10,7 +10,7 @@ const koreanRestaurantsData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/ChickenV.png"), // Replace with the actual image file path
+    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/ChickenV.png"),
   },
   {
     id: "2",
@@ -19,7 +19,7 @@ const koreanRestaurantsData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokLogo.png"), // Replace with the actual image file path
+    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokLogo.png"),
   },
   // ... add more restaurants here
 ];

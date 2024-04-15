@@ -32,10 +32,7 @@ const RestaurantItem = ({
   logoUri,
 }) => (
   <View style={styles.restaurantItem}>
-    <Image
-      source={{ uri: logoUri }} // Assuming the images are remotely sourced; if local, use require(imageUrl)
-      style={styles.image}
-    />
+    <Image source={logoUri} style={styles.image} />
     <View style={styles.infoContainer}>
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.address}>{address}</Text>
