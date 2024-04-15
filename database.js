@@ -19,6 +19,8 @@ function groupBy(list, keyGetter) {
   return map;
 }
 
+//CUSTOMER QUERIES
+
 //Done
 const CreateCustomer = async function (
   firstName,

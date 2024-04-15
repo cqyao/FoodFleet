@@ -60,6 +60,11 @@ function App() {
           options={{ title: "Login" }}
         />
         <Stack.Screen
+          name="Restaurant Main"
+          component={RestaurantMain}
+        />
+        {/* <Stack.Screen
+        <Stack.Screen
           name="SignUpOption"
           component={SignUpOption}
           options={{ title: "SignUpOption" }}
