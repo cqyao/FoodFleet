@@ -27,11 +27,11 @@ function App() {
           name="Restaurant Main"
           component={RestaurantMain}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{ title: "Login" }}
-        /> */}
+        />
         {/* <Stack.Screen
           name="SignUpOption"
           component={SignUpOption}

@@ -2,7 +2,12 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import MenuItem from '../../Components/MenuItem';
 
-const RestaurantProfile = () => {
+const RestaurantProfile = ({ navigation }) => {
+
+  const logout = () => {
+      navigation.navigate("Login")
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -11,7 +16,7 @@ const RestaurantProfile = () => {
       </View>
       <View style={styles.logoContainer}>
         <Image
-          source={{ uri: 'https://links.papareact.com/wru' }}
+          source={{ uri: 'https://links.papareact.com/gn7' }}
           style={styles.logo}
         />
       </View>
@@ -28,7 +33,7 @@ const RestaurantProfile = () => {
             imageUrl="https://links.papareact.com/wru"
         />
       </ScrollView>
-      <TouchableOpacity style={styles.logoutButton}>
+      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
         <Text style={styles.logoutButtonText}>Logout</Text>
         {/* Logout icon would go here */}
       </TouchableOpacity>
@@ -57,8 +62,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 130,
+    height: 130,
     borderRadius: 60,
   },
   restaurantName: {

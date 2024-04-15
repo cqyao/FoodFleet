@@ -10,7 +10,7 @@ const OrderManagement = () => {
             {flexDirection: 'column',
         },
     ]}>
-        <View style={{flex:1, alignItems: "center",}}>
+        <View style={{alignItems: "center",}}>
             <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity style={styles.navButton}>
                     <Text style={styles.navButtonText}>In Preparation</Text>
@@ -25,7 +25,7 @@ const OrderManagement = () => {
 
         </View>
 
-        <ScrollView style={{flex:7}}>
+        <ScrollView style={{}}>
             <OrderCard
                 name="Jacob"
                 items="Wagyu"
@@ -33,10 +33,10 @@ const OrderManagement = () => {
                 address="70 Throsby Dr"
             />
             <OrderCard
-                name="Jacob"
-                items="Wagyu"
-                price="$490.00"
-                address="70 Throsby Dr"
+                name="Peter"
+                items="Wilson"
+                price="$320.50"
+                address="25 Figtree Ave"
             />
         </ScrollView>
         <View style={{flex:1,}} />
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         margin: 10,
+        marginBottom: 40,
     },
     navButtonText: {
         fontSize: 12,

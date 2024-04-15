@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { GetRestaurant } from "../../../database";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -14,9 +15,11 @@ const Login = ({ navigation }) => {
 
   const logo = require("../images/FoodFleetsLogo.png");
 
-  const handleSignIn = () => {
+  const handleSignIn = async() => {
     // Implement your sign-in logic here
+    const cust1 = await GetRestaurant(email, password)
     console.log("Sign in with:", email, password);
+    console.log(cust1[0].name)
   };
 
   const handleForgotPassword = () => {
@@ -44,7 +47,7 @@ const Login = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+      <TouchableOpacity style={styles.button} onPress={ () => handleSignIn(email)}>
         <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>

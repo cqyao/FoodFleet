@@ -63,11 +63,11 @@ const CreateRestaurant = async function(name) {
 
 
 //Done
-const GetRestaurant = async function(restaurantId) {
+const GetRestaurant = async function(restaurantId, password) {
 	const { data, error } = await supabase
 	.from('Restaurants')
 	.select('*')
-	.eq("id", restaurantId);
+	.match({ id: restaurantId, password: password });
 	
 	return data
 }
@@ -209,4 +209,4 @@ const main = async function() {
 
 main()
 
-export { CreateRestaurant, };
+export { CreateRestaurant, GetRestaurant };
