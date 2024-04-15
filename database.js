@@ -289,6 +289,7 @@ const GetCart = async function (cartId) {
 
 //Done
 const GetSubscriptionPlans = async function (restaurantId) {
+  console.log(restaurantId);
   const { data, error } = await supabase
     .from("SubscriptionPlans")
     .select("*")
