@@ -1,57 +1,64 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  Text,
   View,
+  Text,
   TextInput,
   TouchableOpacity,
+  StyleSheet,
   Image,
 } from "react-native";
 
-const Login = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const logo = require("../images/FoodFleetsLogo.png");
-
-  const handleSignIn = () => {
-    // Implement your sign-in logic here
-    console.log("Sign in with:", email, password);
+  const handleCustomerLogin = () => {
+    // TODO: Implement actual login logic
+    navigation.navigate("CustomerHome");
   };
 
-  const handleForgotPassword = () => {
-    // Navigate to your forgot password screen or handle password reset
-    console.log("Navigate to forgot password screen");
+  const handleRestaurantLogin = () => {
+    // TODO: Implement actual login logic
+    navigation.navigate("RestaurantMain");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
+        <Image
+          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/FoodFleetsLogo.png")}
+          style={styles.logo}
+        />
       </View>
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={email}
         onChangeText={setEmail}
+        value={email}
+        placeholder="Email"
+        placeholderTextColor="black" // Ensure placeholder text is black
         keyboardType="email-address"
         autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
-        value={password}
         onChangeText={setPassword}
+        value={password}
+        placeholder="Password"
+        placeholderTextColor="black" // Ensure placeholder text is black
         secureTextEntry
+        autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>Sign In</Text>
+      <TouchableOpacity style={styles.button} onPress={handleCustomerLogin}>
+        <Text style={styles.buttonText}>Sign In Customer</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleForgotPassword}>
-        <Text style={styles.forgotPassword}>Forgot Password</Text>
+      <TouchableOpacity style={styles.button} onPress={handleRestaurantLogin}>
+        <Text style={styles.buttonText}>Sign In Restaurant</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+        <Text style={styles.textButton}>Forgot Password</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("SignUpOption")}>
-        <Text style={styles.createAccount}>Create An Account</Text>
+        <Text style={styles.textButton}>Create An Account</Text>
       </TouchableOpacity>
     </View>
   );
@@ -60,45 +67,46 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
     padding: 20,
+    backgroundColor: "#fff",
   },
   logoContainer: {
-    marginBottom: 20,
+    marginBottom: 50,
+    // Add additional styling for logo container if needed
   },
   logo: {
-    // Add your logo text styles here
+    height: 200, // Adjust your logo height as needed
+    width: 200, // Adjust your logo width as needed
+    resizeMode: "contain", // 'contain' or 'cover' based on your logo's aspect ratio
   },
   input: {
     width: "100%",
-    marginVertical: 10,
-    padding: 15,
+    height: 60,
+    marginBottom: 20,
     borderWidth: 1,
     borderColor: "gray",
-    borderRadius: 5,
+    padding: 10,
+    color: "black", // Set text color to black
+    borderRadius: 30,
   },
   button: {
     width: "100%",
-    padding: 15,
-    marginVertical: 10,
-    backgroundColor: "blue",
-    borderRadius: 5,
+    height: 60,
+    backgroundColor: "#FFD700", // Gold color for the button
+    justifyContent: "center",
     alignItems: "center",
+    marginBottom: 10,
+    borderRadius: 30,
   },
   buttonText: {
-    color: "white",
-    // Add your button text styles here
+    color: "black", // Set button text color to black
   },
-  forgotPassword: {
-    color: "gray",
-    // Add your forgot password text styles here
-  },
-  createAccount: {
-    color: "gray",
-    marginTop: 10,
-    // Add your create account text styles here
+  textButton: {
+    color: "black", // Set text button color to black
+    marginBottom: 10,
   },
 });
 
-export default Login;
+export default LoginScreen;

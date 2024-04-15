@@ -4,18 +4,18 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 const SignUpOption = ({ navigation }) => {
   const handleCustomerSignup = () => {
     // Navigate to the Customer Signup Screen
-    console.log("Navigate to Customer Signup");
+    navigation.navigate("CreateCustomerAccount");
   };
 
   const handleOwnerSignup = () => {
     // Navigate to the Restaurant Owner Signup Screen
-    console.log("Navigate to Owner Signup");
+    navigation.navigate("CreateRestaurantAccount");
   };
 
   return (
     <View style={styles.container}>
       <Image
-        source={require("../images/FoodFleetsLogo.png")}
+        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/FoodFleetsLogo.png")}
         style={styles.logo}
       />
       <TouchableOpacity style={styles.button} onPress={handleCustomerSignup}>
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    width: 150, // Adjust to fit your logo's aspect ratio
-    height: 150, // Adjust to fit your logo's aspect ratio
+    width: 250, // Adjust to fit your logo's aspect ratio
+    height: 250, // Adjust to fit your logo's aspect ratio
     resizeMode: "contain",
     marginBottom: 30,
   },
