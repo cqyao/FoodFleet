@@ -54,16 +54,26 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Restaurant Main" component={RestaurantMain} />
         <Stack.Screen
           name="Login"
           component={Login}
           options={{ title: "Login" }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SignUpOption"
           component={SignUpOption}
           options={{ title: "SignUpOption" }}
-        />
+        /> */}
+
+        <Stack.Screen name="Revenue Report" component={GenerateReport} />
+        <Stack.Screen name="Restaurant Profile" component={RestaurantProfile} />
+        <Stack.Screen name="Order Management" component={OrderManagement} />
+        {/* <Stack.Screen
+          name="Forgot Password"
+          component={ForgotPassword}
+        /> */}
+
         {/* Add more screens here */}
         <Stack.Screen
           name="HanokCart"

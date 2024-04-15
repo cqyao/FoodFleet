@@ -95,16 +95,6 @@ const GetCustomer = async function (customerId) {
 };
 
 //Done
-const CreateMembership = async function (customerId, restaurantId) {
-  const { data, error } = await supabase
-    .from("Memberships")
-    .insert([{ customerId: customerId, restaurantId: restaurantId }])
-    .select();
-
-  return data;
-};
-
-//Done
 const GetMembership = async function (customerId) {
   const { data, error } = await supabase
     .from("Memberships")
@@ -140,31 +130,25 @@ const RestaurantLogin = async function (emailAddress, password) {
 };
 
 //Done
-const GetRestaurant = async function (restaurantId) {
-  const { data, error } = await supabase
-    .from("Restaurants")
-    .select("*")
-    .eq("id", restaurantId);
-
-  return data[0];
-};
-
-//Done
 const CreateRestaurant = async function (
-  name,
-  address,
-  state,
+  restaurantName,
+  email,
   postcode,
-  city,
-  rating,
-  contactEmail,
-  contactNumber,
-  accountNumber,
-  bsb
+  password,
+  category
 ) {
+  console.log("email =", email);
   const { data, error } = await supabase
     .from("Restaurants")
-    .insert([{ name: name }])
+    .insert([
+      {
+        name: restaurantName,
+        contactEmail: email,
+        postcode: postcode,
+        password: password,
+        category: category,
+      },
+    ])
     .select();
 
   return data;
@@ -211,28 +195,13 @@ const SearchRestaurant = async function (name) {
 };
 
 //Done
-const GetDishes = async function (dishIds) {
-  const { data, error } = await supabase.from("Dishes").select("*");
-
-  let filtered = [];
-  for (let i = 0; i < data.length; i++) {
-    if (dishIds.indexOf(data[i].id) != -1) {
-      filtered.push(data[i]);
-    }
-  }
-
-  return filtered;
-};
-
-//Done
-const GetMenus = async function (restaurantId) {
+const GetRestaurant = async function (restaurantId) {
   const { data, error } = await supabase
-    .from("Dishes")
+    .from("Restaurants")
     .select("*")
-    .eq("restaurantId", restaurantId);
+    .eq("id", restaurantId);
 
-  grouped = Object.fromEntries(groupBy(data, (x) => x.menuName));
-  return grouped;
+  return data[0];
 };
 
 //Done
@@ -329,27 +298,15 @@ const GetSubscriptionPlans = async function (restaurantId) {
 };
 
 //Done
-const CreateSubscriptionPlan = async function (
-  restaurantId,
-  name,
-  price,
-  discount,
-  paymentFrequency
-) {
-  const { data, error } = await supabase
-    .from("SubscriptionPlans")
-    .insert([
-      {
-        restaurantId: restaurantId,
-        name: name,
-        price: price,
-        discount: discount,
-        paymentFrequency: paymentFrequency,
-      },
-    ])
-    .select();
+const GetDishes = async function (dishIds) {
+  const { data, error } = await supabase.from("Dishes").select("*");
 
-  return data;
+  let filtered = [];
+  for (let i = 0; i < data.length; i++) {
+    if (dishIds.indexOf(data[i].id) != -1) {
+      filtered.push(data[i]);
+    }
+  }
 };
 
 //Done
@@ -362,9 +319,15 @@ const GetSubscriptions = async function (memberId) {
   return data[0];
 };
 
-const main = async function () {
-  const result = await GetRestaurantRatings(1);
-  console.log(result);
+//Done
+const GetMenus = async function (restaurantId) {
+  const { data, error } = await supabase
+    .from("Dishes")
+    .select("*")
+    .eq("restaurantId", restaurantId);
+
+  grouped = Object.fromEntries(groupBy(data, (x) => x.menuName));
+  return grouped;
 };
 
-main();
+export { CreateRestaurant, CreateCustomer };

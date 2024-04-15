@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFD700", // Golden yellow color
     paddingVertical: 15,
     paddingHorizontal: 30,
-    borderRadius: 30,
+    borderRadius: 15,
     marginVertical: 10,
     width: "80%",
     alignItems: "center",

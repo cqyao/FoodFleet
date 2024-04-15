@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
+import { RestaurantLogin } from "../../../database";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
