@@ -1,30 +1,27 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 const MenuItem = ({ title, price, description, imageUrl }) => {
   return (
     <View style={styles.menuItemContainer}>
-        <View style={styles.textContainer}>
-            <Text style={styles.menuItemTitle}>{title}</Text>
-            <Text style={styles.menuItemPrice}>{price}</Text>
-            <Text style={styles.menuItemDescription}>{description}</Text>
-        </View>
-      <Image
-        source={{ uri: imageUrl }}
-        style={styles.menuItemImage}
-      />
+      <View style={styles.textContainer}>
+        <Text style={styles.menuItemTitle}>{title}</Text>
+        <Text style={styles.menuItemPrice}>{price}</Text>
+        <Text style={styles.menuItemDescription}>{description}</Text>
+      </View>
+      <Image source={{ uri: imageUrl }} style={styles.menuItemImage} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   menuItemContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 20,
     paddingHorizontal: 16,
     borderRadius: 8, // You can adjust this as needed
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   textContainer: {
@@ -32,11 +29,11 @@ const styles = StyleSheet.create({
   },
   menuItemTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   menuItemPrice: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 4,
   },
   menuItemDescription: {
