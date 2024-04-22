@@ -10,11 +10,9 @@ const OrderCard = ({ id }) => {
   useEffect(() => {
     const fetchOrder = async () => {
       const order = await GetRestOrdersById(id)
-      //console.log(order.cartId)
+      console.log(order.cartId)
       const cart = await GetRestaurantCarts(order.cartId)
-      //console.log(cart)
       const cust = await GetCustomer(cart.customerId)
-      //console.log(cust)
       
       setTotal(order.total)
       setMessage(order.message)

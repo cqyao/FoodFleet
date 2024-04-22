@@ -10,7 +10,7 @@ const cafesData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/DiggiesLogo.png"), // Replace with the actual image file path for Diggies
+    logoUri: require("../../EveryImages/DiggiesLogo.png"), // Replace with the actual image file path for Diggies
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ const cafesData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RUH.png"), // Replace with the actual image file path for RUH
+    logoUri: require("../../EveryImages/RUH.png"), // Replace with the actual image file path for RUH
   },
   // ... more cafes
 ];

@@ -1,60 +1,69 @@
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
+import React, {useContext, useState, useEffect } from 'react'
 import RatingItem from '../../Components/RatingItem'
+import GetRestaurantRatings from "../../../database";
+import { UserContext } from '../../../context/UserContext';
 
 const RestaurantFeedback = () => {
-  return (
-    <View
-        style = {[
-            styles.container,
-            {flexDirection: 'column',}
-        ]}
-    >
-      <View style={[styles.topContainer, {alignItems: "center"}]}>
-        <Text style={styles.header}>
-            Hanok
-        </Text>
-        <Text style={styles.ratingHeader}>
-            3.2
-        </Text>
-        <View style={{flexDirection: "row"}}>
-        <Image 
-            style={styles.star}
-            source={require("../images/star.png")}/>
-        <Image 
-            style={styles.star}
-            source={require("../images/star.png")}/>
-        <Image 
-            style={styles.star}
-            source={require("../images/star.png")}/>
-        <Image 
-            style={styles.star}
-            source={require("../images/empty_star.png")}/>
-        <Image 
-            style={styles.star}
-            source={require("../images/empty_star.png")}/>
+    const { userId, setUserId } = useContext(UserContext);
+    const [ reviews, setReviews ] = useState([])
+
+    useEffect(() => {
+        const fetchReview = async() => {
+            const review = await GetRestaurantRatings(userId)
+            setReviews(review)
+        }
+        fetchReview();
+    });
+
+    return (
+        <View
+            style = {[
+                styles.container,
+                {flexDirection: 'column',}
+            ]}
+        >
+        <View style={[styles.topContainer, {alignItems: "center"}]}>
+            <Text style={styles.header}>
+                Hanok
+            </Text>
+            <Text style={styles.ratingHeader}>
+                3.2
+            </Text>
+            <View style={{flexDirection: "row"}}>
+            <Image 
+                style={styles.star}
+                source={require("../../screens/EveryImages/star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../screens/EveryImages/star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../screens/EveryImages/star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../screens/EveryImages/empty_star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../screens/EveryImages/empty_star.png")}/>
+            
+            </View>
+            </View>
+        <ScrollView style={{flex:3}}>
+            {reviews.map((review) =>  (
+                <Text>{review.restaurantId}</Text>
+                // <RatingItem
+                //     restaurantId={review.restaurantId}
+                // />
+            ))}
+            
+        </ScrollView>
+        </View>
         
-        </View>
-        </View>
-      <ScrollView style={{flex:3}}>
-        <RatingItem 
-            name="Jacob Jonathon"
-            rating="3"
-            message="Hello was good"
-        />
-        <RatingItem 
-            name="Philip Wilson"
-            rating="4"
-            message="Loved the ambience!"
-        />
-        <RatingItem 
-            name="Greg Winston"
-            rating="1"
-            message="Staff was rude and did not serve the correct order."
-        />
-      </ScrollView>
-    </View>
-  )
+    )
+
+  
+  
 }
 
 

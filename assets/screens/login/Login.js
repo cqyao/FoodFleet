@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   Image,
 } from "react-native";
 import { RestaurantLogin } from "../../../database";
+import { UserContext } from "../../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
+  const { userId, setUserId } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +27,8 @@ const LoginScreen = ({ navigation }) => {
     if (!tempRest) {
       console.log("No such user")
     } else {
-    navigation.navigate("Restaurant Main")
+      setUserId(tempRest.id)
+      navigation.navigate("Restaurant Main")
     }
   };
 

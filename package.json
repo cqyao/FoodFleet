@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "test": "mocha",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -15,6 +16,7 @@
     "@supabase/supabase-js": "^2.42.0",
     "expo": "~50.0.15",
     "expo-status-bar": "~1.11.1",
+    "mocha": "^10.4.0",
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-gesture-handler": "~2.14.0"

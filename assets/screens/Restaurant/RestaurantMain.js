@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 const RestaurantMain = ( {navigation} ) => {
-    const navOrder = () => {
+      const navOrder = () => {
         // Submit the data or navigate to next screen
         console.log("Go to Order Management")
         navigation.navigate('Order Management')
@@ -10,7 +10,7 @@ const RestaurantMain = ( {navigation} ) => {
       const navFeedback = () => {
         // Submit the data or navigate to next screen
         console.log("Go to Feedback")
-        navigation.navigate('Feedback and Ratings')
+        navigation.navigate('RestaurantFeedback')
       };
       const navRevenue = () => {
         // Submit the data or navigate to next screen

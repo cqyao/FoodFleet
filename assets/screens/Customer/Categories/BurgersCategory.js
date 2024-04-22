@@ -16,7 +16,7 @@ const BurgersData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Macdonald.png"), // 경로 수정
+    logoUri: require("../../EveryImages/Macdonald.png"), // 경로 수정
   },
   {
     id: "2",
@@ -25,7 +25,7 @@ const BurgersData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HungryJacks.png"), // 경로 수정
+    logoUri: require("../../EveryImages/HungryJacks.png"), // 경로 수정
   },
   // ...다른 레스토랑들
 ];

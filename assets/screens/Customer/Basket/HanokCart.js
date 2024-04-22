@@ -10,12 +10,12 @@ const HanokCart = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokLogo.png")}
+        source={require("../../EveryImages/HanokLogo.png")}
         style={styles.logo}
       />
 
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokCoupleSet.png")}
+        source={require("../../EveryImages/HanokCoupleSet.png")}
         style={styles.productImage}
       />
 
