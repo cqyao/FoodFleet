@@ -15,7 +15,7 @@ const SignUpOption = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/FoodFleetsLogo.png")}
+        source={require("../EveryImages/FoodFleetsLogo.png")}
         style={styles.logo}
       />
       <TouchableOpacity style={styles.button} onPress={handleCustomerSignup}>

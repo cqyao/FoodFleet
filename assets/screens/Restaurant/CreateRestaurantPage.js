@@ -6,13 +6,14 @@ const CreateRestaurantPage = () => {
   const [name, setName] = useState('');
   const [restaurantName, setRestaurantName] = useState('');
   const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
   const [postcode, setPostcode] = useState('');
   const [password, setPassword] = useState('');
   const [category, setCategory] = useState('');
 
   const handleSubmit = async() => {
     // Submit the data or navigate to next screen
-    await CreateRestaurant(restaurantName, email, postcode, password, category)
+    await CreateRestaurant(restaurantName, email, postcode, number, password, category)
     //console.log(restaurantName, email, postcode, password, category)
     console.log("Account Created")
   };
@@ -44,6 +45,13 @@ const CreateRestaurantPage = () => {
         keyboardType="email-address"
       />
 
+      <TextInput
+        style={styles.input}
+        placholder="Contact number"
+        onChangeText={setNumber}
+        value={number}
+      />
+
       <TextInput 
         style={styles.input}
         placeholder="Postcode"
@@ -57,6 +65,8 @@ const CreateRestaurantPage = () => {
         placeholder="Password"
         onChangeText={setPassword}
         value={password}
+        secureTextEntry
+        autoCapitalize='none'
       />
 
       <TextInput 
@@ -68,7 +78,7 @@ const CreateRestaurantPage = () => {
       
 
       
-      <TouchableOpacity style={styles.button} onPress={ () => handleSubmit(name, restaurantName, email, postcode, password, category)}>
+      <TouchableOpacity style={styles.button} onPress={ () => handleSubmit(name, restaurantName, email, number, postcode, password, category)}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
