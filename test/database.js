@@ -171,6 +171,7 @@ const GetRestaurantRatings = async function(restaurantId) {
 	.from('Ratings')
 	.select('*')
 	.eq("restaurantId", restaurantId)
+	
 	return data
 }
 
@@ -421,16 +422,16 @@ const GetSubscriptions = async function(memberId) {
 
 
 
-const main = async function() {
-	const result = await GetRestaurantSales(13)
-	//console.log(result[0].dishes)
+
+
+class DatabaseTests
+{
+	async runTest1() {
+		return await GetCustomer(1);
+
+	}
 }
+module.exports = {DatabaseTests};
 
-// export functions for Restaurant
-export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant, GetMenus };
-// export functions for Customer
-export { GetCustomer, CreateCustomer }
-// export others
-export { GetRestaurantCarts }
 
-main()
+

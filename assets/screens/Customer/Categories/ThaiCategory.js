@@ -10,6 +10,7 @@ const thaiRestaurantsData = [
     deliveryFee: "Free",
     deliveryTime: "20 min",
     logoUri: require("../../../../assets/screens/EveryImages/KinThai.png"), // Replace with the actual image file path
+
   },
   {
     id: "2",
@@ -19,6 +20,7 @@ const thaiRestaurantsData = [
     deliveryFee: "Free",
     deliveryTime: "20 min",
     logoUri: require("../../../../assets/screens/EveryImages/JasminRice.png"), // Replace with the actual image file path
+
   },
   // ... more Thai restaurants
 ];
