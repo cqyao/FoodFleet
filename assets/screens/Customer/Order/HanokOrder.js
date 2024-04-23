@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,10 +6,19 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
 
 const HanokOrder = () => {
   const [selectedSauce, setSelectedSauce] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(89); // Initial price for 1 item
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    // Update the total price whenever quantity changes
+    setTotalPrice(89 * quantity); // Assuming the price per item is $89
+  }, [quantity]);
 
   const sauces = [
     "Korean BBQ sauce",
@@ -24,12 +32,13 @@ const HanokOrder = () => {
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const addToBasket = () => {
     // Logic to add the item to basket goes here
+    navigation.navigate("MainCart"); // Navigate to HanokCart screen
   };
 
   return (
     <ScrollView style={styles.container}>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokLogo.png")} // Replace with actual logo path
+        source={require("../../EveryImages/HanokLogo.png")} // Replace with actual logo path
         style={styles.logo}
       />
       <Text style={styles.title}>Hanok</Text>
@@ -68,7 +77,7 @@ const HanokOrder = () => {
 
       <TouchableOpacity style={styles.addToBasketButton} onPress={addToBasket}>
         <Text style={styles.addToBasketText}>
-          Add {quantity} to basket AU$89
+          Add {quantity} to basket AU${totalPrice}
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 100,
-    height: 50,
+    height: 100,
     resizeMode: "contain",
     alignSelf: "center",
     marginTop: 20,

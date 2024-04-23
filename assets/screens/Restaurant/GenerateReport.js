@@ -1,10 +1,17 @@
-import React from 'react';
-import { SafeAreaView, Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React from "react";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
 const GenerateReport = () => {
-    const Generate = () => {
-        console.log("Report Generated!")
-    }
+  const Generate = () => {
+    console.log("Report Generated!");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +40,7 @@ const GenerateReport = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   header: {
     marginTop: 50,
@@ -41,31 +48,31 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 35,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   inputContainer: {
     marginTop: 20,
     marginHorizontal: 20,
   },
   input: {
-    backgroundColor: '#fff1c1', // You might need to adjust the color to match exactly
+    backgroundColor: "#fff1c1", // You might need to adjust the color to match exactly
     borderRadius: 10,
     padding: 15,
     marginBottom: 20,
     fontSize: 18,
   },
   button: {
-    backgroundColor: '#ffcd3c', // You might need to adjust the color to match exactly
+    backgroundColor: "#ffcd3c", // You might need to adjust the color to match exactly
     borderRadius: 10,
     padding: 15,
     marginHorizontal: 20,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
   },
 });
 

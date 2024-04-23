@@ -16,7 +16,7 @@ const BurgersData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Macdonald.png"), // 경로 수정
+    logoUri: require("../../../../assets/screens/EveryImages/Macdonald.png"), // 경로 수정
   },
   {
     id: "2",
@@ -25,7 +25,7 @@ const BurgersData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HungryJacks.png"), // 경로 수정
+    logoUri: require("../../../../assets/screens/EveryImages/HungryJacks.png"), // 경로 수정
   },
   // ...다른 레스토랑들
 ];
@@ -38,19 +38,24 @@ const RestaurantItem = ({
   deliveryTime,
   logoUri,
 }) => (
-  <View style={styles.itemContainer}>
-    <Image source={logoUri} style={styles.logo} resizeMode="contain" />
-    <Text style={styles.name}>{name}</Text>
-    <Text style={styles.address}>{address}</Text>
-    <View style={styles.infoContainer}>
-      <Text style={styles.rating}>{rating} ★</Text>
-      <Text style={styles.deliveryFee}>{deliveryFee}</Text>
-      <Text style={styles.deliveryTime}>{deliveryTime}</Text>
+  <TouchableOpacity
+    style={styles.restaurantItem}
+    onPress={() => console.log(`${name} selected`)}
+  >
+    <Image source={logoUri} style={styles.restaurantImage} />
+    <View style={styles.restaurantInfo}>
+      <Text style={styles.restaurantName}>{name}</Text>
+      <Text style={styles.restaurantAddress}>{address}</Text>
+      <View style={styles.restaurantDetails}>
+        <Text style={styles.restaurantRating}>{rating} ★</Text>
+        <Text style={styles.deliveryInfo}>{deliveryFee}</Text>
+        <Text style={styles.deliveryInfo}>{deliveryTime}</Text>
+      </View>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
-const BugersCategory = () => {
+const BurgersCategory = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Burgers</Text>
@@ -66,51 +71,55 @@ const BugersCategory = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
   header: {
     fontSize: 20,
     fontWeight: "bold",
-    padding: 16,
-    backgroundColor: "white",
+    padding: 20,
+    backgroundColor: "#f0f0f0",
   },
-  itemContainer: {
-    backgroundColor: "white",
-    padding: 16,
+  restaurantItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#e0e0e0",
   },
-  logo: {
+  restaurantImage: {
     width: 100,
-    height: 50,
-    marginBottom: 8,
+    height: 100,
+    borderRadius: 50,
+    marginRight: 20,
   },
-  name: {
+  restaurantInfo: {
+    flex: 1,
+  },
+  restaurantName: {
     fontSize: 18,
     fontWeight: "bold",
   },
-  address: {
-    fontSize: 14,
+  restaurantAddress: {
     color: "gray",
   },
-  infoContainer: {
+  restaurantDetails: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 8,
+    marginTop: 10,
   },
-  rating: {
-    fontSize: 14,
-    color: "#000",
+  restaurantRating: {
+    backgroundColor: "#ffdd00",
+    color: "white",
+    fontWeight: "bold",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    overflow: "hidden",
+    marginRight: 10,
   },
-  deliveryFee: {
-    fontSize: 14,
-    color: "green",
-  },
-  deliveryTime: {
-    fontSize: 14,
-    color: "orange",
+  deliveryInfo: {
+    color: "gray",
+    marginRight: 10,
   },
 });
 
-export default BugersCategory;
+export default BurgersCategory;

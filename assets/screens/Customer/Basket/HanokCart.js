@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const HanokCart = () => {
+const HanokCart = ({ navigation }) => {
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(89);
 
-  const increaseQuantity = () => setQuantity(quantity + 1);
-  const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+    setPrice(89 * (quantity + 1));
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+      setPrice(89 * (quantity - 1));
+    }
+  };
+
+  const handlePayment = () => {
+    navigation.navigate("Payment"); // Navigate to Payment screen
+  };
 
   return (
     <View style={styles.container}>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokLogo.png")}
+        source={require("../../../../assets/screens/EveryImages/HanokLogo.png")}
         style={styles.logo}
       />
 
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokCoupleSet.png")}
+        source={require("../../../../assets/screens/EveryImages/HanokCoupleSet.png")}
         style={styles.productImage}
       />
 
@@ -23,7 +37,7 @@ const HanokCart = () => {
         <Text style={styles.title}>Hanok</Text>
         <Text style={styles.description}>Couple Set</Text>
         <Text style={styles.description}>Sauce: Salt & Sesame oil</Text>
-        <Text style={styles.price}>AU$89</Text>
+        <Text style={styles.price}>AU${price}</Text>
         <View style={styles.quantityContainer}>
           <TouchableOpacity
             onPress={decreaseQuantity}
@@ -40,7 +54,7 @@ const HanokCart = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.payButton}>
+      <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
         <Text style={styles.payText}>Pay</Text>
       </TouchableOpacity>
     </View>
@@ -51,37 +65,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
     paddingTop: 50,
-    backgroundColor: "white",
+    backgroundColor: "#F5F5F5", // Light gray background color
   },
   logo: {
     width: 150,
-    height: 80,
+    height: 100,
     resizeMode: "contain",
+    marginBottom: 20,
   },
   productImage: {
-    width: "100%",
-    height: 200,
+    width: 250,
+    height: 150,
     resizeMode: "contain",
     marginVertical: 20,
   },
   detailsContainer: {
-    width: "90%",
+    width: "80%",
     alignItems: "center",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#333333", // Dark gray text color
   },
   description: {
     fontSize: 18,
-    color: "gray",
+    color: "#666666", // Medium gray text color
   },
   price: {
     fontSize: 22,
-    color: "black",
+    color: "#FFA500", // Orange text color
     marginVertical: 10,
   },
   quantityContainer: {
@@ -90,31 +105,39 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   quantityButton: {
+    backgroundColor: "#FFFFFF", // White background color for quantity buttons
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: "#CCCCCC", // Light gray border color
     padding: 10,
     borderRadius: 5,
   },
   quantityText: {
     fontSize: 20,
-    color: "black",
+    color: "#333333", // Dark gray text color
   },
   quantity: {
     fontSize: 20,
-    color: "black",
+    color: "#333333", // Dark gray text color
     marginHorizontal: 15,
   },
   payButton: {
-    backgroundColor: "#FFD700", // A placeholder color for the Pay button
+    backgroundColor: "#FFD700", // Gold background color for Pay button
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 30,
-    position: "absolute",
-    bottom: 50,
+    marginBottom: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
   payText: {
     fontSize: 20,
-    color: "white",
+    color: "#FFFFFF", // White text color
     fontWeight: "bold",
   },
 });

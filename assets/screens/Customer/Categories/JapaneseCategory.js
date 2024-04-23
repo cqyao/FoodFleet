@@ -9,7 +9,7 @@ const JapaneseRestaurantData = [
     rating: "4.7",
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Toro.png"),
+    logoUri: require("../../../../assets/screens/EveryImages/Toro.png"),
   },
   {
     id: "2",
@@ -18,7 +18,7 @@ const JapaneseRestaurantData = [
     rating: "4.7",
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Sakura.png"),
+    logoUri: require("../../../../assets/screens/EveryImages/Sakura.png"),
   },
   // ... Add more restaurants here
 ];

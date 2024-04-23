@@ -8,13 +8,17 @@ import {
   ScrollView,
 } from "react-native";
 
-const AlmostThere = () => {
+const AlmostThere = ({ navigation }) => {
   const handleMessage = () => {
     // Logic to send a message to the delivery person
   };
 
   const handleTip = () => {
     // Logic to tip the delivery person
+  };
+
+  const handleViewReceipt = () => {
+    navigation.navigate("Receipt");
   };
 
   return (
@@ -63,7 +67,7 @@ const AlmostThere = () => {
         <Text style={styles.itemName}>Couple Set</Text>
         <Text style={styles.total}>Total</Text>
         <Text style={styles.price}>AU$97</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleViewReceipt}>
           <Text style={styles.viewReceipt}>view receipt</Text>
         </TouchableOpacity>
       </View>

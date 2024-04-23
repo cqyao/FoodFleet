@@ -1,4 +1,3 @@
-// ForgotPassword.js
 import React from "react";
 import {
   View,
@@ -8,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const ForgotPassword = ({ navigation }) => {
+const ResetPassword = ({ navigation }) => {
   const submit = () => {
     console.log("E-mail sent!");
   };
@@ -17,20 +16,17 @@ const ForgotPassword = ({ navigation }) => {
     <View style={[styles.container, { flexDirection: "column" }]}>
       <View style={{ flex: 1 }}></View>
       <View style={{ flex: 2 }}>
-        <Text style={styles.header}>Forgot Password</Text>
-        <Text style={styles.subHeader}>Please enter your e-mail</Text>
-        <TextInput style={styles.input} placeholder="E-mail"></TextInput>
-        <TouchableOpacity style={styles.button} onPress={submit}>
-          <Text style={styles.buttonText}>Send E-mail</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.altButton}>
-          <Text style={styles.altButtonText}>Resend</Text>
-        </TouchableOpacity>
+        <Text style={styles.header}>Reset Password</Text>
+        <Text style={styles.subHeader}>Please enter your new password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Please type new password"
+        ></TextInput>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("ResetPassword")}
+          onPress={() => navigation.navigate("Login")}
         >
-          <Text style={styles.buttonText}>Temporarily reset password</Text>
+          <Text style={styles.buttonText}>Reset Password</Text>
         </TouchableOpacity>
       </View>
       <View style={{ flex: 1 }}></View>
@@ -70,13 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
-  altButtonText: {
-    fontSize: 18,
-  },
-  altButton: {
-    alignItems: "center",
-    margin: 10,
-  },
 });
 
-export default ForgotPassword;
+export default ResetPassword;

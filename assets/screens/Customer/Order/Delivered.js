@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Delivered = () => {
+  const navigation = useNavigation();
+
   const handleGiveFeedback = () => {
-    // Logic to handle feedback submission goes here
+    navigation.navigate("GiveFeedback");
   };
 
   return (

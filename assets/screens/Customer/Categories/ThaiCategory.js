@@ -9,7 +9,7 @@ const thaiRestaurantsData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/KinThai.png"), // Replace with the actual image file path
+    logoUri: require("../../../../assets/screens/EveryImages/KinThai.png"), // Replace with the actual image file path
   },
   {
     id: "2",
@@ -18,7 +18,7 @@ const thaiRestaurantsData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/JasminRice.png"), // Replace with the actual image file path
+    logoUri: require("../../../../assets/screens/EveryImages/JasminRice.png"), // Replace with the actual image file path
   },
   // ... more Thai restaurants
 ];
