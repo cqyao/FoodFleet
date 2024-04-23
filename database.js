@@ -171,7 +171,6 @@ const GetRestaurantRatings = async function(restaurantId) {
 	.from('Ratings')
 	.select('*')
 	.eq("restaurantId", restaurantId)
-	
 	return data
 }
 
@@ -424,11 +423,11 @@ const GetSubscriptions = async function(memberId) {
 
 const main = async function() {
 	const result = await GetRestaurantSales(13)
-	console.log(result[0].dishes)
+	//console.log(result[0].dishes)
 }
 
 // export functions for Restaurant
-export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById };
+export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant };
 // export functions for Customer
 export { GetCustomer, CreateCustomer }
 // export others

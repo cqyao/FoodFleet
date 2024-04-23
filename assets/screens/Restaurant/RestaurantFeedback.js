@@ -1,19 +1,26 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React, {useContext, useState, useEffect } from 'react'
 import RatingItem from '../../Components/RatingItem'
-import GetRestaurantRatings from "../../../database";
+import { GetRestaurantRatings, GetRestaurant } from '../../../database';
 import { UserContext } from '../../../context/UserContext';
 
 const RestaurantFeedback = () => {
     const { userId, setUserId } = useContext(UserContext);
     const [ reviews, setReviews ] = useState([])
+    const {name, setName} = useState('');
 
     useEffect(() => {
         const fetchReview = async() => {
             const review = await GetRestaurantRatings(userId)
             setReviews(review)
         }
+        const fetchName = async() => {
+            const rest = await GetRestaurant(userId)
+            const tempName = rest.name
+            setName(tempName)
+        }
         fetchReview();
+        fetchName();
     });
 
     return (
@@ -25,7 +32,7 @@ const RestaurantFeedback = () => {
         >
         <View style={[styles.topContainer, {alignItems: "center"}]}>
             <Text style={styles.header}>
-                Hanok
+                "{name}"
             </Text>
             <Text style={styles.ratingHeader}>
                 3.2
@@ -51,10 +58,11 @@ const RestaurantFeedback = () => {
             </View>
         <ScrollView style={{flex:3}}>
             {reviews.map((review) =>  (
-                <Text>{review.restaurantId}</Text>
-                // <RatingItem
-                //     restaurantId={review.restaurantId}
-                // />
+                <RatingItem
+                    customerId={review.customerId}
+                    message={review.message}
+                    rating={review.rating}
+                />
             ))}
             
         </ScrollView>

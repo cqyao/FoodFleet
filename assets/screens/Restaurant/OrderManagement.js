@@ -21,6 +21,7 @@ const OrderManagement = () => {
     useEffect(() => {
         const fetchOrder = async() => {
             const order = await GetRestaurantOrders(userId)
+            //console.log(order)
             setOrders(order)
         }
         fetchOrder();

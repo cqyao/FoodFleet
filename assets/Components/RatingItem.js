@@ -2,23 +2,17 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { GetRestaurantRatings, GetCustomer } from '../../database';  // Make sure this path is correct
 
-const RatingItem = ({ restaurantId }) => {
-    const [rating, setRating] = useState(null);  // Initialize rating state
-    const [message, setMessage] = useState('');
+const RatingItem = ({ customerId, message, rating }) => {
     const [cust, setCust] = useState('');
 
     useEffect(() => {
         const fetchRating = async () => {
-            const fetchedRating = await GetRestaurantRatings(restaurantId);
-            console.log(fetchedRating.customerId)
-            const cust = await GetCustomer(fetchedRating.customerId)
-            setRating(fetchedRating.rating);
-            setMessage(fetchedRating.message);
+            const cust = await GetCustomer(customerId)
             setCust(cust.firstName + " " + cust.lastName);
         };
 
         fetchRating();
-    }, [restaurantId]);
+    }, [customerId]);
 
     const starArray = [];
     

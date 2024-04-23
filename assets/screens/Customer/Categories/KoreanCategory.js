@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 // Dummy data array for Korean restaurants
 const koreanRestaurantsData = [
@@ -10,7 +18,7 @@ const koreanRestaurantsData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("../../EveryImages/ChickenV.png"),
+    logoUri: require("../../../../assets/screens/EveryImages/ChickenV.png"),
   },
   {
     id: "2",
@@ -19,7 +27,7 @@ const koreanRestaurantsData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("../../EveryImages/HanokLogo.png"),
+    logoUri: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
   },
   // ... add more restaurants here
 ];
@@ -31,20 +39,28 @@ const KoreanRestaurantItem = ({
   deliveryFee,
   deliveryTime,
   logoUri,
-}) => (
-  <View style={styles.restaurantItem}>
-    <Image source={logoUri} style={styles.logo} />
-    <View style={styles.infoContainer}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.address}>{address}</Text>
-      <View style={styles.details}>
-        <Text style={styles.rating}>{rating} ★</Text>
-        <Text style={styles.deliveryFee}>{deliveryFee}</Text>
-        <Text style={styles.deliveryTime}>{deliveryTime}</Text>
+}) => {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate("HanokMenu");
+  };
+
+  return (
+    <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
+      <Image source={logoUri} style={styles.logo} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.address}>{address}</Text>
+        <View style={styles.details}>
+          <Text style={styles.rating}>{rating} ★</Text>
+          <Text style={styles.deliveryFee}>{deliveryFee}</Text>
+          <Text style={styles.deliveryTime}>{deliveryTime}</Text>
+        </View>
       </View>
-    </View>
-  </View>
-);
+    </TouchableOpacity>
+  );
+};
 
 const KoreanCategory = () => {
   return (
