@@ -427,7 +427,7 @@ const main = async function() {
 }
 
 // export functions for Restaurant
-export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant };
+export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant, GetMenus };
 // export functions for Customer
 export { GetCustomer, CreateCustomer }
 // export others

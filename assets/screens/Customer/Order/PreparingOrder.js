@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const PreparingOrder = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate("Delivered");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.statusHeader}>Preparing your order...</Text>

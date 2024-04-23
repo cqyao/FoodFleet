@@ -38,9 +38,10 @@ import { UserProvider } from './context/UserContext'
 
 // import CreateCustomerAccount from "./assets/screens/Customer/SignUp/CreateCustomerAccount";
 
-import Login from "./assets/screens/login/Login";
-import ForgotPassword from "./assets/screens/login/ForgotPassword";
-import SignUpOption from "./assets/screens/login/SignUpOption";
+import Login from "./assets/screens/Login/Login";
+import ForgotPassword from "./assets/screens/Login/ForgotPassword";
+import ResetPassword from "./assets/screens/Login/ResetPassword";
+import SignUpOption from "./assets/screens/Login/SignUpOption";
 
 //import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
 import GenerateReport from "./assets/screens/Restaurant/GenerateReport/GenerateReport";
@@ -56,34 +57,31 @@ const App = () => (
   <UserProvider>
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
-          name="OrderManagement"
-          component={OrderManagement}
-          options={{ title: "Order Management" }}
-        /> */}
         <Stack.Screen
           name="Login"
           component={Login}
           options={{ title: "Login" }}
         />
-        <Stack.Screen 
-          name="Restaurant Main" 
-          component={RestaurantMain} 
+        <Stack.Screen
+          name="RestaurantMain"
+          component={RestaurantMain}
+          options={{ title: "RestaurantMain" }}
         />
+
         <Stack.Screen
           name="SignUpOption"
           component={SignUpOption}
           options={{ title: "SignUpOption" }}
         />
-
-        <Stack.Screen 
-          name="Revenue Report" 
-          component={GenerateReport} 
+        <Stack.Screen
+          name="GenerateReport"
+          component={GenerateReport}
+          options={{ title: "GenerateReport" }}
         />
         <Stack.Screen 
           name="Restaurant Profile" 
           component={RestaurantProfile} 
-  />
+        />
         <Stack.Screen 
           name="Order Management" 
           component={OrderManagement} 
@@ -95,54 +93,55 @@ const App = () => (
 
         {/* Add more screens here */}
         {/* <Stack.Screen
+
           name="HanokCart"
           component={HanokCart}
-          options={{ title: "Hanok Cart" }}
+          options={{ title: "HanokCart" }}
         />
         <Stack.Screen
           name="MainCart"
           component={MainCart}
-          options={{ title: "Main Cart" }}
+          options={{ title: "MainCart" }}
         />
         <Stack.Screen
           name="BurgersCategory"
           component={BurgersCategory}
-          options={{ title: "Burgers Category" }}
+          options={{ title: "BurgersCategory" }}
         />
         <Stack.Screen
           name="CafesCategory"
           component={CafesCategory}
-          options={{ title: "Cafes Category" }}
+          options={{ title: "CafesCategory" }}
         />
         <Stack.Screen
           name="CategoriesMain"
           component={CategoriesMain}
-          options={{ title: "Categories Main" }}
+          options={{ title: "CategoriesMain" }}
         />
         <Stack.Screen
           name="JapaneseCategory"
           component={JapaneseCategory}
-          options={{ title: "Japanese Category" }}
+          options={{ title: "JapaneseCategory" }}
         />
         <Stack.Screen
           name="KoreanCategory"
           component={KoreanCategory}
-          options={{ title: "Korean Category" }}
+          options={{ title: "KoreanCategory" }}
         />
         <Stack.Screen
           name="PizzasCategory"
           component={PizzasCategory}
-          options={{ title: "Pizzas Category" }}
+          options={{ title: "PizzasCategory" }}
         />
         <Stack.Screen
           name="ThaiCategory"
           component={ThaiCategory}
-          options={{ title: "Thai Category" }}
+          options={{ title: "ThaiCategory" }}
         />
         <Stack.Screen
           name="CustomerHome"
           component={CustomerHome}
-          options={{ title: "Customer Home" }}
+          options={{ title: "CustomerHome" }}
         />
         <Stack.Screen
           name="Filter"
@@ -152,7 +151,7 @@ const App = () => (
         <Stack.Screen
           name="FilteredRestaurant"
           component={FilteredRestaurant}
-          options={{ title: "Filtered Restaurant" }}
+          options={{ title: "FilteredRestaurant" }}
         />
         <Stack.Screen
           name="Search"
@@ -162,7 +161,7 @@ const App = () => (
         <Stack.Screen
           name="AlmostThere"
           component={AlmostThere}
-          options={{ title: "Almost There" }}
+          options={{ title: "AlmostThere" }}
         />
         <Stack.Screen
           name="Delivered"
@@ -172,22 +171,22 @@ const App = () => (
         <Stack.Screen
           name="GiveFeedback"
           component={GiveFeedback}
-          options={{ title: "Give Feedback" }}
+          options={{ title: "GiveFeedback" }}
         />
         <Stack.Screen
           name="HanokMenu"
           component={HanokMenu}
-          options={{ title: "Hanok Menu" }}
+          options={{ title: "HanokMenu" }}
         />
         <Stack.Screen
           name="HanokOrder"
           component={HanokOrder}
-          options={{ title: "Hanok Order" }}
+          options={{ title: "HanokOrder" }}
         />
         <Stack.Screen
           name="PreparingOrder"
           component={PreparingOrder}
-          options={{ title: "Preparing Order" }}
+          options={{ title: "PreparingOrder" }}
         />
         <Stack.Screen
           name="Receipt"
@@ -197,7 +196,7 @@ const App = () => (
         <Stack.Screen
           name="AddPaymentMethod"
           component={AddPaymentMethod}
-          options={{ title: "Add Payment Method" }}
+          options={{ title: "AddPaymentMethod" }}
         />
         <Stack.Screen
           name="Payment"
@@ -207,17 +206,17 @@ const App = () => (
         <Stack.Screen
           name="PaymentMethod"
           component={PaymentMethod}
-          options={{ title: "Payment Method" }}
+          options={{ title: "PaymentMethod" }}
         />
         <Stack.Screen
           name="MembershipPayment"
           component={MembershipPayment}
-          options={{ title: "Membership Payment" }}
+          options={{ title: "MembershipPayment" }}
         />
         <Stack.Screen
           name="MembershipPlan"
           component={MembershipPlan}
-          options={{ title: "Membership Plan" }}
+          options={{ title: "MembershipPlan" }}
         />
         <Stack.Screen
           name="Profile"
@@ -227,37 +226,39 @@ const App = () => (
         <Stack.Screen
           name="CheckCustomerReview"
           component={CheckCustomerReview}
-          options={{ title: "Check Customer Review" }}
+          options={{ title: "CheckCustomerReview" }}
         />
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
           options={{ title: "Generate Report" }}
         /> */}
-        <Stack.Screen
-          name="RestaurantMain"
-          component={RestaurantMain}
-          options={{ title: "Restaurant Main" }}
-        />
+
         <Stack.Screen
           name="OrderManagement"
           component={OrderManagement}
-          options={{ title: "Order Management" }}
+          options={{ title: "OrderManagement" }}
         />
         <Stack.Screen
           name="RestaurantProfile"
           component={RestaurantProfile}
-          options={{ title: "Restaurant Profile" }}
+          options={{ title: "RestaurantProfile" }}
         />
         <Stack.Screen
           name="CreateRestaurantAccount"
-          component={CreateRestaurantPage}
-          options={{ title: "Create Restaurant Account" }}
+          component={CreateRestaurantAccount}
+          options={{ title: "CreateRestaurantAccount" }}
+
         />
         <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
-          options={{ title: "Forgot Password" }}
+          options={{ title: "ForgotPassword" }}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{ title: "ResetPassword" }}
         />
         <Stack.Screen
           name="Feedback and Ratings"

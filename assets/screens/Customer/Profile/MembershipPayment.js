@@ -6,25 +6,40 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 
-const MembershipPayment = () => {
+const MembershipPayment = ({ navigation }) => {
+  const handleCardPress = () => {
+    navigation.navigate("PaymentMethod");
+  };
+
   const handleStartMembership = () => {
-    // Logic to start membership goes here
+    Alert.alert(
+      "Membership Started!",
+      "Your membership has been successfully started!",
+      [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("Profile"),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Membership</Text>
 
-      <TouchableOpacity style={styles.paymentMethod}>
+      <TouchableOpacity style={styles.paymentMethod} onPress={handleCardPress}>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/MasterCard.png")} // Replace with your actual MasterCard icon path
+          source={require("../../EveryImages/MasterCard.png")}
           style={styles.cardIcon}
         />
         <Text style={styles.cardText}>MasterCard 1234</Text>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")} // Replace with your actual chevron right icon path
+          source={require("../../EveryImages/RightChevron.png")}
           style={styles.chevronIcon}
         />
       </TouchableOpacity>

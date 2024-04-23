@@ -8,13 +8,13 @@ import {
   ScrollView,
 } from "react-native";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   const handleSignUp = () => {
-    // Sign-up logic goes here
+    navigation.navigate("MembershipPlan");
   };
 
   const handleLogout = () => {
-    // Logout logic goes here
+    navigation.navigate("Login");
   };
 
   return (
@@ -23,14 +23,14 @@ const Profile = () => {
         <Text style={styles.header}>Profile</Text>
         <TouchableOpacity>
           <Image
-            source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Edit.png")} // Replace with actual edit icon path
+            source={require("../../EveryImages/Edit.png")} // Replace with actual edit icon path
             style={styles.editIcon}
           />
         </TouchableOpacity>
       </View>
 
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Avatar1.png")} // Replace with actual profile picture path
+        source={require("../../EveryImages/Avatar1.png")} // Replace with actual profile picture path
         style={styles.profilePic}
       />
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const MembershipPlan = () => {
+const MembershipPlan = ({ navigation }) => {
   const [selectedPlan, setSelectedPlan] = useState("monthly");
 
   // Sample data for the plans
@@ -21,7 +21,8 @@ const MembershipPlan = () => {
   };
 
   const handlePayment = () => {
-    // Payment logic goes here
+    navigation.navigate("MembershipPayment");
+    // Payment logic goes here if needed
   };
 
   return (

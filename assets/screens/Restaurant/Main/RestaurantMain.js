@@ -10,24 +10,16 @@ import {
 
 const RestaurantMain = ({ navigation }) => {
   const navOrder = () => {
-    // Submit the data or navigate to next screen
-    console.log("Go to Order Management");
-    navigation.navigate("Order Management");
+    navigation.navigate("OrderManagement");
   };
   const navFeedback = () => {
-    // Submit the data or navigate to next screen
-    console.log("Go to Feedback");
-    navigation.navigate("Feedback and Ratings");
+    navigation.navigate("CheckCustomerReview");
   };
   const navRevenue = () => {
-    // Submit the data or navigate to next screen
-    console.log("Go to Revenue Report");
-    navigation.navigate("Revenue Report");
+    navigation.navigate("GenerateReport");
   };
   const navProfile = () => {
-    // Submit the data or navigate to next screen
-    console.log("Go to profile");
-    navigation.navigate("Restaurant Profile");
+    navigation.navigate("RestaurantProfile");
   };
 
   return (

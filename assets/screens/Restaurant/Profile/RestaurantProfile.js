@@ -10,11 +10,20 @@ import {
 import MenuItem from "../../../Components/MenuItem";
 
 const RestaurantProfile = () => {
+  const handleEditProfile = () => {
+    // Edit profile logic goes here
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
-        {/* Icon for settings would go here */}
+        <TouchableOpacity onPress={handleEditProfile}>
+          <Image
+            source={require("../../../../assets/screens/EveryImages/Edit.png")}
+            style={styles.editIcon}
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.logoContainer}>
         <Image
@@ -39,7 +48,6 @@ const RestaurantProfile = () => {
       </ScrollView>
       <TouchableOpacity style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>Logout</Text>
-        {/* Logout icon would go here */}
       </TouchableOpacity>
     </ScrollView>
   );
@@ -60,6 +68,10 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 22,
     fontWeight: "bold",
+  },
+  editIcon: {
+    width: 24,
+    height: 24,
   },
   logoContainer: {
     alignItems: "center",
@@ -116,6 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 200,
     alignSelf: "center",
+    marginTop: 20,
   },
   logoutButtonText: {
     fontSize: 18,
