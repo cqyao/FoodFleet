@@ -9,7 +9,7 @@ const pizzaPlacesData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/PizzaHut.png"), // 실제 이미지 파일 경로로 교체하세요
+    logoUri: require("../../../../assets/screens/EveryImages/PizzaHut.png"), // 실제 이미지 파일 경로로 교체하세요
   },
   {
     id: "2",

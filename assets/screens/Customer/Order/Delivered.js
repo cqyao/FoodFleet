@@ -22,7 +22,7 @@ const Delivered = () => {
         <Text style={styles.deliveredText}>Delivered!</Text>
         <Text style={styles.enjoyText}>Enjoy your order</Text>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Food.png")}
+          source={require("../../../../assets/screens/EveryImages/Food.png")}
           style={styles.deliveryImage}
         />
       </View>

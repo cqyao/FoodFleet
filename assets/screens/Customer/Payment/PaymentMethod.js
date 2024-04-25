@@ -42,7 +42,7 @@ const PaymentMethod = () => {
           onPress={() => handleSelectCard(index)}
         >
           <Image
-            source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/MasterCard.png")} // Replace with your actual card icon path
+            source={require("../../../../assets/screens/EveryImages/MasterCard.png")} // Replace with your actual card icon path
             style={styles.cardIcon}
           />
           <Text style={styles.cardText}>

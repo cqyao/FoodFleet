@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   Image,
 } from "react-native";
 import { RestaurantLogin } from "../../../database";
+import { UserContext } from "../../context/UserContext";
 
-const LoginScreen = ({ navigation }) => {
+const Login = ({ navigation }) => {
+  const { userId, setUserId } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,16 +20,23 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate("CustomerHome");
   };
 
-  const handleRestaurantLogin = () => {
+  const handleRestaurantLogin = async () => {
     // TODO: Implement actual login logic
-    navigation.navigate("RestaurantMain");
+    //console.log(email, password)
+    tempRest = await RestaurantLogin(email, password);
+    if (!tempRest) {
+      console.log("No such user");
+    } else {
+      setUserId(tempRest.id);
+      navigation.navigate("RestaurantMain");
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/FoodFleetsLogo.png")}
+          source={require("../../screens/EveryImages/FoodFleetsLogo.png")}
           style={styles.logo}
         />
       </View>
@@ -52,7 +61,10 @@ const LoginScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleCustomerLogin}>
         <Text style={styles.buttonText}>Sign In Customer</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleRestaurantLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleRestaurantLogin(email, password)}
+      >
         <Text style={styles.buttonText}>Sign In Restaurant</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
@@ -88,6 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: "gray",
+    paddingLeft: 30,
     padding: 10,
     color: "black", // Set text color to black
     borderRadius: 30,
@@ -110,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Login;

@@ -30,13 +30,13 @@ const AlmostThere = ({ navigation }) => {
         <View style={styles.progressBar} />
       </View>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Delivery.png")} // Replace with your actual delivery person image path
+        source={require("../../../../assets/screens/EveryImages/Delivery.png")} // Replace with your actual delivery person image path
         style={styles.deliveryImage}
       />
 
       <View style={styles.deliveryPersonInfo}>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Avatar1.png")} // Replace with the actual avatar path
+          source={require("../../../../assets/screens/EveryImages/Avatar1.png")} // Replace with the actual avatar path
           style={styles.avatar}
         />
         <View style={styles.info}>
