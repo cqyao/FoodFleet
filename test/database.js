@@ -428,7 +428,9 @@ class DatabaseTests
 {
 	async runTest1() {
 		return await GetCustomer(1);
-
+	}
+	async runTest2() {
+		return await GetRestaurant(1);
 	}
 }
 module.exports = {DatabaseTests};
