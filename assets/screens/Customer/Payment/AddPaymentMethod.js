@@ -5,18 +5,21 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Picker,
   ScrollView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
 
 const AddPaymentMethod = () => {
+  const navigation = useNavigation();
+
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [country, setCountry] = useState("Australia"); // default value
 
   const handleSave = () => {
-    // Logic to handle saving the payment method goes here
+    navigation.navigate("PaymentMethod");
   };
 
   return (
@@ -28,7 +31,7 @@ const AddPaymentMethod = () => {
           style={styles.input}
           value={cardNumber}
           onChangeText={setCardNumber}
-          placeholder="1234 2442 4234 2345"
+          placeholder="0000 0000 0000 0000"
           keyboardType="numeric"
         />
         <View style={styles.row}>
@@ -38,7 +41,7 @@ const AddPaymentMethod = () => {
               style={[styles.input, styles.smallInput]}
               value={expiryDate}
               onChangeText={setExpiryDate}
-              placeholder="09/2027"
+              placeholder="mm/year"
               keyboardType="numeric"
             />
           </View>
@@ -48,7 +51,7 @@ const AddPaymentMethod = () => {
               style={[styles.input, styles.smallInput]}
               value={cvv}
               onChangeText={setCvv}
-              placeholder="377"
+              placeholder="000"
               keyboardType="numeric"
               secureTextEntry
             />
@@ -63,6 +66,8 @@ const AddPaymentMethod = () => {
           {/* Populate the Picker with country options */}
           <Picker.Item label="Australia" value="Australia" />
           <Picker.Item label="United States" value="United States" />
+          <Picker.Item label="Korea" value="Korea" />
+          <Picker.Item label="Malaysia" value="Malaysia" />
           {/* Add more countries as needed */}
         </Picker>
       </View>

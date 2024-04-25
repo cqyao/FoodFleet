@@ -4,12 +4,16 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const GiveFeedback = () => {
   const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const navigation = useNavigation();
 
   const handleRating = (rate) => {
     setRating(rate);
@@ -17,14 +21,25 @@ const GiveFeedback = () => {
 
   const handleSubmitFeedback = () => {
     // Submit feedback logic goes here
+    Alert.alert(
+      "Thank you for your feedback!",
+      "",
+      [{ text: "OK", onPress: () => navigation.navigate("CustomerHome") }],
+      { cancelable: false }
+    );
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Feedback & Rating</Text>
       <View style={styles.feedbackCard}>
         <Text style={styles.question}>How was your food?</Text>
-        <Text style={styles.response}>GOOD!</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Type your feedback here..."
+          onChangeText={(text) => setFeedback(text)}
+          value={feedback}
+        />
         <View style={styles.stars}>
           {[...Array(5)].map((_, index) => {
             return (
@@ -57,7 +72,9 @@ const GiveFeedback = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "white",
   },
   header: {
@@ -72,17 +89,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     alignItems: "center",
-    marginHorizontal: 20,
+    width: "80%",
   },
   question: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
   },
-  response: {
-    fontSize: 16,
-    color: "black",
+  input: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 5,
+    paddingHorizontal: 10,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
   stars: {
     flexDirection: "row",

@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const menuItems = [
   {
@@ -8,7 +16,7 @@ const menuItems = [
     description:
       "Wagyu scotch fillet, pork belly, Bean paste soup or kimchi soup, deep-fried vegetable dumpling",
     price: "AU$89.00",
-    imageUrl: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokCoupleSet.png"), // Replace with the actual image file path
+    imageUrl: require("../../EveryImages/HanokCoupleSet.png"), // Replace with the actual image file path
   },
   {
     id: "2",
@@ -16,7 +24,7 @@ const menuItems = [
     description:
       "Wagyu scotch fillet, wagyu short-rib meat, wagyu intercostal, wagyu brisket and deep-fried king prawn/drop or soft shell crab",
     price: "AU$119.00",
-    imageUrl: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/WagyuTester.png"), // Replace with the actual image file path
+    imageUrl: require("../../EveryImages/WagyuTester.png"), // Replace with the actual image file path
   },
   {
     id: "3",
@@ -24,16 +32,23 @@ const menuItems = [
     description:
       "Wagyu scotch fillet, pork belly, Bean paste soup or kimchi soup, deep-fried vegetable dumpling",
     price: "AU$249.00",
-    imageUrl: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokPlatter.png"), // Replace with the actual image file path
+    imageUrl: require("../../EveryImages/HanokPlatter.png"), // Replace with the actual image file path
   },
   // ... other menu items
 ];
 
 const HanokMenu = () => {
+  const navigation = useNavigation();
+
+  const handleMenuItemPress = (itemId) => {
+    // Navigate to HanokOrder screen with the itemId as a parameter
+    navigation.navigate("HanokOrder", { itemId });
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/HanokLogo.png")} // Replace with the actual Hanok logo path
+        source={require("../../EveryImages/HanokLogo.png")} // Replace with the actual Hanok logo path
         style={styles.logo}
       />
       <Text style={styles.restaurantName}>Hanok</Text>
@@ -42,12 +57,16 @@ const HanokMenu = () => {
       <Text style={styles.sectionTitle}>Most Popular</Text>
 
       {menuItems.map((item) => (
-        <View key={item.id} style={styles.menuItem}>
+        <TouchableOpacity
+          key={item.id}
+          style={styles.menuItem}
+          onPress={() => handleMenuItemPress(item.id)}
+        >
           <Image source={item.imageUrl} style={styles.itemImage} />
           <Text style={styles.itemTitle}>{item.title}</Text>
           <Text style={styles.itemPrice}>{item.price}</Text>
           <Text style={styles.itemDescription}>{item.description}</Text>
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );
@@ -59,8 +78,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   logo: {
-    width: 100,
-    height: 50,
+    width: 200,
+    height: 200,
     resizeMode: "contain",
     alignSelf: "center",
     marginTop: 20,

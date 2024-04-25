@@ -15,27 +15,27 @@ const categoriesData = [
   {
     id: "1",
     title: "Cafes",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Cafe.png"),
+    image: require("../../../../assets/screens/EveryImages/Cafe.png"),
   },
   {
     id: "2",
     title: "Clubs",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Clubs.png"),
+    image: require("../../../../assets/screens/EveryImages/Clubs.png"),
   },
   {
     id: "3",
     title: "Asian food",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/AsianFood.png"),
+    image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
   },
   {
     id: "4",
     title: "Asian food",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/AsianFood.png"),
+    image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
   },
   {
     id: "5",
     title: "Asian food",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/AsianFood.png"),
+    image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
   },
   // Add more category data here.
 ];
@@ -48,16 +48,16 @@ const restaurantsData = [
     rating: 4.7,
     isFreeDelivery: true,
     deliveryTime: "20 min",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RoseGarden.png"),
+    image: require("../../../../assets/screens/EveryImages/RoseGarden.png"),
   },
   {
     id: "2",
-    name: "Rose Garden Restaurant",
-    type: "Burger - Chicken - Riche - Wings",
+    name: "Hanok",
+    type: "Korean bbq",
     rating: 4.7,
     isFreeDelivery: true,
     deliveryTime: "20 min",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RoseGarden.png"),
+    image: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
   },
   {
     id: "3",
@@ -66,7 +66,7 @@ const restaurantsData = [
     rating: 4.7,
     isFreeDelivery: true,
     deliveryTime: "20 min",
-    image: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RoseGarden.png"),
+    image: require("../../../../assets/screens/EveryImages/RoseGarden.png"),
   },
   // Add more restaurant data here.
 ];
@@ -87,18 +87,74 @@ const RestaurantItem = ({
   isFreeDelivery,
   deliveryTime,
   image,
-}) => (
-  <View style={styles.restaurantItem}>
-    <Image source={image} style={styles.restaurantImage} />
-    <Text style={styles.restaurantName}>{name}</Text>
-    <Text style={styles.restaurantType}>{type}</Text>
-    <View style={styles.restaurantInfo}>
-      <Text style={styles.restaurantRating}>⭐ {rating}</Text>
-      {isFreeDelivery && <Text style={styles.deliveryText}>Free</Text>}
-      <Text style={styles.deliveryTime}>{deliveryTime}</Text>
-    </View>
-  </View>
-);
+}) => {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate("HanokMenu");
+  };
+
+  return (
+    <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
+      <Image source={image} style={styles.restaurantImage} />
+      <Text style={styles.restaurantName}>{name}</Text>
+      <Text style={styles.restaurantType}>{type}</Text>
+      <View style={styles.restaurantInfo}>
+        <Text style={styles.restaurantRating}>⭐ {rating}</Text>
+        {isFreeDelivery && <Text style={styles.deliveryText}>Free</Text>}
+        <Text style={styles.deliveryTime}>{deliveryTime}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const HomeButton = () => {
+  const navigation = useNavigation();
+
+  const handleHomePress = () => {
+    navigation.navigate("Home");
+  };
+
+  return (
+    <TouchableOpacity style={styles.iconContainer} onPress={handleHomePress}>
+      <Ionicons name="home-outline" size={24} color="black" />
+    </TouchableOpacity>
+  );
+};
+
+const ProfileIcon = () => {
+  const navigation = useNavigation();
+
+  const handleProfilePress = () => {
+    navigation.navigate("Profile");
+  };
+
+  return (
+    <TouchableOpacity style={styles.iconContainer} onPress={handleProfilePress}>
+      <Ionicons name="person-circle-outline" size={24} color="black" />
+    </TouchableOpacity>
+  );
+};
+
+const MotorcycleImage = () => {
+  const navigation = useNavigation();
+
+  const handleMotorcyclePress = () => {
+    navigation.navigate("AlmostThere");
+  };
+
+  return (
+    <TouchableOpacity
+      style={styles.iconContainer}
+      onPress={handleMotorcyclePress}
+    >
+      <Image
+        source={require("../../../../assets/screens/EveryImages/motorcycle.png")}
+        style={styles.motorcycleImage}
+      />
+    </TouchableOpacity>
+  );
+};
 
 const CustomerHome = () => {
   const navigation = useNavigation();
@@ -143,7 +199,7 @@ const CustomerHome = () => {
         data={categoriesData}
         renderItem={({ item }) => <CategoryItem {...item} />}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 20 }} // Adjust the spacing as needed
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
 
       <View style={styles.sectionHeader}>
@@ -158,6 +214,12 @@ const CustomerHome = () => {
         renderItem={({ item }) => <RestaurantItem {...item} />}
         keyExtractor={(item) => item.id}
       />
+
+      <View style={styles.menuBar}>
+        <MotorcycleImage />
+        <HomeButton />
+        <ProfileIcon />
+      </View>
     </View>
   );
 };
@@ -199,7 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 15,
-    marginTop: 10, // Adjust the top margin of Categories
+    marginTop: 10,
   },
   sectionTitle: {
     fontSize: 20,
@@ -234,6 +296,8 @@ const styles = StyleSheet.create({
   },
   restaurantItem: {
     marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
   },
   restaurantImage: {
     width: "100%",
@@ -262,6 +326,23 @@ const styles = StyleSheet.create({
   },
   deliveryTime: {
     color: "grey",
+  },
+  iconContainer: {
+    paddingHorizontal: 20,
+  },
+  motorcycleImage: {
+    width: 50,
+    height: 50,
+    resizeMode: "contain",
+  },
+  menuBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#e0e0e0",
   },
 });
 

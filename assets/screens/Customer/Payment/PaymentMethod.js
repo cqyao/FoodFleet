@@ -7,9 +7,11 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const PaymentMethod = () => {
-  const [selectedCard, setSelectedCard] = useState("1234"); // Default to the first card
+  const [selectedCardIndex, setSelectedCardIndex] = useState(0); // Default to the first card
+  const navigation = useNavigation();
 
   const cards = [
     { lastFourDigits: "1234", default: true },
@@ -18,8 +20,8 @@ const PaymentMethod = () => {
     // Add more cards here
   ];
 
-  const handleSelectCard = (cardNumber) => {
-    setSelectedCard(cardNumber);
+  const handleSelectCard = (index) => {
+    setSelectedCardIndex(index);
   };
 
   const handlePay = () => {
@@ -27,7 +29,7 @@ const PaymentMethod = () => {
   };
 
   const handleAddPaymentMethod = () => {
-    // Logic to add payment method goes here
+    navigation.navigate("AddPaymentMethod");
   };
 
   return (
@@ -37,7 +39,7 @@ const PaymentMethod = () => {
         <TouchableOpacity
           key={index}
           style={styles.cardContainer}
-          onPress={() => handleSelectCard(card.lastFourDigits)}
+          onPress={() => handleSelectCard(index)}
         >
           <Image
             source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/MasterCard.png")} // Replace with your actual card icon path
@@ -46,7 +48,9 @@ const PaymentMethod = () => {
           <Text style={styles.cardText}>
             MasterCard **** {card.lastFourDigits}
           </Text>
-          {card.default && <Text style={styles.defaultText}>Default</Text>}
+          {selectedCardIndex === index && (
+            <Text style={styles.defaultText}>Default</Text>
+          )}
         </TouchableOpacity>
       ))}
       <TouchableOpacity
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
   defaultText: {
     fontSize: 16,
     color: "green",
+    marginLeft: 10,
   },
   addCardButton: {
     flexDirection: "row",

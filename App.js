@@ -2,53 +2,55 @@ import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { UserProvider } from './context/UserContext'
+import { UserProvider } from "./context/UserContext";
 
-// import HanokCart from "./assets/screens/Customer/Basket/HanokCart";
-// import MainCart from "./assets/screens/Customer/Basket/MainCart";
+import HanokCart from "./assets/screens/Customer/Basket/HanokCart";
+import MainCart from "./assets/screens/Customer/Basket/MainCart";
 
-// import BurgersCategory from "./assets/screens/Customer/Categories/BurgersCategory";
-// import CafesCategory from "./assets/screens/Customer/Categories/CafesCategory";
-// import CategoriesMain from "./assets/screens/Customer/Categories/CategoriesMain";
-// import JapaneseCategory from "./assets/screens/Customer/Categories/JapaneseCategory";
-// import KoreanCategory from "./assets/screens/Customer/Categories/KoreanCategory";
-// import PizzasCategory from "./assets/screens/Customer/Categories/PizzasCategory";
-// import ThaiCategory from "./assets/screens/Customer/Categories/ThaiCategory";
+import BurgersCategory from "./assets/screens/Customer/Categories/BurgersCategory";
+import CafesCategory from "./assets/screens/Customer/Categories/CafesCategory";
+import CategoriesMain from "./assets/screens/Customer/Categories/CategoriesMain";
+import JapaneseCategory from "./assets/screens/Customer/Categories/JapaneseCategory";
+import KoreanCategory from "./assets/screens/Customer/Categories/KoreanCategory";
+import PizzasCategory from "./assets/screens/Customer/Categories/PizzasCategory";
+import ThaiCategory from "./assets/screens/Customer/Categories/ThaiCategory";
 
-// import CustomerHome from "./assets/screens/Customer/CustomerHome/CustomerHome";
-// import Filter from "./assets/screens/Customer/CustomerHome/Filter";
-// import FilteredRestaurant from "./assets/screens/Customer/CustomerHome/FilteredRestaurant";
-// import Search from "./assets/screens/Customer/CustomerHome/Search";
+import CustomerHome from "./assets/screens/Customer/CustomerHome/CustomerHome";
+import Filter from "./assets/screens/Customer/CustomerHome/Filter";
+import FilteredRestaurant from "./assets/screens/Customer/CustomerHome/FilteredRestaurant";
+import Search from "./assets/screens/Customer/CustomerHome/Search";
 
-// import AlmostThere from "./assets/screens/Customer/Order/AlmostThere";
-// import Delivered from "./assets/screens/Customer/Order/Delivered";
-// import GiveFeedback from "./assets/screens/Customer/Order/GiveFeedback";
-// import HanokMenu from "./assets/screens/Customer/Order/HanokMenu";
-// import HanokOrder from "./assets/screens/Customer/Order/HanokOrder";
-// import PreparingOrder from "./assets/screens/Customer/Order/PreparingOrder";
-// import Receipt from "./assets/screens/Customer/Order/Receipt";
+import AlmostThere from "./assets/screens/Customer/Order/AlmostThere";
+import Delivered from "./assets/screens/Customer/Order/Delivered";
+import GiveFeedback from "./assets/screens/Customer/Order/GiveFeedback";
+import HanokMenu from "./assets/screens/Customer/Order/HanokMenu";
+import HanokOrder from "./assets/screens/Customer/Order/HanokOrder";
+import PreparingOrder from "./assets/screens/Customer/Order/PreparingOrder";
+import Receipt from "./assets/screens/Customer/Order/Receipt";
 
-// import AddPaymentMethod from "./assets/screens/Customer/Payment/AddPaymentMethod";
-// import Payment from "./assets/screens/Customer/Payment/Payment";
-// import PaymentMethod from "./assets/screens/Customer/Payment/PaymentMethod";
+import AddPaymentMethod from "./assets/screens/Customer/Payment/AddPaymentMethod";
+import Payment from "./assets/screens/Customer/Payment/Payment";
+import PaymentMethod from "./assets/screens/Customer/Payment/PaymentMethod";
 
-// import MembershipPayment from "./assets/screens/Customer/Profile/MembershipPayment";
-// import MembershipPlan from "./assets/screens/Customer/Profile/MembershipPlan";
-// import Profile from "./assets/screens/Customer/Profile/Profile";
+import MembershipPayment from "./assets/screens/Customer/Profile/MembershipPayment";
+import MembershipPlan from "./assets/screens/Customer/Profile/MembershipPlan";
+import Profile from "./assets/screens/Customer/Profile/Profile";
 
-// import CreateCustomerAccount from "./assets/screens/Customer/SignUp/CreateCustomerAccount";
+import CreateCustomerAccount from "./assets/screens/Customer/SignUp/CreateCustomerAccount";
+import CreateRestaurantAccount from "./assets/screens/Restaurant/Signup/CreateRestaurantAccount";
 
-import Login from "./assets/screens/login/Login";
-import ForgotPassword from "./assets/screens/login/ForgotPassword";
-import SignUpOption from "./assets/screens/login/SignUpOption";
+import Login from "./assets/screens/Login/Login";
+import ForgotPassword from "./assets/screens/Login/ForgotPassword";
+import ResetPassword from "./assets/screens/Login/ResetPassword";
+import SignUpOption from "./assets/screens/Login/SignUpOption";
 
-//import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
+import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
 import GenerateReport from "./assets/screens/Restaurant/GenerateReport/GenerateReport";
 import RestaurantMain from "./assets/screens/Restaurant/Main/RestaurantMain";
-import OrderManagement from "./assets/screens/Restaurant/OrderManagement/OrderManagement";
+import OrderManagement from "./assets/screens/Restaurant/OrderManagement";
 import RestaurantProfile from "./assets/screens/Restaurant/Profile/RestaurantProfile";
 import CreateRestaurantPage from "./assets/screens/Restaurant/CreateRestaurantPage";
-import RestaurantFeedback from "./assets/screens/Restaurant/CheckCustomerReview/RestaurantFeedback";
+import RestaurantFeedback from "./assets/screens/Restaurant/RestaurantFeedback";
 
 const Stack = createStackNavigator();
 
@@ -56,29 +58,35 @@ const App = () => (
   <UserProvider>
     <NavigationContainer>
       <Stack.Navigator>
-        
         <Stack.Screen
           name="Login"
           component={Login}
           options={{ title: "Login" }}
         />
-        <Stack.Screen 
-          name="Restaurant Main" 
-          component={RestaurantMain} 
+        <Stack.Screen
+          name="RestaurantMain"
+          component={RestaurantMain}
+          options={{ title: "RestaurantMain" }}
         />
+
         <Stack.Screen
           name="SignUpOption"
           component={SignUpOption}
           options={{ title: "SignUpOption" }}
         />
         <Stack.Screen
-          name="Restaurant Profile"
-          component={RestaurantProfile}
+          name="GenerateReport"
+          component={GenerateReport}
+          options={{ title: "GenerateReport" }}
         />
         <Stack.Screen 
-          name="Revenue Report" 
-          component={GenerateReport} 
+          name="Restaurant Profile" 
+          component={RestaurantProfile} 
         />
+        <Stack.Screen 
+          name="Order Management" 
+          component={OrderManagement} 
+        /> 
         {/* <Stack.Screen
           name="Forgot Password"
           component={ForgotPassword}
@@ -86,54 +94,55 @@ const App = () => (
 
         {/* Add more screens here */}
         {/* <Stack.Screen
+
           name="HanokCart"
           component={HanokCart}
-          options={{ title: "Hanok Cart" }}
+          options={{ title: "HanokCart" }}
         />
         <Stack.Screen
           name="MainCart"
           component={MainCart}
-          options={{ title: "Main Cart" }}
+          options={{ title: "MainCart" }}
         />
         <Stack.Screen
           name="BurgersCategory"
           component={BurgersCategory}
-          options={{ title: "Burgers Category" }}
+          options={{ title: "BurgersCategory" }}
         />
         <Stack.Screen
           name="CafesCategory"
           component={CafesCategory}
-          options={{ title: "Cafes Category" }}
+          options={{ title: "CafesCategory" }}
         />
         <Stack.Screen
           name="CategoriesMain"
           component={CategoriesMain}
-          options={{ title: "Categories Main" }}
+          options={{ title: "CategoriesMain" }}
         />
         <Stack.Screen
           name="JapaneseCategory"
           component={JapaneseCategory}
-          options={{ title: "Japanese Category" }}
+          options={{ title: "JapaneseCategory" }}
         />
         <Stack.Screen
           name="KoreanCategory"
           component={KoreanCategory}
-          options={{ title: "Korean Category" }}
+          options={{ title: "KoreanCategory" }}
         />
         <Stack.Screen
           name="PizzasCategory"
           component={PizzasCategory}
-          options={{ title: "Pizzas Category" }}
+          options={{ title: "PizzasCategory" }}
         />
         <Stack.Screen
           name="ThaiCategory"
           component={ThaiCategory}
-          options={{ title: "Thai Category" }}
+          options={{ title: "ThaiCategory" }}
         />
         <Stack.Screen
           name="CustomerHome"
           component={CustomerHome}
-          options={{ title: "Customer Home" }}
+          options={{ title: "CustomerHome" }}
         />
         <Stack.Screen
           name="Filter"
@@ -143,7 +152,7 @@ const App = () => (
         <Stack.Screen
           name="FilteredRestaurant"
           component={FilteredRestaurant}
-          options={{ title: "Filtered Restaurant" }}
+          options={{ title: "FilteredRestaurant" }}
         />
         <Stack.Screen
           name="Search"
@@ -153,7 +162,7 @@ const App = () => (
         <Stack.Screen
           name="AlmostThere"
           component={AlmostThere}
-          options={{ title: "Almost There" }}
+          options={{ title: "AlmostThere" }}
         />
         <Stack.Screen
           name="Delivered"
@@ -163,22 +172,22 @@ const App = () => (
         <Stack.Screen
           name="GiveFeedback"
           component={GiveFeedback}
-          options={{ title: "Give Feedback" }}
+          options={{ title: "GiveFeedback" }}
         />
         <Stack.Screen
           name="HanokMenu"
           component={HanokMenu}
-          options={{ title: "Hanok Menu" }}
+          options={{ title: "HanokMenu" }}
         />
         <Stack.Screen
           name="HanokOrder"
           component={HanokOrder}
-          options={{ title: "Hanok Order" }}
+          options={{ title: "HanokOrder" }}
         />
         <Stack.Screen
           name="PreparingOrder"
           component={PreparingOrder}
-          options={{ title: "Preparing Order" }}
+          options={{ title: "PreparingOrder" }}
         />
         <Stack.Screen
           name="Receipt"
@@ -188,7 +197,7 @@ const App = () => (
         <Stack.Screen
           name="AddPaymentMethod"
           component={AddPaymentMethod}
-          options={{ title: "Add Payment Method" }}
+          options={{ title: "AddPaymentMethod" }}
         />
         <Stack.Screen
           name="Payment"
@@ -198,17 +207,17 @@ const App = () => (
         <Stack.Screen
           name="PaymentMethod"
           component={PaymentMethod}
-          options={{ title: "Payment Method" }}
+          options={{ title: "PaymentMethod" }}
         />
         <Stack.Screen
           name="MembershipPayment"
           component={MembershipPayment}
-          options={{ title: "Membership Payment" }}
+          options={{ title: "MembershipPayment" }}
         />
         <Stack.Screen
           name="MembershipPlan"
           component={MembershipPlan}
-          options={{ title: "Membership Plan" }}
+          options={{ title: "MembershipPlan" }}
         />
         <Stack.Screen
           name="Profile"
@@ -218,41 +227,50 @@ const App = () => (
         <Stack.Screen
           name="CheckCustomerReview"
           component={CheckCustomerReview}
-          options={{ title: "Check Customer Review" }}
+          options={{ title: "CheckCustomerReview" }}
         />
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
           options={{ title: "Generate Report" }}
         /> */}
+
         <Stack.Screen
           name="OrderManagement"
           component={OrderManagement}
-          options={{ title: "Order Management" }}
+          options={{ title: "OrderManagement" }}
         />
-        {/* <Stack.Screen
-          name="Restaurant Profile"
+        <Stack.Screen
+          name="RestaurantProfile"
           component={RestaurantProfile}
-        /> */}
+          options={{ title: "RestaurantProfile" }}
+        />
         <Stack.Screen
           name="CreateRestaurantAccount"
-          component={CreateRestaurantPage}
-          options={{ title: "Create Restaurant Account" }}
+          component={CreateRestaurantAccount}
+          options={{ title: "CreateRestaurantAccount" }}
+
         />
         <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
-          options={{ title: "Forgot Password" }}
+          options={{ title: "ForgotPassword" }}
         />
         <Stack.Screen
-          name="Feedback and Ratings"
-          component={RestaurantFeedback}
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{ title: "ResetPassword" }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{ title: "ResetPassword" }}
+        />
+        <Stack.Screen
           name="CreateCustomerAccount"
           component={CreateCustomerAccount}
           options={{ title: "CreateCustomerAccount" }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   </UserProvider>

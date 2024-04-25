@@ -6,25 +6,46 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Payment = () => {
+  const navigation = useNavigation();
+
   const handlePay = () => {
     // Logic to handle the payment process
+    Alert.alert(
+      "Payment Successful",
+      "Your payment is Successful",
+      [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("PreparingOrder"),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const goToPaymentMethod = () => {
+    navigation.navigate("PaymentMethod");
   };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
+        <View style={styles.locationContainer}>
+          <Image
+            source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Location.png")}
+            style={styles.icon}
+          />
+          <Text style={styles.textPrimary}>
+            66 Princes Hwy, Fairy Meadow NSW 2519
+          </Text>
+        </View>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Location.png")} // Replace with actual location icon path
-          style={styles.icon}
-        />
-        <Text style={styles.textPrimary}>
-          66 Princes Hwy, Fairy Meadow NSW 2519
-        </Text>
-        <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")} // Replace with actual chevron icon path
+          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")}
           style={styles.icon}
         />
       </View>
@@ -47,17 +68,19 @@ const Payment = () => {
         <Text style={styles.price}>AU$97</Text>
       </View>
 
-      <View style={styles.section}>
+      <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
+        <View style={styles.cardContainer}>
+          <Image
+            source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/MasterCard.png")}
+            style={styles.icon}
+          />
+          <Text style={styles.textPrimary}>MasterCard 1234</Text>
+        </View>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/MasterCard.png")} // Replace with actual MasterCard icon path
+          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")}
           style={styles.icon}
         />
-        <Text style={styles.textPrimary}>MasterCard 1234</Text>
-        <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")} // Replace with actual chevron icon path
-          style={styles.icon}
-        />
-      </View>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.payButton} onPress={handlePay}>
         <Text style={styles.payButtonText}>Pay</Text>
@@ -75,18 +98,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
+  },
+  locationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+  cardContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
   },
   icon: {
     width: 20,
     height: 20,
     resizeMode: "contain",
+    marginRight: 10,
   },
   textPrimary: {
-    flex: 1,
-    marginLeft: 10,
     fontSize: 16,
   },
   header: {
@@ -107,19 +140,15 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 16,
     fontWeight: "bold",
-    textAlign: "right",
   },
   subtotal: {
-    textAlign: "left",
     fontSize: 16,
   },
   fee: {
-    textAlign: "left",
     fontSize: 16,
     color: "grey",
   },
   total: {
-    textAlign: "left",
     fontSize: 16,
     fontWeight: "bold",
   },

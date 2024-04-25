@@ -1,106 +1,95 @@
-import React, {useContext, useEffect, useState} from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import MenuItem from '../../../Components/MenuItem';
-import { UserContext } from '../../../../context/UserContext';
-import { GetMenus, GetRestaurant } from '../../../../database';
+import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import MenuItem from "../../../Components/MenuItem";
 
-const RestaurantProfile = ({ navigation }) => {
-  const { userId, setUserId } = useContext(UserContext);
-  const [ dishes, setDishes ] = useState([]);
-  const [ name, setName ] = useState(null);
-  const [ category, setCategory ] = useState(null);
-
-  useEffect(() => {
-    const fetchDishes = async() => {
-      const dish = await GetMenus(userId)
-      setDishes(dish)
-    }
-    fetchDishes();
-  }, []);
-  useEffect(() => {
-    const fetchName = async() => {
-      const restaurant = await GetRestaurant(userId)
-      const name = restaurant.name
-      const category = restaurant.category
-      setName(name)
-      setCategory(category)
-    }
-    fetchName();
-  })
-
-  const logout = () => {
-    setUserId(null);
-    navigation.navigate('Login')
+const RestaurantProfile = () => {
+  const handleEditProfile = () => {
+    // Edit profile logic goes here
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
-        {/* Icon for settings would go here */}
+        <TouchableOpacity onPress={handleEditProfile}>
+          <Image
+            source={require("../../../../assets/screens/EveryImages/Edit.png")}
+            style={styles.editIcon}
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.logoContainer}>
         <Image
-          source={{ uri: 'https://links.papareact.com/gn7' }}
+          source={{ uri: "https://links.papareact.com/wru" }}
           style={styles.logo}
         />
       </View>
-      <Text style={styles.restaurantName}>{name}</Text>
+      <Text style={styles.restaurantName}>Hanok</Text>
       <View style={styles.ratingContainer}>
-        <Text style={styles.ratingText}>⭐ 4.6 (200+ ratings)  {category}  $$</Text>
+        <Text style={styles.ratingText}>
+          ⭐ 4.6 (200+ ratings) Korean BBQ $$
+        </Text>
         <Text style={styles.hoursText}>Open until 10:00 PM</Text>
       </View>
-      <ScrollView style={height= 200}>
-        {dishes.map((dish) => (
-          <MenuItem
-            name={dish.name}
-            price = {dish.price}
-            description={dish.description}
-            imageUrl={dish.image_url}
-          />
-        ))}
+      <ScrollView style={(height = 200)}>
+        <MenuItem
+          title="Couple Set"
+          price="AUD $89.00"
+          description="Wagyu scotch fillet, pork belly, Bean paste soup or kimchi soup, deep fried vegetable dumpling"
+          imageUrl="https://links.papareact.com/wru"
+        />
       </ScrollView>
-      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+      <TouchableOpacity style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>Logout</Text>
-        {/* Logout icon would go here */}
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
+    flexDirection: "column",
+    backgroundColor: "#fff",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 16,
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  editIcon: {
+    width: 24,
+    height: 24,
   },
   logoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   logo: {
-    width: 130,
-    height: 130,
+    width: 120,
+    height: 120,
     borderRadius: 60,
   },
   restaurantName: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginTop: 8,
   },
   ratingContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 8,
   },
   ratingText: {
@@ -116,11 +105,11 @@ const styles = StyleSheet.create({
   },
   menuItemTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   menuItemPrice: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 4,
   },
   menuItemDescription: {
@@ -132,17 +121,18 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   logoutButton: {
-    backgroundColor: 'gold',
+    backgroundColor: "gold",
     borderRadius: 25,
     padding: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     width: 200,
     alignSelf: "center",
+    marginTop: 20,
   },
   logoutButtonText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
