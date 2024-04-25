@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-const MenuItem = ({ title, price, description, imageUrl }) => {
+const MenuItem = ({ name, price, description, imageUrl }) => {
   return (
     <View style={styles.menuItemContainer}>
       <View style={styles.textContainer}>
-        <Text style={styles.menuItemTitle}>{title}</Text>
-        <Text style={styles.menuItemPrice}>{price}</Text>
+        <Text style={styles.menuItemTitle}>{name}</Text>
+        <Text style={styles.menuItemPrice}>${price}</Text>
         <Text style={styles.menuItemDescription}>{description}</Text>
       </View>
       <Image source={{ uri: imageUrl }} style={styles.menuItemImage} />

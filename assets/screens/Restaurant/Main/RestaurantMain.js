@@ -12,7 +12,7 @@ const RestaurantMain = ({ navigation }) => {
   const navOrder = () => {
     // Submit the data or navigate to next screen
     console.log("Go to Order Management");
-    navigation.navigate("Order Management");
+    navigation.navigate("OrderManagement");
   };
   const navFeedback = () => {
     // Submit the data or navigate to next screen

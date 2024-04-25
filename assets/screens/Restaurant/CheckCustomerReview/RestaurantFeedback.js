@@ -1,27 +1,30 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React, {useContext, useState, useEffect } from 'react'
-import RatingItem from '../../Components/RatingItem'
-import { GetRestaurantRatings, GetRestaurant } from '../../../database';
-import { UserContext } from '../../../context/UserContext';
+import RatingItem from '../../../Components/RatingItem'
+import { GetRestaurantRatings, GetRestaurant } from '../../../../database';
+import { UserContext } from '../../../../context/UserContext';
 
 const RestaurantFeedback = () => {
     const { userId, setUserId } = useContext(UserContext);
     const [ reviews, setReviews ] = useState([])
-    const {name, setName} = useState('');
+    const [name, setName] = useState(null);
 
     useEffect(() => {
         const fetchReview = async() => {
             const review = await GetRestaurantRatings(userId)
             setReviews(review)
         }
+        fetchReview();
+        
+    });
+    useEffect(() => {
         const fetchName = async() => {
             const rest = await GetRestaurant(userId)
             const tempName = rest.name
             setName(tempName)
         }
-        fetchReview();
         fetchName();
-    });
+    })
 
     return (
         <View
@@ -32,7 +35,7 @@ const RestaurantFeedback = () => {
         >
         <View style={[styles.topContainer, {alignItems: "center"}]}>
             <Text style={styles.header}>
-                "{name}"
+                {name}
             </Text>
             <Text style={styles.ratingHeader}>
                 3.2
@@ -40,19 +43,19 @@ const RestaurantFeedback = () => {
             <View style={{flexDirection: "row"}}>
             <Image 
                 style={styles.star}
-                source={require("../../screens/EveryImages/star.png")}/>
+                source={require("../../../screens/EveryImages/star.png")}/>
             <Image 
                 style={styles.star}
-                source={require("../../screens/EveryImages/star.png")}/>
+                source={require("../../../screens/EveryImages/star.png")}/>
             <Image 
                 style={styles.star}
-                source={require("../../screens/EveryImages/star.png")}/>
+                source={require("../../../screens/EveryImages/star.png")}/>
             <Image 
                 style={styles.star}
-                source={require("../../screens/EveryImages/empty_star.png")}/>
+                source={require("../../../screens/EveryImages/empty_star.png")}/>
             <Image 
                 style={styles.star}
-                source={require("../../screens/EveryImages/empty_star.png")}/>
+                source={require("../../../screens/EveryImages/empty_star.png")}/>
             
             </View>
             </View>
@@ -63,17 +66,11 @@ const RestaurantFeedback = () => {
                     message={review.message}
                     rating={review.rating}
                 />
-            ))}
-            
+            ))}          
         </ScrollView>
-        </View>
-        
+        </View>     
     )
-
-  
-  
 }
-
 
 const styles = StyleSheet.create({
     container: {

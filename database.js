@@ -6,6 +6,8 @@ const supabase = Supabase.createClient(supabaseUrl, supabaseKey);
 
 
 function groupBy(list, keyGetter) {
+	
+
     const map = new Map();
     list.forEach((item) => {
          const key = keyGetter(item);
@@ -227,7 +229,7 @@ const GetMenus = async function(restaurantId) {
 	.eq("restaurantId", restaurantId);
 		
 	grouped = Object.fromEntries(groupBy(data, x => x.menuName))
-	return grouped
+	return data
 }
 
 
@@ -369,17 +371,17 @@ const GetCustomerPurchases = async function(customerId) {
 
 
 
-const GetRestaurantSales = async function(restaurantId) {
-	var carts = await GetRestaurantCarts(restaurantId)
-	for (let i=0; i < carts.length; i++){
-		carts[i].dishes = await GetCartItems(carts[i].id)
-		for (let x=0; x < carts[i].dishes.length; x++){
-			carts[i].dishes[x].dish = await GetDish(carts[i].dishes[x].dishId)
-		}
-	}
+// const GetRestaurantSales = async function(restaurantId) {
+// 	var carts = await GetRestaurantCarts(restaurantId)
+// 	for (let i=0; i < carts.length; i++){
+// 		carts[i].dishes = await GetCartItems(carts[i].id)
+// 		for (let x=0; x < carts[i].dishes.length; x++){
+// 			carts[i].dishes[x].dish = await GetDish(carts[i].dishes[x].dishId)
+// 		}
+// 	}
 	
-	return carts
-}
+// 	return carts
+// }
 
 
 
@@ -421,16 +423,16 @@ const GetSubscriptions = async function(memberId) {
 
 
 
-const main = async function() {
-	const result = await GetRestaurantSales(13)
-	//console.log(result[0].dishes)
-}
+// const main = async function() {
+// 	const result = await GetRestaurantSales(13)
+// 	//console.log(result[0].dishes)
+// }
 
 // export functions for Restaurant
-export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant };
+export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant, GetMenus };
 // export functions for Customer
 export { GetCustomer, CreateCustomer }
 // export others
 export { GetRestaurantCarts }
 
-main()
+//main()

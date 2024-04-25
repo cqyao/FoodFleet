@@ -20,7 +20,7 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate("CustomerHome");
   };
 
-  const handleRestaurantLogin = async() => {
+  const handleRestaurantLogin = async(email, password) => {
     // TODO: Implement actual login logic
     //console.log(email, password)
     tempRest = await RestaurantLogin(email, password)
@@ -28,6 +28,8 @@ const LoginScreen = ({ navigation }) => {
       console.log("No such user")
     } else {
       setUserId(tempRest.id)
+      setEmail('');
+      setPassword('');
       navigation.navigate("Restaurant Main")
     }
   };
@@ -40,6 +42,7 @@ const LoginScreen = ({ navigation }) => {
           style={styles.logo}
         />
       </View>
+      <Text>User ID (for testing): {userId}</Text>
       <TextInput
         style={styles.input}
         onChangeText={setEmail}

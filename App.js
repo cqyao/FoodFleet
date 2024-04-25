@@ -45,10 +45,10 @@ import SignUpOption from "./assets/screens/login/SignUpOption";
 //import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
 import GenerateReport from "./assets/screens/Restaurant/GenerateReport/GenerateReport";
 import RestaurantMain from "./assets/screens/Restaurant/Main/RestaurantMain";
-import OrderManagement from "./assets/screens/Restaurant/OrderManagement";
+import OrderManagement from "./assets/screens/Restaurant/OrderManagement/OrderManagement";
 import RestaurantProfile from "./assets/screens/Restaurant/Profile/RestaurantProfile";
 import CreateRestaurantPage from "./assets/screens/Restaurant/CreateRestaurantPage";
-import RestaurantFeedback from "./assets/screens/Restaurant/RestaurantFeedback";
+import RestaurantFeedback from "./assets/screens/Restaurant/CheckCustomerReview/RestaurantFeedback";
 
 const Stack = createStackNavigator();
 
@@ -56,11 +56,7 @@ const App = () => (
   <UserProvider>
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
-          name="OrderManagement"
-          component={OrderManagement}
-          options={{ title: "Order Management" }}
-        /> */}
+        
         <Stack.Screen
           name="Login"
           component={Login}
@@ -75,19 +71,14 @@ const App = () => (
           component={SignUpOption}
           options={{ title: "SignUpOption" }}
         />
-
+        <Stack.Screen
+          name="Restaurant Profile"
+          component={RestaurantProfile}
+        />
         <Stack.Screen 
           name="Revenue Report" 
           component={GenerateReport} 
         />
-        <Stack.Screen 
-          name="Restaurant Profile" 
-          component={RestaurantProfile} 
-  />
-        <Stack.Screen 
-          name="Order Management" 
-          component={OrderManagement} 
-        /> 
         {/* <Stack.Screen
           name="Forgot Password"
           component={ForgotPassword}
@@ -235,20 +226,14 @@ const App = () => (
           options={{ title: "Generate Report" }}
         /> */}
         <Stack.Screen
-          name="RestaurantMain"
-          component={RestaurantMain}
-          options={{ title: "Restaurant Main" }}
-        />
-        <Stack.Screen
           name="OrderManagement"
           component={OrderManagement}
           options={{ title: "Order Management" }}
         />
-        <Stack.Screen
-          name="RestaurantProfile"
+        {/* <Stack.Screen
+          name="Restaurant Profile"
           component={RestaurantProfile}
-          options={{ title: "Restaurant Profile" }}
-        />
+        /> */}
         <Stack.Screen
           name="CreateRestaurantAccount"
           component={CreateRestaurantPage}
