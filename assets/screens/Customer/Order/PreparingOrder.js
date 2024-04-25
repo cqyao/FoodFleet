@@ -19,7 +19,7 @@ const PreparingOrder = () => {
       <Text style={styles.arrivalTime}>Arriving at 10:15</Text>
       <Text style={styles.latestArrival}>Latest arrival by 10:40</Text>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Cooking.png")} // Replace with your actual cooking icon path
+        source={require("../../../../assets/screens/EveryImages/Cooking.png")} // Replace with your actual cooking icon path
         style={styles.cookingIcon}
       />
 

@@ -37,7 +37,7 @@ const Payment = () => {
       <View style={styles.section}>
         <View style={styles.locationContainer}>
           <Image
-            source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Location.png")}
+            source={require("../../../../assets/screens/EveryImages/Location.png")}
             style={styles.icon}
           />
           <Text style={styles.textPrimary}>
@@ -45,7 +45,7 @@ const Payment = () => {
           </Text>
         </View>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")}
+          source={require("../../../../assets/screens/EveryImages/RightChevron.png")}
           style={styles.icon}
         />
       </View>

@@ -18,7 +18,7 @@ const Receipt = () => {
       <Text style={styles.header}>Receipt</Text>
       <Text style={styles.description}>Here's your receipt for your food,</Text>
       <Image
-        source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Food.png")} // Replace with your actual food receipt image path
+        source={require("../../../../assets/screens/EveryImages/Food.png")} // Replace with your actual food receipt image path
         style={styles.foodIcon}
       />
       <View style={styles.receiptDetails}>

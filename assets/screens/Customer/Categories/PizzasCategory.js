@@ -9,7 +9,7 @@ const pizzaPlacesData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-    logoUri: require("../../EveryImages/PizzaHut.png"), // 실제 이미지 파일 경로로 교체하세요
+    logoUri: require("../../../../assets/screens/EveryImages/PizzaHut.png"), // 실제 이미지 파일 경로로 교체하세요
   },
   {
     id: "2",
@@ -19,7 +19,6 @@ const pizzaPlacesData = [
     deliveryFee: "Free",
     deliveryTime: "20 min",
     logoUri: require("../../../../assets/screens/EveryImages/Domino.png"), // 실제 이미지 파일 경로로 교체하세요
-
   },
   // ... 다른 피자 가게 추가
 ];

@@ -105,16 +105,16 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "grey",
-    borderRadius: 5,
+    borderRadius: 30,
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   button: {
     backgroundColor: "#FFD700",
     borderRadius: 30,
     padding: 15,
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 0,
   },
   buttonText: {
     color: "#fff",

@@ -11,26 +11,19 @@ import { RestaurantLogin } from "../../../database";
 import { UserContext } from "../../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
-  const { userId, setUserId } = useContext(UserContext);
+  const { setUserId } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleCustomerLogin = () => {
-    // TODO: Implement actual login logic
-    navigation.navigate("CustomerHome");
-  };
-
-  const handleRestaurantLogin = async(email, password) => {
+  const handleLogin = async () => {
     // TODO: Implement actual login logic
     //console.log(email, password)
-    tempRest = await RestaurantLogin(email, password)
+    const tempRest = await RestaurantLogin(email, password);
     if (!tempRest) {
-      console.log("No such user")
+      console.log("No such user");
     } else {
-      setUserId(tempRest.id)
-      setEmail('');
-      setPassword('');
-      navigation.navigate("Restaurant Main")
+      setUserId(tempRest.id);
+      navigation.navigate("Restaurant Main");
     }
   };
 
@@ -42,7 +35,6 @@ const LoginScreen = ({ navigation }) => {
           style={styles.logo}
         />
       </View>
-      <Text>User ID (for testing): {userId}</Text>
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
@@ -61,11 +53,8 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={handleCustomerLogin}>
-        <Text style={styles.buttonText}>Sign In Customer</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={ () => handleRestaurantLogin(email, password)}>
-        <Text style={styles.buttonText}>Sign In Restaurant</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
         <Text style={styles.textButton}>Forgot Password</Text>
