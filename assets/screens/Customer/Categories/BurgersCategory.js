@@ -17,6 +17,7 @@ const BurgersData = [
     deliveryFee: "Free",
     deliveryTime: "20 min",
     logoUri: require("../../../../assets/screens/EveryImages/Macdonald.png"), // 경로 수정
+
   },
   {
     id: "2",
@@ -26,6 +27,7 @@ const BurgersData = [
     deliveryFee: "Free",
     deliveryTime: "20 min",
     logoUri: require("../../../../assets/screens/EveryImages/HungryJacks.png"), // 경로 수정
+
   },
   // ...다른 레스토랑들
 ];

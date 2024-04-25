@@ -5,7 +5,8 @@ import MenuItem from '../../Components/MenuItem';
 const RestaurantProfile = ({ navigation }) => {
 
   const logout = () => {
-      navigation.navigate("Login")
+    console.log("hello")  
+    navigation.navigate('Login')
   }
 
   return (
