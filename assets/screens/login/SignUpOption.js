@@ -9,7 +9,7 @@ const SignUpOption = ({ navigation }) => {
 
   const handleOwnerSignup = () => {
     // Navigate to the Restaurant Owner Signup Screen
-    navigation.navigate("CreateRestaurantAccount");
+    navigation.navigate("CreateRestaurantPage");
   };
 
   return (

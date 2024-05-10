@@ -331,8 +331,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   motorcycleImage: {
-    width: 50,
-    height: 50,
+    width: 35,
+    height: 35,
     resizeMode: "contain",
   },
   menuBar: {

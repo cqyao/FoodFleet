@@ -44,13 +44,13 @@ import ForgotPassword from "./assets/screens/Login/ForgotPassword";
 import ResetPassword from "./assets/screens/Login/ResetPassword";
 import SignUpOption from "./assets/screens/Login/SignUpOption";
 
-import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
 import GenerateReport from "./assets/screens/Restaurant/GenerateReport/GenerateReport";
 import RestaurantMain from "./assets/screens/Restaurant/Main/RestaurantMain";
-import OrderManagement from "./assets/screens/Restaurant/OrderManagement";
+import OrderManagement from "./assets/screens/Restaurant/OrderManagement/OrderManagement";
 import RestaurantProfile from "./assets/screens/Restaurant/Profile/RestaurantProfile";
-import CreateRestaurantPage from "./assets/screens/Restaurant/CreateRestaurantPage";
-import RestaurantFeedback from "./assets/screens/Restaurant/RestaurantFeedback";
+import CreateRestaurantPage from "./assets/screens/Restaurant/Signup/CreateRestaurantAccount";
+import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
+import EditProfile from "./assets/screens/Restaurant/Profile/EditProfile";
 
 const Stack = createStackNavigator();
 
@@ -58,6 +58,7 @@ const App = () => (
   <UserProvider>
     <NavigationContainer>
       <Stack.Navigator>
+        
         <Stack.Screen
           name="Login"
           component={Login}
@@ -139,11 +140,13 @@ const App = () => (
           component={ThaiCategory}
           options={{ title: "ThaiCategory" }}
         />
+      */}
         <Stack.Screen
           name="CustomerHome"
           component={CustomerHome}
           options={{ title: "CustomerHome" }}
         />
+      {/*
         <Stack.Screen
           name="Filter"
           component={Filter}
@@ -224,17 +227,17 @@ const App = () => (
           component={Profile}
           options={{ title: "Profile" }}
         />
-        <Stack.Screen
-          name="CheckCustomerReview"
-          component={CheckCustomerReview}
-          options={{ title: "CheckCustomerReview" }}
-        />
+        
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
           options={{ title: "Generate Report" }}
         /> */}
-
+        <Stack.Screen
+          name="CheckCustomerReview"
+          component={CheckCustomerReview}
+          options={{ title: "CheckCustomerReview" }}
+        />
         <Stack.Screen
           name="OrderManagement"
           component={OrderManagement}
@@ -246,20 +249,20 @@ const App = () => (
           options={{ title: "RestaurantProfile" }}
         />
         <Stack.Screen
-          name="CreateRestaurantAccount"
-          component={CreateRestaurantAccount}
-          options={{ title: "CreateRestaurantAccount" }}
+          name="EditProfile"
+          component={EditProfile}
+          options={{ title: "EditProfile" }}
+        />
+        <Stack.Screen
+          name="CreateRestaurantPage"
+          component={CreateRestaurantPage}
+          options={{ title: "CreateRestaurantPage" }}
 
         />
         <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
           options={{ title: "ForgotPassword" }}
-        />
-        <Stack.Screen
-          name="ResetPassword"
-          component={ResetPassword}
-          options={{ title: "ResetPassword" }}
         />
         <Stack.Screen
           name="ResetPassword"

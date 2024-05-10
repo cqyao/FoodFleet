@@ -1,107 +1,102 @@
-import React from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
+import React, {useContext, useState, useEffect } from 'react'
+import RatingItem from '../../../Components/RatingItem'
+import { GetRestaurantRatings, GetRestaurant } from '../../../../database';
+import { UserContext } from '../../../../context/UserContext';
 
-const CustomerReviews = [
-  // CheckCustomerReview 대신에 CustomerReviews로 수정
-  {
-    id: "1",
-    name: "Myunggyun Yu",
-    review: "It was really good! Recommend!",
-    rating: 4,
-    avatar: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Avatar1.png"),
-  },
-  {
-    id: "2",
-    name: "Tim",
-    review: "So so...",
-    rating: 3,
-    avatar: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Avatar2.png"),
-  },
-  {
-    id: "3",
-    name: "Peter",
-    review: "What is this?",
-    rating: 1,
-    avatar: require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/Avatar3.png"),
-  },
-];
+const RestaurantFeedback = () => {
+    const { userId, setUserId } = useContext(UserContext);
+    const [ reviews, setReviews ] = useState([])
+    const [name, setName] = useState('');
 
-const ReviewItem = ({ name, review, rating, avatar }) => {
-  return (
-    <View style={styles.reviewItem}>
-      <Image source={avatar} style={styles.avatar} />
-      <View style={styles.reviewText}>
-        <Text style={styles.name}>{name}</Text>
-        <Text>{"★".repeat(rating) + "☆".repeat(5 - rating)}</Text>
-        <Text>{review}</Text>
-      </View>
-    </View>
-  );
-};
+    useEffect(() => {
+        const fetchReview = async() => {
+            const review = await GetRestaurantRatings(userId)
+            setReviews(review)
+        }
+        const fetchName = async() => {
+            const rest = await GetRestaurant(userId)
+            const tempName = rest.name
+            setName(tempName)
+        }
+        fetchReview();
+        fetchName();
+    });
 
-const CheckCustomersReview = () => {
-  // CheckCustomerReview 대신에 CheckCustomersReview로 수정
-  const averageRating =
-    CustomerReviews.reduce((acc, { rating }) => acc + rating, 0) /
-    CustomerReviews.length;
+    return (
+        <View
+            style = {[
+                styles.container,
+                {flexDirection: 'column',}
+            ]}
+        >
+        <View style={[styles.topContainer, {alignItems: "center"}]}>
+            <Text style={styles.header}>
+                {name}
+            </Text>
+            <Text style={styles.ratingHeader}>
+                3.2
+            </Text>
+            <View style={{flexDirection: "row"}}>
+            <Image 
+                style={styles.star}
+                source={require("../../../screens/EveryImages/star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../../screens/EveryImages/star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../../screens/EveryImages/star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../../screens/EveryImages/empty_star.png")}/>
+            <Image 
+                style={styles.star}
+                source={require("../../../screens/EveryImages/empty_star.png")}/>
+            
+            </View>
+            </View>
+        <ScrollView style={{flex:3}}>
+            {reviews.map((review) =>  (
+                <RatingItem
+                    key={review.id}
+                    customerId={review.customerId}
+                    message={review.message}
+                    rating={review.rating}
+                />
+            ))}
+            
+        </ScrollView>
+        </View>
+        
+    )
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Check Customers Review and ratings</Text>
-      <Text style={styles.title}>Hanok</Text>
-      <Text style={styles.rating}>
-        {averageRating.toFixed(1)}{" "}
-        {"★".repeat(Math.round(averageRating)) +
-          "☆".repeat(5 - Math.round(averageRating))}
-      </Text>
-      <FlatList
-        data={CustomerReviews}
-        renderItem={({ item }) => <ReviewItem {...item} />}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
-  );
-};
+  
+  
+}
+
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  header: {
-    textAlign: "center",
-    padding: 10,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 28,
-    fontWeight: "bold",
-    marginVertical: 10,
-  },
-  rating: {
-    textAlign: "center",
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  reviewItem: {
-    flexDirection: "row",
-    padding: 10,
-    alignItems: "center",
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  reviewText: {
-    flex: 1,
-  },
-  name: {
-    fontWeight: "bold",
-  },
-});
+    container: {
+        flex: 1,
+        padding: 10,
 
-export default CheckCustomersReview;
+    },
+    topContainer: {
+        padding: 20,
+    },
+    header: {
+        fontSize: 40,
+        fontWeight: "bold",
+    },
+    ratingHeader: {
+        fontSize: 30,
+        fontWeight: "600",
+    },
+    star: {
+        height: 50,
+        width: 50,
+    }
+})
+
+export default RestaurantFeedback
