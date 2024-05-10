@@ -2,7 +2,7 @@ import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { UserProvider } from "./context/UserContext";
+import { UserProvider } from "./assets/context/UserContext"
 
 import HanokCart from "./assets/screens/Customer/Basket/HanokCart";
 import MainCart from "./assets/screens/Customer/Basket/MainCart";
@@ -216,11 +216,6 @@ const App = () => (
           options={{ title: "Profile" }}
         />
 
-        <Stack.Screen
-          name="GenerateReport"
-          component={GenerateReport}
-          options={{ title: "Generate Report" }}
-        />
         <Stack.Screen
           name="CheckCustomerReview"
           component={CheckCustomerReview}

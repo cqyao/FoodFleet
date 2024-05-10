@@ -236,7 +236,7 @@ const GetMenus = async function(restaurantId) {
 	.eq("restaurantId", restaurantId);
 		
 	grouped = Object.fromEntries(groupBy(data, x => x.menuName))
-	return grouped
+	return data
 }
 
 

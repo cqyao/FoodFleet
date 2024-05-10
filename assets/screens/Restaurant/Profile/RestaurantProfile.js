@@ -1,7 +1,7 @@
 import React, {useEffect, useContext, useState} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import MenuItem from '../../../Components/MenuItem';
-import { UserContext } from '../../../../context/UserContext';
+import { UserContext } from '../../../context/UserContext';
 import { GetRestaurant, GetMenus } from '../../../../database';
 
 const RestaurantProfile = ({ navigation }) => {

@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import { UserContext } from '../../../../context/UserContext';
 import { GetRestaurant, UpdateRestaurant} from '../../../../database';
 
-const EditProfile = () => {
+const EditProfile = ( {navigation} ) => {
   const {userId, setUserId } = useContext(UserContext);
 
   const [name, setName] = useState(name);
@@ -15,7 +15,7 @@ const EditProfile = () => {
 
   const handleEdit = async() => {
     await UpdateRestaurant(userId, name, postcode, number, email, category)
-    console.log("file", userId, name, postcode, number, email, category)
+    navigation.navigate("RestaurantMain")
   }
 
   return (

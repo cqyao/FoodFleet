@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { RestaurantLogin, CustomerLogin } from "../../../database";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
   const { userId, setUserId } = useContext(UserContext);

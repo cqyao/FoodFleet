@@ -85,13 +85,13 @@ const Payment = ({ route }) => {
       <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
         <View style={styles.cardContainer}>
           <Image
-            source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/MasterCard.png")}
+            source={require("../../../../assets/screens/EveryImages/MasterCard.png")}
             style={styles.icon}
           />
           <Text style={styles.textPrimary}>MasterCard 1234</Text>
         </View>
         <Image
-          source={require("C:/Users/hp/FoodFleet/assets/screens/EveryImages/RightChevron.png")}
+          source={require("../../../../assets/screens/EveryImages/RightChevron.png")}
           style={styles.icon}
         />
       </TouchableOpacity>
