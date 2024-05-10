@@ -8,6 +8,8 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { AddCustomerPaymentMethod } from "../../../../database";
+import { UserContext } from "../../../../context/UserContext";
 
 const PaymentMethod = () => {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0); // Default to the first card
@@ -15,17 +17,12 @@ const PaymentMethod = () => {
 
   const cards = [
     { lastFourDigits: "1234", default: true },
-    { lastFourDigits: "4567", default: false },
-    { lastFourDigits: "8901", default: false },
+
     // Add more cards here
   ];
 
   const handleSelectCard = (index) => {
     setSelectedCardIndex(index);
-  };
-
-  const handlePay = () => {
-    // Payment logic goes here
   };
 
   const handleAddPaymentMethod = () => {
@@ -58,9 +55,6 @@ const PaymentMethod = () => {
         onPress={handleAddPaymentMethod}
       >
         <Text style={styles.addCardText}>Add Payment Method</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.payButton} onPress={handlePay}>
-        <Text style={styles.payButtonText}>Pay</Text>
       </TouchableOpacity>
     </ScrollView>
   );

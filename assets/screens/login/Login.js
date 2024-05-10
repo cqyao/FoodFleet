@@ -1,3 +1,5 @@
+// LoginScreen.js
+
 import React, { useState, useContext } from "react";
 import {
   View,
@@ -7,46 +9,33 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { RestaurantLogin } from "../../../database";
-<<<<<<< HEAD
-import { UserContext } from "../../context/UserContext";
-
-const Login = ({ navigation }) => {
-=======
+import { RestaurantLogin, CustomerLogin } from "../../../database";
 import { UserContext } from "../../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
->>>>>>> 4ccaa84239ab89dd0770905384ab622ea41d8c48
   const { userId, setUserId } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleCustomerLogin = () => {
+  const handleCustomerLogin = async () => {
     // TODO: Implement actual login logic
-    navigation.navigate("CustomerHome");
+    const tempCust = await CustomerLogin(email, password);
+    if (!tempCust) {
+      console.log("No such user");
+    } else {
+      setUserId(tempCust.id);
+      navigation.navigate("CustomerHome");
+    }
   };
 
-<<<<<<< HEAD
   const handleRestaurantLogin = async () => {
     // TODO: Implement actual login logic
-    //console.log(email, password)
-    tempRest = await RestaurantLogin(email, password);
+    const tempRest = await RestaurantLogin(email, password);
     if (!tempRest) {
       console.log("No such user");
     } else {
       setUserId(tempRest.id);
       navigation.navigate("RestaurantMain");
-=======
-  const handleRestaurantLogin = async() => {
-    // TODO: Implement actual login logic
-    //console.log(email, password)
-    tempRest = await RestaurantLogin(email, password)
-    if (!tempRest) {
-      console.log("No such user")
-    } else {
-      setUserId(tempRest.id)
-      navigation.navigate("Restaurant Main")
->>>>>>> 4ccaa84239ab89dd0770905384ab622ea41d8c48
     }
   };
 
@@ -79,14 +68,7 @@ const LoginScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleCustomerLogin}>
         <Text style={styles.buttonText}>Sign In Customer</Text>
       </TouchableOpacity>
-<<<<<<< HEAD
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => handleRestaurantLogin(email, password)}
-      >
-=======
-      <TouchableOpacity style={styles.button} onPress={ () => handleRestaurantLogin(email, password)}>
->>>>>>> 4ccaa84239ab89dd0770905384ab622ea41d8c48
+      <TouchableOpacity style={styles.button} onPress={handleRestaurantLogin}>
         <Text style={styles.buttonText}>Sign In Restaurant</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
@@ -145,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default LoginScreen;

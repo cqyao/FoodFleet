@@ -9,18 +9,26 @@ import {
 import { CreateRestaurant } from "../../../../database";
 
 const CreateRestaurantAccount = ({ navigation }) => {
-  // 1. Receive navigation prop
   const [name, setName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
   const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [postcode, setPostcode] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleSubmit = async () => {
     // Submit the data or navigate to next screen
-    navigation.navigate("Login"); // 2. Navigate to "Login" screen
+    await CreateRestaurant(
+      restaurantName,
+      email,
+      number,
+      postcode,
+      password,
+      category
+    );
+    // Navigate to Login page
+    navigation.navigate("Login");
   };
 
   return (
@@ -48,13 +56,6 @@ const CreateRestaurantAccount = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Date of birth"
-        onChangeText={setDateOfBirth}
-        value={dateOfBirth}
-      />
-
-      <TextInput
-        style={styles.input}
         placeholder="Restaurant Name"
         onChangeText={setRestaurantName}
         value={restaurantName}
@@ -70,6 +71,13 @@ const CreateRestaurantAccount = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
+        placeholder="Contact number"
+        onChangeText={setNumber}
+        value={number}
+      />
+
+      <TextInput
+        style={styles.input}
         placeholder="Postcode"
         onChangeText={setPostcode}
         value={postcode}
@@ -80,17 +88,32 @@ const CreateRestaurantAccount = ({ navigation }) => {
         placeholder="Password"
         onChangeText={setPassword}
         value={password}
+        secureTextEntry
+        autoCapitalize="none"
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Confirm Password"
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
+        placeholder="Category"
+        onChangeText={setCategory}
+        value={category}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Next</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          handleSubmit(
+            name,
+            restaurantName,
+            email,
+            number,
+            postcode,
+            password,
+            category
+          )
+        }
+      >
+        <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
     </View>
   );
@@ -102,19 +125,29 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  subHeader: {
+    fontSize: 18,
+    color: "grey",
+    marginBottom: 20,
+  },
   input: {
     borderWidth: 1,
     borderColor: "grey",
-    borderRadius: 5,
+    borderRadius: 30,
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   button: {
-    backgroundColor: "#FFD700",
+    backgroundColor: "#FFD700", // Adjust the color to match the design
     borderRadius: 30,
     padding: 15,
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 0,
   },
   buttonText: {
     color: "#fff",

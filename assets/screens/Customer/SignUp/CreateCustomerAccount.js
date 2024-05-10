@@ -7,16 +7,31 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { CreateCustomer } from "../../../../database";
 
 const CreateCustomerAccount = ({ navigation }) => {
-  const [fullName, setFullName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleCreateAccount = () => {
-    // Here you would handle the account creation logic
+  const handleCreateAccount = async () => {
+    await CreateCustomer(
+      firstName,
+      lastName,
+      address,
+      state,
+      postcode,
+      city,
+      email,
+      phoneNumber,
+      password
+    );
     navigation.navigate("Login");
   };
 
@@ -27,16 +42,44 @@ const CreateCustomerAccount = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
-        placeholder="Full Name"
-        value={fullName}
-        onChangeText={setFullName}
+        placeholder="First Name"
+        value={firstName}
+        onChangeText={setFirstName}
       />
 
       <TextInput
         style={styles.input}
-        placeholder="Date of birth"
-        value={dateOfBirth}
-        onChangeText={setDateOfBirth}
+        placeholder="Last Name"
+        value={lastName}
+        onChangeText={setLastName}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Address"
+        value={address}
+        onChangeText={setAddress}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="State"
+        value={state}
+        onChangeText={setState}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Postcode"
+        value={postcode}
+        onChangeText={setPostcode}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="City"
+        value={city}
+        onChangeText={setCity}
       />
 
       <TextInput
@@ -48,21 +91,35 @@ const CreateCustomerAccount = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
+        placeholder="Phone number"
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+      />
+
+      <TextInput
+        style={styles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
-
-      <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          handleCreateAccount(
+            firstName,
+            lastName,
+            address,
+            state,
+            postcode,
+            city,
+            email,
+            phoneNumber,
+            password
+          )
+        }
+      >
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -88,16 +145,16 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    marginVertical: 10,
+    marginVertical: 5,
     borderWidth: 1,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 30,
     borderColor: "#cccccc",
   },
   button: {
     backgroundColor: "#FFD700",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 30,
     alignItems: "center",
     marginVertical: 10,
   },

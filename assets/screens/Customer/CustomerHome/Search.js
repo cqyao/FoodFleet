@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -8,40 +8,51 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Slider } from "@react-native-community/slider";
 import { useNavigation } from "@react-navigation/native";
+import { SearchRestaurant } from "../../../../database";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const navigation = useNavigation();
 
-  const recentSearches = [
-    "Cafe",
-    "Irish",
-    "Korean",
-    "Chinese",
-    "Japanese",
-    "Asian",
-    "Burger",
-    "Chicken",
-  ];
+  useEffect(() => {
+    const search = async () => {
+      if (searchQuery.trim() === "") {
+        setSearchResults([]);
+        return;
+      }
+      console.log("Searching for:", searchQuery);
+      const results = await SearchRestaurant(searchQuery); // 검색어로 시작하는 식당 검색
+      setSearchResults(results);
+    };
 
-  const handleSearch = (query) => {
-    console.log("Searching for:", query);
-    // 검색 실행 로직을 구현할 수 있습니다.
-  };
+    // 검색어가 변경될 때마다 검색 수행
+    search();
+  }, [searchQuery]); // searchQuery가 변경될 때만 useEffect 실행
 
   const handleFilterPress = () => {
     navigation.navigate("Filter"); // Filter 화면으로 이동합니다.
   };
 
-  const SearchItem = ({ title }) => (
+  const handleSearch = async (query) => {
+    console.log("Searching for:", query);
+    const results = await SearchRestaurant(query);
+    setSearchResults(results);
+
+    // 검색 결과가 Hanok이면 HanokMenu로 이동
+    if (query === "Hanok") {
+      navigation.navigate("HanokMenu");
+    }
+  };
+
+  const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.searchItem}
-      onPress={() => handleSearch(title)}
+      onPress={() => handleSearch(item.name)}
     >
       <Ionicons name="search" size={24} style={styles.searchIcon} />
-      <Text style={styles.searchText}>{title}</Text>
+      <Text style={styles.searchText}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -55,18 +66,17 @@ const Search = () => {
           value={searchQuery}
           onChangeText={setSearchQuery}
           returnKeyType="search"
-          onSubmitEditing={() => handleSearch(searchQuery)}
         />
         <TouchableOpacity onPress={handleFilterPress}>
           <Ionicons name="filter" size={24} style={styles.filterIcon} />
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.subheader}>Recent searches</Text>
+      <Text style={styles.subheader}>Search results</Text>
       <FlatList
-        data={recentSearches}
-        renderItem={({ item }) => <SearchItem title={item} />}
-        keyExtractor={(item, index) => item + index}
+        data={searchResults}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );

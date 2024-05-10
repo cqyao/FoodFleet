@@ -10,7 +10,7 @@ import {
 import React, { useState, useEffect, useContext } from "react";
 import OrderCard from "../../../Components/OrderCard";
 import { GetRestaurantOrders } from "../../../../database";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext } from "../../../../context/UserContext";
 
 const OrderManagement = () => {
   const [activeCategory, setActiveCategory] = useState("In Preparation");

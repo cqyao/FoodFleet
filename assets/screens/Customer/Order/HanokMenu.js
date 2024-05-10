@@ -40,9 +40,9 @@ const menuItems = [
 const HanokMenu = () => {
   const navigation = useNavigation();
 
-  const handleMenuItemPress = (itemId) => {
-    // Navigate to HanokOrder screen with the itemId as a parameter
-    navigation.navigate("HanokOrder", { itemId });
+  const handleMenuItemPress = (item) => {
+    // Navigate to HanokOrder screen with the item as a parameter
+    navigation.navigate("HanokOrder", { item });
   };
 
   return (
@@ -60,7 +60,7 @@ const HanokMenu = () => {
         <TouchableOpacity
           key={item.id}
           style={styles.menuItem}
-          onPress={() => handleMenuItemPress(item.id)}
+          onPress={() => handleMenuItemPress(item)}
         >
           <Image source={item.imageUrl} style={styles.itemImage} />
           <Text style={styles.itemTitle}>{item.title}</Text>

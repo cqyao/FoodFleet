@@ -112,7 +112,7 @@ const HomeButton = () => {
   const navigation = useNavigation();
 
   const handleHomePress = () => {
-    navigation.navigate("Home");
+    navigation.navigate("CustomerHome");
   };
 
   return (

@@ -47,7 +47,7 @@ const CheckCustomersReview = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Check Customers Review and ratings</Text>
+      <Text style={styles.header}>Customer Review</Text>
       <Text style={styles.title}>Hanok</Text>
       <Text style={styles.rating}>
         {averageRating.toFixed(1)}{" "}

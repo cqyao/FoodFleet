@@ -10,11 +10,7 @@ const cafesData = [
     rating: 4.7,
     deliveryFee: "Free",
     deliveryTime: "20 min",
-<<<<<<< HEAD
     logoUri: require("../../../../assets/screens/EveryImages/DiggiesLogo.png"), // Replace with the actual image file path for Diggies
-=======
-    logoUri: require("../../EveryImages/DiggiesLogo.png"), // Replace with the actual image file path for Diggies
->>>>>>> 4ccaa84239ab89dd0770905384ab622ea41d8c48
   },
   {
     id: "2",

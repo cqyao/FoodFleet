@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,19 +7,21 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const HanokOrder = () => {
   const [selectedSauce, setSelectedSauce] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(89); // Initial price for 1 item
   const navigation = useNavigation();
+  const route = useRoute();
+  const { item } = route.params; // Extracting the item from route params
 
   useEffect(() => {
     // Update the total price whenever quantity changes
-    setTotalPrice(89 * quantity); // Assuming the price per item is $89
-  }, [quantity]);
+    const price = parseFloat(item.price.replace("AU$", "")); // Parse the price string to float
+    setTotalPrice(price * quantity);
+  }, [quantity, item]);
 
   const sauces = [
     "Korean BBQ sauce",
@@ -32,7 +35,12 @@ const HanokOrder = () => {
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const addToBasket = () => {
     // Logic to add the item to basket goes here
-    navigation.navigate("MainCart"); // Navigate to HanokCart screen
+    navigation.navigate("HanokCart", {
+      item: item,
+      sauce: selectedSauce,
+      quantity: quantity, // Ensure that quantity is passed correctly
+      totalPrice: totalPrice.toFixed(2),
+    });
   };
 
   return (
@@ -77,7 +85,8 @@ const HanokOrder = () => {
 
       <TouchableOpacity style={styles.addToBasketButton} onPress={addToBasket}>
         <Text style={styles.addToBasketText}>
-          Add {quantity} to basket AU${totalPrice}
+          Add {quantity} to basket AU${totalPrice.toFixed(2)}{" "}
+          {/* Fixed to 2 decimal places */}
         </Text>
       </TouchableOpacity>
     </ScrollView>

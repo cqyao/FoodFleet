@@ -18,11 +18,7 @@ const filteredRestaurants = [
     rating: 4.7,
     deliveryTime: "20 min",
     isFreeDelivery: true,
-<<<<<<< HEAD
     logoUri: require("../../../../assets/screens/EveryImages/Macdonald.png"), // Macdonald's 로고 이미지 경로를 적절히 수정하세요
-=======
-    logoUri: require("../../EveryImages/Macdonald.png"), // Macdonald's 로고 이미지 경로를 적절히 수정하세요
->>>>>>> 4ccaa84239ab89dd0770905384ab622ea41d8c48
   },
   {
     id: "2",
@@ -32,11 +28,7 @@ const filteredRestaurants = [
     rating: 4.7,
     deliveryTime: "20 min",
     isFreeDelivery: true,
-<<<<<<< HEAD
     logoUri: require("../../../../assets/screens/EveryImages/HanokLogo.png"), // Hanok 로고 이미지 경로를 적절히 수정하세요
-=======
-    logoUri: require("../../EveryImages/HanokLogo.png"), // Hanok 로고 이미지 경로를 적절히 수정하세요
->>>>>>> 4ccaa84239ab89dd0770905384ab622ea41d8c48
   },
   // 더 많은 레스토랑 데이터 추가...
 ];

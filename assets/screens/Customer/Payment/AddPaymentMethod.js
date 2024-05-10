@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -9,17 +9,36 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
+import { AddCustomerPaymentMethod } from "../../../../database";
+import { UserContext } from "../../../../context/UserContext";
 
 const AddPaymentMethod = () => {
   const navigation = useNavigation();
+  const { userId } = useContext(UserContext);
 
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
-  const [country, setCountry] = useState("Australia"); // default value
+  const [country, setCountry] = useState("Australia");
 
-  const handleSave = () => {
-    navigation.navigate("PaymentMethod");
+  const handleSave = async () => {
+    try {
+      const data = await AddCustomerPaymentMethod(
+        userId,
+        cardNumber,
+        cvv,
+        expiryDate,
+        country // Add country to function call
+      );
+
+      if (data) {
+        navigation.navigate("PaymentMethod");
+      } else {
+        console.log("Failed to add payment method");
+      }
+    } catch (error) {
+      console.error("Error adding payment method:", error.message);
+    }
   };
 
   return (
@@ -32,17 +51,15 @@ const AddPaymentMethod = () => {
           value={cardNumber}
           onChangeText={setCardNumber}
           placeholder="0000 0000 0000 0000"
-          keyboardType="numeric"
         />
         <View style={styles.row}>
           <View style={styles.column}>
-            <Text style={styles.inputLabel}>Expired Date</Text>
+            <Text style={styles.inputLabel}>Expiration Date</Text>
             <TextInput
               style={[styles.input, styles.smallInput]}
               value={expiryDate}
               onChangeText={setExpiryDate}
               placeholder="mm/year"
-              keyboardType="numeric"
             />
           </View>
           <View style={styles.column}>
@@ -52,23 +69,20 @@ const AddPaymentMethod = () => {
               value={cvv}
               onChangeText={setCvv}
               placeholder="000"
-              keyboardType="numeric"
               secureTextEntry
             />
           </View>
         </View>
-        <Text style={styles.inputLabel}>Card issuing country</Text>
+        <Text style={styles.inputLabel}>Card Issuing Country</Text>
         <Picker
           selectedValue={country}
           onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}
           style={styles.picker}
         >
-          {/* Populate the Picker with country options */}
           <Picker.Item label="Australia" value="Australia" />
           <Picker.Item label="United States" value="United States" />
           <Picker.Item label="Korea" value="Korea" />
           <Picker.Item label="Malaysia" value="Malaysia" />
-          {/* Add more countries as needed */}
         </Picker>
       </View>
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
