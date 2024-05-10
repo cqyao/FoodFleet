@@ -1,31 +1,32 @@
-import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const RestaurantMain = ({ navigation }) => {
-  const navOrder = () => {
-    navigation.navigate("OrderManagement");
-  };
-  const navFeedback = () => {
-    navigation.navigate("CheckCustomerReview");
-  };
-  const navRevenue = () => {
-    navigation.navigate("GenerateReport");
-  };
-  const navProfile = () => {
-    navigation.navigate("RestaurantProfile");
-  };
+const RestaurantMain = ( {navigation} ) => {
+      const navOrder = () => {
+        // Submit the data or navigate to next screen
+        console.log("Go to Order Management")
+        navigation.navigate('Order Management')
+      };
+      const navFeedback = () => {
+        // Submit the data or navigate to next screen
+        console.log("Go to Feedback")
+        navigation.navigate('CheckCustomerReview')
+      };
+      const navRevenue = () => {
+        // Submit the data or navigate to next screen
+        console.log("Go to Revenue Report")
+        navigation.navigate('GenerateReport')
+      };
+      const navProfile = () => {
+        // Submit the data or navigate to next screen
+        console.log("Go to profile")
+        navigation.navigate('Restaurant Profile')
+      };
 
   return (
     <ScrollView style={styles.container}>
       <Image
-        source={{ uri: "https://links.papareact.com/wru" }} // Replace with your image path
+        source={{ uri: 'https://links.papareact.com/wru' }} // Replace with your image path
         style={styles.logo}
         resizeMode="contain"
       />
@@ -34,9 +35,7 @@ const RestaurantMain = ({ navigation }) => {
           <Text style={styles.buttonText}>Order Management</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={navFeedback}>
-          <Text style={styles.buttonText}>
-            Check Customers Reviews and Ratings
-          </Text>
+          <Text style={styles.buttonText}>Check Customers Reviews and Ratings</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={navRevenue}>
           <Text style={styles.buttonText}>Revenue Report</Text>
@@ -52,10 +51,10 @@ const RestaurantMain = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   logo: {
-    width: "100%",
+    width: '100%',
     height: 150, // Adjust the size as needed
     marginTop: 20,
   },
@@ -63,13 +62,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#F2BE22", // Gold color
+    backgroundColor: '#F2BE22', // Gold color
     paddingVertical: 30,
     paddingHorizontal: 20,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    marginHorizontal:20,
+    marginVertical:10,
     borderRadius: 15,
-    alignItems: "center",
+    alignItems: 'center',
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.25,
@@ -77,15 +76,15 @@ const styles = StyleSheet.create({
     // elevation: 5,
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   homeButton: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 20,
-    alignSelf: "center",
+    alignSelf: 'center',
     // Add styles for your home icon button
   },
 });

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import OrderCard from "../../../Components/OrderCard";
+import IncomingOrder from "../../../Components/IncomingOrder";
 import { GetRestaurantOrders } from "../../../../database";
 import { UserContext } from "../../../../context/UserContext";
 
@@ -27,8 +28,9 @@ const OrderManagement = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       const order = await GetRestaurantOrders(userId);
-      //console.log(order)
-      setOrders(order);
+      if (order !== null) {
+        setOrders(order);
+      }
     };
     fetchOrder();
   });
@@ -41,6 +43,9 @@ const OrderManagement = () => {
   return (
     <View style={[styles.container, { flexDirection: "column" }]}>
       <View style={{ alignItems: "center" }}>
+        {/* <ScrollView horizontal={true}>
+                    <IncomingOrder key={1} id={1}></IncomingOrder>
+                </ScrollView> */}
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             style={styles.navButton}
@@ -65,12 +70,13 @@ const OrderManagement = () => {
 
       <ScrollView>
         {/*Create new array with filtered orders only and create new component for each */}
-        {filteredOrders.map((order) => (
-          //<Text>{order.total}</Text>
-          <OrderCard id={order.id} />
-        ))}
+
+        {filteredOrders !== 0 &&
+          filteredOrders.map((order) => (
+            //<Text>{order.total}</Text>
+            <OrderCard key={order.id} id={order.id} />
+          ))}
       </ScrollView>
-      <View style={{ flex: 1 }} />
     </View>
   );
 };
@@ -83,16 +89,16 @@ const styles = StyleSheet.create({
   },
   navButton: {
     backgroundColor: "#FFCF70",
-    borderRadius: 20,
-    width: "30%",
-    height: 30,
+    borderRadius: 10,
+    width: "33%",
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
-    marginBottom: 40,
+    marginHorizontal: 5,
+    marginVertical: 20,
   },
   navButtonText: {
-    fontSize: 12,
+    fontSize: 14,
   },
 });
 

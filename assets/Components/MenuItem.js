@@ -1,13 +1,24 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { RemoveDish } from "../../database";
 
-const MenuItem = ({ title, price, description, imageUrl }) => {
+const MenuItem = ({ id, name, price, description, imageUrl }) => {
+
+  // Function for removing the item from the menu
+  const deleteItem = async() => {
+    await RemoveDish(id)
+  }
+
   return (
     <View style={styles.menuItemContainer}>
       <View style={styles.textContainer}>
-        <Text style={styles.menuItemTitle}>{title}</Text>
-        <Text style={styles.menuItemPrice}>{price}</Text>
+        <Text style={styles.menuItemName}>{name}</Text>
+        <Text style={styles.menuItemPrice}>Price: ${price}</Text>
         <Text style={styles.menuItemDescription}>{description}</Text>
+        <TouchableOpacity onPress={deleteItem}>
+          <Text style={{color:"red"}}>Delete</Text>
+        </TouchableOpacity>
       </View>
       <Image source={{ uri: imageUrl }} style={styles.menuItemImage} />
     </View>
@@ -27,7 +38,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
   },
-  menuItemTitle: {
+  menuItemName: {
     fontSize: 18,
     fontWeight: "bold",
   },

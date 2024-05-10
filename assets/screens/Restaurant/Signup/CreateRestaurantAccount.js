@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { CreateRestaurant } from "../../../../database";
 
-const CreateRestaurantAccount = ({ navigation }) => {
+const CreateRestaurantPage = () => {
   const [name, setName] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,8 +27,6 @@ const CreateRestaurantAccount = ({ navigation }) => {
       password,
       category
     );
-    // Navigate to Login page
-    navigation.navigate("Login");
   };
 
   return (
@@ -113,7 +111,7 @@ const CreateRestaurantAccount = ({ navigation }) => {
           )
         }
       >
-        <Text style={styles.buttonText}>Create Account</Text>
+        <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
   );
@@ -138,16 +136,16 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "grey",
-    borderRadius: 30,
+    borderRadius: 5,
     padding: 10,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   button: {
     backgroundColor: "#FFD700", // Adjust the color to match the design
     borderRadius: 30,
     padding: 15,
     alignItems: "center",
-    marginTop: 0,
+    marginTop: 10,
   },
   buttonText: {
     color: "#fff",
@@ -156,4 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateRestaurantAccount;
+export default CreateRestaurantPage;

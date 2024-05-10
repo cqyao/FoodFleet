@@ -1,5 +1,3 @@
-// LoginScreen.js
-
 import React, { useState, useContext } from "react";
 import {
   View,
@@ -19,7 +17,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleCustomerLogin = async () => {
     // TODO: Implement actual login logic
-    const tempCust = await CustomerLogin(email, password);
+    tempCust = await CustomerLogin(email, password);
     if (!tempCust) {
       console.log("No such user");
     } else {
@@ -30,12 +28,15 @@ const LoginScreen = ({ navigation }) => {
 
   const handleRestaurantLogin = async () => {
     // TODO: Implement actual login logic
-    const tempRest = await RestaurantLogin(email, password);
+    //console.log(email, password)
+    tempRest = await RestaurantLogin(email, password);
     if (!tempRest) {
       console.log("No such user");
     } else {
       setUserId(tempRest.id);
       navigation.navigate("RestaurantMain");
+      setEmail("");
+      setPassword("");
     }
   };
 
@@ -65,10 +66,16 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={handleCustomerLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleCustomerLogin(email, password)}
+      >
         <Text style={styles.buttonText}>Sign In Customer</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleRestaurantLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleRestaurantLogin(email, password)}
+      >
         <Text style={styles.buttonText}>Sign In Restaurant</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
