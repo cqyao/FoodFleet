@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -8,39 +8,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-const menuItems = [
-  {
-    id: "1",
-    title: "Couple Set",
-    description:
-      "Wagyu scotch fillet, pork belly, Bean paste soup or kimchi soup, deep-fried vegetable dumpling",
-    price: "AU$89.00",
-    imageUrl: require("../../EveryImages/HanokCoupleSet.png"), // Replace with the actual image file path
-  },
-  {
-    id: "2",
-    title: "Wagyu Tester",
-    description:
-      "Wagyu scotch fillet, wagyu short-rib meat, wagyu intercostal, wagyu brisket and deep-fried king prawn/drop or soft shell crab",
-    price: "AU$119.00",
-    imageUrl: require("../../EveryImages/WagyuTester.png"), // Replace with the actual image file path
-  },
-  {
-    id: "3",
-    title: "Hanok Platter",
-    description:
-      "Wagyu scotch fillet, pork belly, Bean paste soup or kimchi soup, deep-fried vegetable dumpling",
-    price: "AU$249.00",
-    imageUrl: require("../../EveryImages/HanokPlatter.png"), // Replace with the actual image file path
-  },
-  // ... other menu items
-];
+import { UserContext } from "../../../../context/UserContext";
+import { AddToCart } from "../../../../database";
 
 const HanokMenu = () => {
   const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
 
   const handleMenuItemPress = (item) => {
+    console.log(user);
     // Navigate to HanokOrder screen with the item as a parameter
     navigation.navigate("HanokOrder", { item });
   };
@@ -56,7 +32,7 @@ const HanokMenu = () => {
       <Text style={styles.timing}>Open until 10:00 PM</Text>
       <Text style={styles.sectionTitle}>Most Popular</Text>
 
-      {menuItems.map((item) => (
+      {user.menus.map((item) => (
         <TouchableOpacity
           key={item.id}
           style={styles.menuItem}

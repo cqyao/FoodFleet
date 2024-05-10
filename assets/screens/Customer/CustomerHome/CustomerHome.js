@@ -1,4 +1,5 @@
-import React from "react";
+// CustomerHome.js
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,154 +11,154 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
-const categoriesData = [
-  {
-    id: "1",
-    title: "Cafes",
-    image: require("../../../../assets/screens/EveryImages/Cafe.png"),
-  },
-  {
-    id: "2",
-    title: "Clubs",
-    image: require("../../../../assets/screens/EveryImages/Clubs.png"),
-  },
-  {
-    id: "3",
-    title: "Asian food",
-    image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
-  },
-  {
-    id: "4",
-    title: "Asian food",
-    image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
-  },
-  {
-    id: "5",
-    title: "Asian food",
-    image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
-  },
-  // Add more category data here.
-];
-
-const restaurantsData = [
-  {
-    id: "1",
-    name: "Rose Garden Restaurant",
-    type: "Burger - Chicken - Riche - Wings",
-    rating: 4.7,
-    isFreeDelivery: true,
-    deliveryTime: "20 min",
-    image: require("../../../../assets/screens/EveryImages/RoseGarden.png"),
-  },
-  {
-    id: "2",
-    name: "Hanok",
-    type: "Korean bbq",
-    rating: 4.7,
-    isFreeDelivery: true,
-    deliveryTime: "20 min",
-    image: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
-  },
-  {
-    id: "3",
-    name: "Rose Garden Restaurant",
-    type: "Burger - Chicken - Riche - Wings",
-    rating: 4.7,
-    isFreeDelivery: true,
-    deliveryTime: "20 min",
-    image: require("../../../../assets/screens/EveryImages/RoseGarden.png"),
-  },
-  // Add more restaurant data here.
-];
-
-const CategoryItem = ({ title, image }) => (
-  <View style={styles.categoryItem}>
-    <Image source={image} style={styles.categoryImage} />
-    <Text style={styles.categoryTitle} numberOfLines={1} ellipsizeMode="tail">
-      {title}
-    </Text>
-  </View>
-);
-
-const RestaurantItem = ({
-  name,
-  type,
-  rating,
-  isFreeDelivery,
-  deliveryTime,
-  image,
-}) => {
-  const navigation = useNavigation();
-
-  const handlePress = () => {
-    navigation.navigate("HanokMenu");
-  };
-
-  return (
-    <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
-      <Image source={image} style={styles.restaurantImage} />
-      <Text style={styles.restaurantName}>{name}</Text>
-      <Text style={styles.restaurantType}>{type}</Text>
-      <View style={styles.restaurantInfo}>
-        <Text style={styles.restaurantRating}>⭐ {rating}</Text>
-        {isFreeDelivery && <Text style={styles.deliveryText}>Free</Text>}
-        <Text style={styles.deliveryTime}>{deliveryTime}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const HomeButton = () => {
-  const navigation = useNavigation();
-
-  const handleHomePress = () => {
-    navigation.navigate("CustomerHome");
-  };
-
-  return (
-    <TouchableOpacity style={styles.iconContainer} onPress={handleHomePress}>
-      <Ionicons name="home-outline" size={24} color="black" />
-    </TouchableOpacity>
-  );
-};
-
-const ProfileIcon = () => {
-  const navigation = useNavigation();
-
-  const handleProfilePress = () => {
-    navigation.navigate("Profile");
-  };
-
-  return (
-    <TouchableOpacity style={styles.iconContainer} onPress={handleProfilePress}>
-      <Ionicons name="person-circle-outline" size={24} color="black" />
-    </TouchableOpacity>
-  );
-};
-
-const MotorcycleImage = () => {
-  const navigation = useNavigation();
-
-  const handleMotorcyclePress = () => {
-    navigation.navigate("AlmostThere");
-  };
-
-  return (
-    <TouchableOpacity
-      style={styles.iconContainer}
-      onPress={handleMotorcyclePress}
-    >
-      <Image
-        source={require("../../../../assets/screens/EveryImages/motorcycle.png")}
-        style={styles.motorcycleImage}
-      />
-    </TouchableOpacity>
-  );
-};
+import { UserContext } from "../../../../context/UserContext";
+import { GetRestaurants, CreateCart, GetMenus } from "../../../../database";
 
 const CustomerHome = () => {
   const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
+  const [restaurants, setRestaurants] = useState([]);
+
+  const categoriesData = [
+    {
+      id: "1",
+      title: "Cafes",
+      image: require("../../../../assets/screens/EveryImages/Cafe.png"),
+    },
+    {
+      id: "2",
+      title: "Clubs",
+      image: require("../../../../assets/screens/EveryImages/Clubs.png"),
+    },
+    {
+      id: "3",
+      title: "Asian food",
+      image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
+    },
+    {
+      id: "4",
+      title: "Asian food",
+      image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
+    },
+    {
+      id: "5",
+      title: "Asian food",
+      image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
+    },
+    // Add more category data here.
+  ];
+
+  const CategoryItem = ({ title, image }) => (
+    <View style={styles.categoryItem}>
+      <Image source={image} style={styles.categoryImage} />
+      <Text style={styles.categoryTitle} numberOfLines={1} ellipsizeMode="tail">
+        {title}
+      </Text>
+    </View>
+  );
+
+  const RestaurantItem = ({
+    id,
+    name,
+    type,
+    rating,
+    isFreeDelivery,
+    deliveryTime,
+    image_url,
+  }) => {
+    const navigation = useNavigation();
+
+    const handlePress = async () => {
+      user.restaurantId = id;
+      var cart = await CreateCart(user.id, user.restaurantId);
+      user.cartId = cart.id;
+      user.menus = await GetMenus(user.restaurantId);
+
+      console.log("Selected restaurant:", id);
+      navigation.navigate("HanokMenu");
+    };
+
+    return (
+      <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
+        <Image source={{ uri: image_url }} style={styles.restaurantImage} />
+        <Text style={styles.restaurantName}>{name}</Text>
+        <Text style={styles.restaurantType}>{type}</Text>
+        <View style={styles.restaurantInfo}>
+          <Text style={styles.restaurantRating}>⭐ {rating}</Text>
+          {isFreeDelivery && <Text style={styles.deliveryText}>Free</Text>}
+          <Text style={styles.deliveryTime}>{deliveryTime}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const HomeButton = () => {
+    const navigation = useNavigation();
+
+    const handleHomePress = () => {
+      navigation.navigate("CustomerHome");
+    };
+
+    return (
+      <TouchableOpacity style={styles.iconContainer} onPress={handleHomePress}>
+        <Ionicons name="home-outline" size={24} color="black" />
+      </TouchableOpacity>
+    );
+  };
+
+  const ProfileIcon = () => {
+    const navigation = useNavigation();
+
+    const handleProfilePress = () => {
+      navigation.navigate("Profile");
+    };
+
+    return (
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={handleProfilePress}
+      >
+        <Ionicons name="person-circle-outline" size={24} color="black" />
+      </TouchableOpacity>
+    );
+  };
+
+  const MotorcycleImage = () => {
+    const navigation = useNavigation();
+
+    const handleMotorcyclePress = () => {
+      navigation.navigate("AlmostThere");
+    };
+
+    return (
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={handleMotorcyclePress}
+      >
+        <Image
+          source={require("../../../../assets/screens/EveryImages/motorcycle.png")}
+          style={styles.motorcycleImage}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const fetchedRestaurants = await GetRestaurants();
+        const formattedRestaurants = fetchedRestaurants.map((restaurant) => ({
+          ...restaurant,
+          image_url: restaurant.image_url[0], // 배열의 첫 번째 요소를 사용
+        }));
+        setRestaurants(formattedRestaurants);
+      } catch (error) {
+        console.error("Error fetching restaurants:", error);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   const handleMorePress = () => {
     navigation.navigate("CategoriesMain");
@@ -210,8 +211,8 @@ const CustomerHome = () => {
       </View>
 
       <FlatList
-        data={restaurantsData}
-        renderItem={({ item }) => <RestaurantItem {...item} />}
+        data={restaurants}
+        renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
         keyExtractor={(item) => item.id}
       />
 

@@ -8,10 +8,6 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import {
-  savePostCode,
-  getPostCode as retrievePostCode,
-} from "../../ClientStorage";
 
 const Profile = ({ navigation }) => {
   const [PostCode, setPostCode] = useState("");

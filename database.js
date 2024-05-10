@@ -54,95 +54,88 @@ const CreateCustomer = async function (
 };
 
 //Done
-const AddCustomerPaymentMethod = async function(customerId, cardNumber, ccv, expiry)
-{
-	const { data, error } = await supabase
-	  .from('CustomerPaymentMethods')
-	  .insert({"customerId": customerId, "cardNumber": cardNumber, "ccv": ccv, "expiry": expiry })
-	  .select()
-	  
-	return data
-}
+export const AddCustomerPaymentMethod = async function (
+  customerId,
+  cardNumber,
+  ccv,
+  expiry,
+  country
+) {
+  const { data, error } = await supabase
+    .from("CustomerPaymentMethods")
+    .insert({
+      customerId: customerId,
+      cardNumber: cardNumber,
+      ccv: ccv,
+      expiry: expiry,
+      country: country,
+    })
+    .select();
 
+  return data;
+};
 
-export const CustomerLogin = async function(emailAddress, password) {
-	const { data, error } = await supabase
-	.from('Customers')
-	.select('*')
-	.eq("emailAddress", emailAddress)
-	.eq("password", password);
-	
-	if (data.length > 0)
-		return data[0]
-	else
-		return null
-}
+export const CustomerLogin = async function (emailAddress, password) {
+  const { data, error } = await supabase
+    .from("Customers")
+    .select("*")
+    .eq("emailAddress", emailAddress)
+    .eq("password", password);
 
-
-//Done
-const GetCustomer = async function(customerId) {  	
-	const { data, error } = await supabase
-	.from('Customers')
-	.select('*')
-	.eq("id", customerId);
-	
-	return data[0]
-}
-
+  if (data.length > 0) return data[0];
+  else return null;
+};
 
 //Done
-export const GetPaymentMethods = async function(customerId) {  	
-	const { data, error } = await supabase
-	.from('CustomerPaymentMethods')
-	.select('*')
-	.eq("customerId", customerId);
-	
-	return data
-}
+const GetCustomer = async function (customerId) {
+  const { data, error } = await supabase
+    .from("Customers")
+    .select("*")
+    .eq("id", customerId);
 
-
-
-
+  return data[0];
+};
 
 //Done
-const CreateMembership = async function(customerId, restaurantId) {
-	const { data, error } = await supabase
-	  .from('Memberships')
-	  .insert([
-	    { "customerId": customerId, "restaurantId": restaurantId },
-	  ])
-	  .select()
-	  
-	  return data
-}
+export const GetPaymentMethods = async function (customerId) {
+  const { data, error } = await supabase
+    .from("CustomerPaymentMethods")
+    .select("*")
+    .eq("customerId", customerId);
 
+  return data;
+};
 
 //Done
-const GetMembership = async function(customerId) {
-	const { data, error } = await supabase
-	.from('Memberships')
-	.select('*')
-	.eq("customerId", customerId);
-	
-	return data
-}
+const CreateMembership = async function (customerId, restaurantId) {
+  const { data, error } = await supabase
+    .from("Memberships")
+    .insert([{ customerId: customerId, restaurantId: restaurantId }])
+    .select();
 
+  return data;
+};
 
+//Done
+const GetMembership = async function (customerId) {
+  const { data, error } = await supabase
+    .from("Memberships")
+    .select("*")
+    .eq("customerId", customerId);
 
-const AddFeedback = async function(customerId, restaurantId, rating) {
-	const { data, error } = await supabase
-	  .from('Ratings')
-	  .insert([
-	    { "customerId": customerId, "restaurantId": restaurantId, "rating": rating }
-	  ])
-	  .select()
-	  
-	  return data
-}
+  return data;
+};
 
+const AddFeedback = async function (customerId, restaurantId, rating) {
+  const { data, error } = await supabase
+    .from("Ratings")
+    .insert([
+      { customerId: customerId, restaurantId: restaurantId, rating: rating },
+    ])
+    .select();
 
-
-
+  return data;
+};
 
 //RESTAURANT QUERIES
 
@@ -159,114 +152,136 @@ const RestaurantLogin = async function (emailAddress, password) {
 };
 
 //Done
-const GetRestaurant = async function(restaurantId) {
-	const { data, error } = await supabase
-	.from('Restaurants')
-	.select('*')
-	.eq("id", restaurantId);
-	
-	return data[0]
-}
+const GetRestaurant = async function (restaurantId) {
+  const { data, error } = await supabase
+    .from("Restaurants")
+    .select("*")
+    .eq("id", restaurantId);
 
+  return data[0];
+};
 
+export const GetRestaurants = async function () {
+  const { data, error } = await supabase.from("Restaurants").select("*");
 
-//Done
-const CreateRestaurant = async function(name, address, state, postcode, city, contactEmail, contactNumber) {
-	const { data, error } = await supabase
-	  .from('Restaurants')
-	  .insert([
-	    { "name": name, "address": address, "state": state, "postcode": postcode,
-	      "city": city, "contactEmail": contactEmail, "contactNumber": contactNumber }
-	  ])
-	  .select()
-	  
-	  return data
-}
+  if (error) {
+    console.error("Error fetching restaurants:", error);
+    return [];
+  }
 
+  // 이미지 URL을 절대 경로로 변환
+  const formattedRestaurants = data.map((restaurant) => ({
+    ...restaurant,
+    image_url: `../../../../../${restaurant.image_url}`, // 상대 경로에서 절대 경로로 변환
+  }));
 
-//Done
-const GetRestaurantRatings = async function(restaurantId) {
-	const { data, error } = await supabase
-	.from('Ratings')
-	.select('*')
-	.eq("restaurantId", restaurantId)
-	return data
-}
-
-
+  return formattedRestaurants;
+};
 
 //Done
-const GetNearbyRestaurants = async function(postcode) {
-	const { data, error } = await supabase
-	.from('Restaurants')
-	.select('*')
-	.gt('postcode', postcode - 5)
-	.lt('postcode', postcode + 5)
+const CreateRestaurant = async function (
+  name,
+  address,
+  state,
+  postcode,
+  city,
+  contactEmail,
+  contactNumber
+) {
+  const { data, error } = await supabase
+    .from("Restaurants")
+    .insert([
+      {
+        name: name,
+        address: address,
+        state: state,
+        postcode: postcode,
+        city: city,
+        contactEmail: contactEmail,
+        contactNumber: contactNumber,
+      },
+    ])
+    .select();
 
-	return data;
-}
-
-//Done
-const GetRestaurantsByCategory = async function(category) {
-	const { data, error } = await supabase
-	.from('Restaurants')
-	.select('*')
-	.eq("category", category)
-
-	return data;
-}
-
-
-const SearchRestaurant = async function(name) {
-	const { data, error } = await supabase
-	.from('Restaurants')
-	.select('*')
-	.ilike("name", "%"+name+"%")
-
-	return data;
-}
-
-
+  return data;
+};
 
 //Done
-const GetDish = async function(dishId) {
-	const { data, error } = await supabase
-	.from('Dishes')
-	.select('*')
-	.eq("id", dishId)
-	
-	return data[0]
-}
+const GetRestaurantRatings = async function (restaurantId) {
+  const { data, error } = await supabase
+    .from("Ratings")
+    .select("*")
+    .eq("restaurantId", restaurantId);
+  return data;
+};
 
 //Done
-const GetMenus = async function(restaurantId) {
-	const { data, error } = await supabase
-	.from('Dishes')
-	.select('*')
-	.eq("restaurantId", restaurantId);
-		
-	grouped = Object.fromEntries(groupBy(data, x => x.menuName))
-	return data
-}
+const GetNearbyRestaurants = async function (postcode) {
+  const { data, error } = await supabase
+    .from("Restaurants")
+    .select("*")
+    .gt("postcode", postcode - 5)
+    .lt("postcode", postcode + 5);
 
-
+  return data;
+};
 
 //Done
-const GetRestaurantOrders = async function(restaurantId) { 
-	const { data, error } = await supabase
-	.from('Orders')
-	.select('*')
-	.eq("restaurantId", restaurantId)
-	//.eq("status", status) No need to match status?
-	
-	//Pending
-	//Accepted
-	//Cancelled
-	//In Preparation
-	//Delivered
-	
-	return data
-}	
+const GetRestaurantsByCategory = async function (category) {
+  const { data, error } = await supabase
+    .from("Restaurants")
+    .select("*")
+    .eq("category", category);
+
+  return data;
+};
+
+const SearchRestaurant = async function (name) {
+  const { data, error } = await supabase
+    .from("Restaurants")
+    .select("*")
+    .ilike("name", "%" + name + "%");
+
+  return data;
+};
+
+//Done
+const GetDish = async function (dishId) {
+  const { data, error } = await supabase
+    .from("Dishes")
+    .select("*")
+    .eq("id", dishId);
+
+  return data[0];
+};
+
+//Done
+const GetMenus = async function (restaurantId) {
+  const { data, error } = await supabase
+    .from("Dishes")
+    .select("*")
+    .eq("restaurantId", restaurantId);
+
+  grouped = Object.fromEntries(groupBy(data, (x) => x.menuName));
+  return data;
+};
+
+//Done
+const GetRestaurantOrders = async function (restaurantId) {
+  const { data, error } = await supabase
+    .from("Orders")
+    .select("*")
+    .eq("restaurantId", restaurantId);
+  //.eq("status", status) No need to match status?
+
+  //Pending
+  //Accepted
+  //Cancelled
+  //In Preparation
+  //Delivered
+
+  return data;
+};
 
 const GetRestOrdersById = async function (orderId) {
   const { data, error } = await supabase
@@ -307,17 +322,17 @@ const UpdateOrder = async function (orderId, status) {
 };
 
 //Done
-const CreateCart = async function (customerId, restaurantId) {
+export const CreateCart = async function (customerId, restaurantId) {
   const { data, error } = await supabase
     .from("Carts")
     .insert([{ customerId: customerId, restaurantId: restaurantId }])
     .select();
 
-  return data;
+  return data[0];
 };
 
 //Done
-const AddToCart = async function (dishId, cartId) {
+export const AddToCart = async function (dishId, cartId) {
   const { data, error } = await supabase
     .from("CartEntries")
     .insert([{ dishId: dishId, cartId: cartId }])
@@ -326,11 +341,15 @@ const AddToCart = async function (dishId, cartId) {
   return data;
 };
 
-const GetCartItems = async function (cartId) {
+export const GetCartItems = async function (cartId) {
   const { data, error } = await supabase
     .from("CartEntries")
     .select("*")
     .eq("cartId", cartId);
+
+  for (let i = 0; i < data.length; i++) {
+    data[i].dish = await GetDish(data[i].dishId);
+  }
 
   return data;
 };
@@ -367,67 +386,79 @@ const GetCustomerPurchases = async function (customerId) {
   return carts;
 };
 
-const GetRestaurantSales = async function(restaurantId) {
-	var carts = await GetRestaurantCarts(restaurantId)
-	for (let i=0; i < carts.length; i++){
-		carts[i].dishes = await GetCartItems(carts[i].id)
-		for (let x=0; x < carts[i].dishes.length; x++){
-			carts[i].dishes[x].dish = await GetDish(carts[i].dishes[x].dishId)
-		}
-	}
-	
-	return carts
-}
+const GetRestaurantSales = async function (restaurantId) {
+  var carts = await GetRestaurantCarts(restaurantId);
+  for (let i = 0; i < carts.length; i++) {
+    carts[i].dishes = await GetCartItems(carts[i].id);
+    for (let x = 0; x < carts[i].dishes.length; x++) {
+      carts[i].dishes[x].dish = await GetDish(carts[i].dishes[x].dishId);
+    }
+  }
 
-
-
+  return carts;
+};
 
 //Done
-const GetSubscriptionPlans = async function(restaurantId) {
-	const { data, error } = await supabase
-	.from('SubscriptionPlans')
-	.select('*')
-	.eq("restaurantId", restaurantId);
-	
-	return data
-}
+const GetSubscriptionPlans = async function (restaurantId) {
+  const { data, error } = await supabase
+    .from("SubscriptionPlans")
+    .select("*")
+    .eq("restaurantId", restaurantId);
 
-
-//Done
-const CreateSubscriptionPlan = async function(restaurantId, name, price, discount, paymentFrequency) {
-	const { data, error } = await supabase
-	  .from('SubscriptionPlans')
-	  .insert([
-	    { "restaurantId": restaurantId, "name": name, "price": price,
-	      "discount": discount, "paymentFrequency": paymentFrequency },
-	  ])
-	  .select()
-	  
-	  return data
-} 
-
+  return data;
+};
 
 //Done
-const GetSubscriptions = async function(memberId) {
-	const { data, error } = await supabase
-	.from('Subscriptions')
-	.select('*')
-	.eq("memberId", memberId);
-	
-	return data[0]
-}
+const CreateSubscriptionPlan = async function (
+  restaurantId,
+  name,
+  price,
+  discount,
+  paymentFrequency
+) {
+  const { data, error } = await supabase
+    .from("SubscriptionPlans")
+    .insert([
+      {
+        restaurantId: restaurantId,
+        name: name,
+        price: price,
+        discount: discount,
+        paymentFrequency: paymentFrequency,
+      },
+    ])
+    .select();
 
+  return data;
+};
 
+//Done
+const GetSubscriptions = async function (memberId) {
+  const { data, error } = await supabase
+    .from("Subscriptions")
+    .select("*")
+    .eq("memberId", memberId);
 
-const main = async function() {
-	const result = await GetRestaurantSales(13)
-	//console.log(result[0].dishes)
-}
+  return data[0];
+};
+
+const main = async function () {
+  const result = await GetRestaurantSales(13);
+  //console.log(result[0].dishes)
+};
 
 // export functions for Restaurant
-export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant, GetMenus };
+export {
+  CreateRestaurant,
+  RestaurantLogin,
+  GetRestaurantRatings,
+  GetRestaurantOrders,
+  GetRestOrdersById,
+  GetRestaurant,
+  GetMenus,
+};
 // export functions for Customer
-export { GetCustomer, CreateCustomer }
+export { GetCustomer, CreateCustomer };
 // export others
 export { GetRestaurantCarts };
 
