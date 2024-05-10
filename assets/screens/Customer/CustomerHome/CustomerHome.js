@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   View,
   Text,
@@ -7,9 +7,12 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../../../../context/UserContext";
+import RestaurantItem from '../../../Components/RestaurantItem';
 
 const categoriesData = [
   {
@@ -40,36 +43,6 @@ const categoriesData = [
   // Add more category data here.
 ];
 
-const restaurantsData = [
-  {
-    id: "1",
-    name: "Rose Garden Restaurant",
-    type: "Burger - Chicken - Riche - Wings",
-    rating: 4.7,
-    isFreeDelivery: true,
-    deliveryTime: "20 min",
-    image: require("../../../../assets/screens/EveryImages/RoseGarden.png"),
-  },
-  {
-    id: "2",
-    name: "Hanok",
-    type: "Korean bbq",
-    rating: 4.7,
-    isFreeDelivery: true,
-    deliveryTime: "20 min",
-    image: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
-  },
-  {
-    id: "3",
-    name: "Rose Garden Restaurant",
-    type: "Burger - Chicken - Riche - Wings",
-    rating: 4.7,
-    isFreeDelivery: true,
-    deliveryTime: "20 min",
-    image: require("../../../../assets/screens/EveryImages/RoseGarden.png"),
-  },
-  // Add more restaurant data here.
-];
 
 const CategoryItem = ({ title, image }) => (
   <View style={styles.categoryItem}>
@@ -80,33 +53,7 @@ const CategoryItem = ({ title, image }) => (
   </View>
 );
 
-const RestaurantItem = ({
-  name,
-  type,
-  rating,
-  isFreeDelivery,
-  deliveryTime,
-  image,
-}) => {
-  const navigation = useNavigation();
 
-  const handlePress = () => {
-    navigation.navigate("HanokMenu");
-  };
-
-  return (
-    <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
-      <Image source={image} style={styles.restaurantImage} />
-      <Text style={styles.restaurantName}>{name}</Text>
-      <Text style={styles.restaurantType}>{type}</Text>
-      <View style={styles.restaurantInfo}>
-        <Text style={styles.restaurantRating}>⭐ {rating}</Text>
-        {isFreeDelivery && <Text style={styles.deliveryText}>Free</Text>}
-        <Text style={styles.deliveryTime}>{deliveryTime}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const HomeButton = () => {
   const navigation = useNavigation();
@@ -158,6 +105,7 @@ const MotorcycleImage = () => {
 
 const CustomerHome = () => {
   const navigation = useNavigation();
+  const {user, setUser} = useContext(UserContext)
 
   const handleMorePress = () => {
     navigation.navigate("CategoriesMain");
@@ -166,6 +114,7 @@ const CustomerHome = () => {
   const handleSearchPress = () => {
     navigation.navigate("Search");
   };
+
 
   return (
     <View style={styles.container}>
@@ -209,11 +158,26 @@ const CustomerHome = () => {
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        data={restaurantsData}
+      {/* <FlatList
+        data={user.restaurants}
         renderItem={({ item }) => <RestaurantItem {...item} />}
         keyExtractor={(item) => item.id}
-      />
+      /> */}
+      <ScrollView>
+        {
+          user.restaurants !== 0 &&
+          user.restaurants.map((restaurant) => (
+            <RestaurantItem
+              name={restaurant.name}
+              type = {restaurant.type}
+              rating={restaurant.rating}
+              isFreeDelivery={restaurant.isFreeDelivery}
+              deliveryTime={restaurant.deliveryTime}
+              imageUrl={restaurant.imageUrl}
+            />
+          ))
+        }
+      </ScrollView>
 
       <View style={styles.menuBar}>
         <MotorcycleImage />
@@ -300,7 +264,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#e0e0e0",
   },
   restaurantImage: {
-    width: "100%",
+    width: 100,
     height: 180,
   },
   restaurantName: {

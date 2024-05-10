@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { RestaurantLogin, CustomerLogin, GetMenus, GetPaymentMethods } from "../../../database";
+import { RestaurantLogin, CustomerLogin, GetMenus, GetPaymentMethods, GetRestaurants } from "../../../database";
 import { UserContext } from "../../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
@@ -22,6 +22,7 @@ const LoginScreen = ({ navigation }) => {
       console.log("No such user");
     } else {
       tempCust.paymentMethods = await GetPaymentMethods(tempCust.id)
+      tempCust.restaurants = await GetRestaurants();
       console.log(tempCust)
       setUser(tempCust);
       navigation.navigate("CustomerHome");

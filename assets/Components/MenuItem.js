@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { RemoveDish } from "../../database";
 
+
 const MenuItem = ({ id, name, price, description, imageUrl }) => {
 
   // Function for removing the item from the menu

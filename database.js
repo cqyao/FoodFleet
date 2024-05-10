@@ -171,6 +171,18 @@ const GetRestaurant = async function(restaurantId) {
 
 
 //Done
+export const GetRestaurants = async function() {
+	const { data, error } = await supabase
+	.from('Restaurants')
+	.select('*');
+
+	return data
+}
+
+
+
+
+//Done
 const CreateRestaurant = async function(name, address, state, postcode, city, contactEmail, contactNumber) {
 	const { data, error } = await supabase
 	  .from('Restaurants')
