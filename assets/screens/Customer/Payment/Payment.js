@@ -17,26 +17,17 @@ import {
   GetCartItems,
 } from "../../../../database";
 
-const Payment = ({ route }) => {
+const Payment = async ({ route }) => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  const [cart, setCart] = useState([]);
-  const [paymentMethods, setPaymentMethods] = useState([]);
+
+
+  var cartItems = await GetCartItems(user.cartId);
+  console.log("Cart items:", cartItems);
+
 
   useEffect(() => {
-    const fetchCartAndPaymentMethods = async () => {
-      try {
-        const cartItems = await GetCartItems(user.cartId);
-        setCart(cartItems);
 
-        const methods = await GetPaymentMethods(user.customerId);
-        setPaymentMethods(methods);
-      } catch (error) {
-        console.error("Error fetching cart items or payment methods:", error);
-      }
-    };
-
-    fetchCartAndPaymentMethods();
   }, []);
 
   const handlePay = async () => {

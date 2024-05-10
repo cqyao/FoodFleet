@@ -217,7 +217,7 @@ const CustomerHome = () => {
         renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
         keyExtractor={(item) => item.id}
       /> 
-      <ScrollView>
+      {/* <ScrollView>
         {
           user.restaurants !== 0 &&
           user.restaurants.map((restaurant) => (
@@ -231,7 +231,7 @@ const CustomerHome = () => {
             />
           ))
         }
-      </ScrollView>
+      </ScrollView> */}
 
       <View style={styles.menuBar}>
         <MotorcycleImage />
