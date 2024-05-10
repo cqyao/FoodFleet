@@ -9,35 +9,44 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
-import { AddCustomerPaymentMethod } from "../../../../database";
+import {
+  AddCustomerPaymentMethod,
+  GetPaymentMethods,
+} from "../../../../database";
 import { UserContext } from "../../../../context/UserContext";
 
 const AddPaymentMethod = () => {
   const navigation = useNavigation();
-  const { userId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [country, setCountry] = useState("Australia");
+  const [isLoading, setIsLoading] = useState(false); // 추가
 
   const handleSave = async () => {
+    setIsLoading(true); // 추가
     try {
       const data = await AddCustomerPaymentMethod(
-        userId,
+        user.id,
         cardNumber,
         cvv,
         expiryDate,
-        country // Add country to function call
+        country
       );
 
       if (data) {
+        const newPaymentMethods = await GetPaymentMethods(user.id);
+        setUser({ ...user, paymentMethods: newPaymentMethods }); // 상태 업데이트만 수행
         navigation.navigate("PaymentMethod");
       } else {
         console.log("Failed to add payment method");
       }
     } catch (error) {
       console.error("Error adding payment method:", error.message);
+    } finally {
+      setIsLoading(false); // 추가
     }
   };
 
@@ -85,8 +94,14 @@ const AddPaymentMethod = () => {
           <Picker.Item label="Malaysia" value="Malaysia" />
         </Picker>
       </View>
-      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-        <Text style={styles.saveButtonText}>Save</Text>
+      <TouchableOpacity
+        style={styles.saveButton}
+        onPress={handleSave}
+        disabled={isLoading} // 추가
+      >
+        <Text style={styles.saveButtonText}>
+          {isLoading ? "Adding..." : "Save"}
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );

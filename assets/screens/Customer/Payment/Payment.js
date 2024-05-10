@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,37 +9,35 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { getPostCode } from "../../ClientStorage";
-import { MakeOrder, GetPaymentMethods, GetMenus } from "../../../../database";
+import { UserContext } from "../../../../context/UserContext";
+
+import {
+  MakeOrder,
+  GetPaymentMethods,
+  GetCartItems,
+} from "../../../../database";
 
 const Payment = ({ route }) => {
   const navigation = useNavigation();
-  const [userPostCode, setUserPostCode] = useState("");
+  const { user, setUser } = useContext(UserContext);
+  const [cart, setCart] = useState([]);
   const [paymentMethods, setPaymentMethods] = useState([]);
 
   useEffect(() => {
-    fetchPostCode();
-    fetchPaymentMethods(); // 고객의 결제 방법을 가져옵니다.
+    const fetchCartAndPaymentMethods = async () => {
+      try {
+        const cartItems = await GetCartItems(user.cartId);
+        setCart(cartItems);
+
+        const methods = await GetPaymentMethods(user.customerId);
+        setPaymentMethods(methods);
+      } catch (error) {
+        console.error("Error fetching cart items or payment methods:", error);
+      }
+    };
+
+    fetchCartAndPaymentMethods();
   }, []);
-
-  const fetchPostCode = async () => {
-    try {
-      const postCode = await getPostCode();
-      setUserPostCode(postCode);
-    } catch (error) {
-      console.error("Error fetching post code: ", error);
-    }
-  };
-
-  const fetchPaymentMethods = async () => {
-    try {
-      const customerId = "15"; // 사용자의 고객 ID를 여기에 넣으세요.
-      const paymentMethods = await GetPaymentMethods(customerId);
-      setPaymentMethods(paymentMethods);
-    } catch (error) {
-      console.error("Error fetching payment methods: ", error);
-    }
-  };
 
   const handlePay = async () => {
     // handlePay 함수 구현
@@ -59,7 +57,7 @@ const Payment = ({ route }) => {
             source={require("../../../../assets/screens/EveryImages/Location.png")}
             style={styles.icon}
           />
-          <Text style={styles.userPostCode}>{userPostCode}</Text>
+          <Text style={styles.userPostCode}>{user.postCode}</Text>
         </View>
       </View>
 

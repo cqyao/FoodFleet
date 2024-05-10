@@ -7,7 +7,13 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { RestaurantLogin, CustomerLogin, GetMenus, GetPaymentMethods, GetRestaurants } from "../../../database";
+import {
+  RestaurantLogin,
+  CustomerLogin,
+  GetMenus,
+  GetPaymentMethods,
+  GetRestaurants,
+} from "../../../database";
 import { UserContext } from "../../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
@@ -21,9 +27,16 @@ const LoginScreen = ({ navigation }) => {
     if (!tempCust) {
       console.log("No such user");
     } else {
-      tempCust.paymentMethods = await GetPaymentMethods(tempCust.id)
+      tempCust.paymentMethods = await GetPaymentMethods(tempCust.id);
       tempCust.restaurants = await GetRestaurants();
-      console.log(tempCust)
+      for (let i = 0; i < tempCust.restaurants.length; i++) {
+        console.log(tempCust.restaurants[i].image_url);
+        tempCust.restaurants[i].image = {
+          uri: tempCust.restaurants[i].image_url,
+        };
+      }
+
+      console.log(tempCust);
       setUser(tempCust);
       navigation.navigate("CustomerHome");
     }
@@ -36,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
     if (!tempRest) {
       console.log("No such user");
     } else {
-      console.log(tempRest)
+      console.log(tempRest);
       setUser(tempRest);
       navigation.navigate("RestaurantMain");
       setEmail("");

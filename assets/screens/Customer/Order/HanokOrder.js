@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   Image,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { UserContext } from "../../../../context/UserContext";
+import { AddToCart } from "../../../../database";
 
 const HanokOrder = () => {
   const [selectedSauce, setSelectedSauce] = useState(null);
@@ -16,10 +18,11 @@ const HanokOrder = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { item } = route.params; // Extracting the item from route params
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     // Update the total price whenever quantity changes
-    const price = parseFloat(item.price.replace("AU$", "")); // Parse the price string to float
+    const price = parseFloat(item.price); // Parse the price string to float
     setTotalPrice(price * quantity);
   }, [quantity, item]);
 
@@ -33,8 +36,12 @@ const HanokOrder = () => {
 
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
-  const addToBasket = () => {
+  const addToBasket = async () => {
     // Logic to add the item to basket goes here
+
+    await AddToCart(item.id, user.cartId);
+    console.log("item added to cart", user.cartId, item);
+
     navigation.navigate("HanokCart", {
       item: item,
       sauce: selectedSauce,
