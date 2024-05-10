@@ -1,24 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const HanokCart = ({ navigation }) => {
-  const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(89);
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-    setPrice(89 * (quantity + 1));
-  };
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-      setPrice(89 * (quantity - 1));
-    }
-  };
+const HanokCart = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { item, sauce, totalPrice, quantity } = route.params; // Extracting the item, sauce, totalPrice, and quantity from route params
 
   const handlePayment = () => {
-    navigation.navigate("Payment"); // Navigate to Payment screen
+    navigation.navigate("Payment", {
+      // Pass data to Payment screen
+      itemName: item.title,
+      sauceName: sauce,
+      quantity: quantity,
+      totalPrice: totalPrice,
+    });
   };
 
   return (
@@ -28,31 +24,15 @@ const HanokCart = ({ navigation }) => {
         style={styles.logo}
       />
 
-      <Image
-        source={require("../../../../assets/screens/EveryImages/HanokCoupleSet.png")}
-        style={styles.productImage}
-      />
+      <Image source={item.imageUrl} style={styles.productImage} />
 
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>Hanok</Text>
-        <Text style={styles.description}>Couple Set</Text>
-        <Text style={styles.description}>Sauce: Salt & Sesame oil</Text>
-        <Text style={styles.price}>AU${price}</Text>
-        <View style={styles.quantityContainer}>
-          <TouchableOpacity
-            onPress={decreaseQuantity}
-            style={styles.quantityButton}
-          >
-            <Text style={styles.quantityText}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.quantity}>{quantity}</Text>
-          <TouchableOpacity
-            onPress={increaseQuantity}
-            style={styles.quantityButton}
-          >
-            <Text style={styles.quantityText}>+</Text>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.description}>{item.title}</Text>
+        <Text style={styles.description}>Sauce: {sauce}</Text>
+        <Text style={styles.description}>Quantity: {quantity}</Text>
+        {/* Modified */}
+        <Text style={styles.price}>AU${totalPrice}</Text>
       </View>
       <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
         <Text style={styles.payText}>Pay</Text>
@@ -98,27 +78,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#FFA500", // Orange text color
     marginVertical: 10,
-  },
-  quantityContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  quantityButton: {
-    backgroundColor: "#FFFFFF", // White background color for quantity buttons
-    borderWidth: 1,
-    borderColor: "#CCCCCC", // Light gray border color
-    padding: 10,
-    borderRadius: 5,
-  },
-  quantityText: {
-    fontSize: 20,
-    color: "#333333", // Dark gray text color
-  },
-  quantity: {
-    fontSize: 20,
-    color: "#333333", // Dark gray text color
-    marginHorizontal: 15,
   },
   payButton: {
     backgroundColor: "#FFD700", // Gold background color for Pay button

@@ -58,7 +58,6 @@ const App = () => (
   <UserProvider>
     <NavigationContainer>
       <Stack.Navigator>
-        
         <Stack.Screen
           name="Login"
           component={Login}
@@ -80,22 +79,11 @@ const App = () => (
           component={GenerateReport}
           options={{ title: "GenerateReport" }}
         />
-        <Stack.Screen 
-          name="Restaurant Profile" 
-          component={RestaurantProfile} 
-        />
-        <Stack.Screen 
-          name="Order Management" 
-          component={OrderManagement} 
-        /> 
-        {/* <Stack.Screen
-          name="Forgot Password"
-          component={ForgotPassword}
-        /> */}
+        <Stack.Screen name="Restaurant Profile" component={RestaurantProfile} />
+        <Stack.Screen name="Order Management" component={OrderManagement} />
+        <Stack.Screen name="Forgot Password" component={ForgotPassword} />
 
-        {/* Add more screens here */}
-        {/* <Stack.Screen
-
+        <Stack.Screen
           name="HanokCart"
           component={HanokCart}
           options={{ title: "HanokCart" }}
@@ -140,13 +128,13 @@ const App = () => (
           component={ThaiCategory}
           options={{ title: "ThaiCategory" }}
         />
-      */}
+
         <Stack.Screen
           name="CustomerHome"
           component={CustomerHome}
           options={{ title: "CustomerHome" }}
         />
-      {/*
+
         <Stack.Screen
           name="Filter"
           component={Filter}
@@ -227,12 +215,12 @@ const App = () => (
           component={Profile}
           options={{ title: "Profile" }}
         />
-        
+
         <Stack.Screen
           name="GenerateReport"
           component={GenerateReport}
           options={{ title: "Generate Report" }}
-        /> */}
+        />
         <Stack.Screen
           name="CheckCustomerReview"
           component={CheckCustomerReview}
@@ -257,7 +245,6 @@ const App = () => (
           name="CreateRestaurantPage"
           component={CreateRestaurantPage}
           options={{ title: "CreateRestaurantPage" }}
-
         />
         <Stack.Screen
           name="ForgotPassword"

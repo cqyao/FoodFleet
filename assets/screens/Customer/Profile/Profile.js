@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,29 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  TextInput,
 } from "react-native";
+import {
+  savePostCode,
+  getPostCode as retrievePostCode,
+} from "../../ClientStorage";
 
 const Profile = ({ navigation }) => {
+  const [PostCode, setPostCode] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    // Load PostCode when component mounts
+    getPostCode();
+  }, []);
+
+  const getPostCode = async () => {
+    const savedPostCode = await retrievePostCode();
+    if (savedPostCode !== null) {
+      setPostCode(savedPostCode);
+    }
+  };
+
   const handleSignUp = () => {
     navigation.navigate("MembershipPlan");
   };
@@ -17,25 +37,52 @@ const Profile = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
+  const handleEditAddress = () => {
+    setIsEditing(true);
+  };
+
+  const handleSavePostCode = () => {
+    setIsEditing(false);
+    savePostCode(PostCode);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Profile</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleEditAddress}>
           <Image
-            source={require("../../EveryImages/Edit.png")} // Replace with actual edit icon path
+            source={require("../../EveryImages/Edit.png")}
             style={styles.editIcon}
           />
         </TouchableOpacity>
       </View>
 
       <Image
-        source={require("../../EveryImages/Avatar1.png")} // Replace with actual profile picture path
+        source={require("../../EveryImages/smile.png")}
         style={styles.profilePic}
       />
 
       <Text style={styles.name}>Myunggyun Yu</Text>
       <Text style={styles.age}>26</Text>
+
+      <View style={styles.PostCodeContainer}>
+        <Text style={styles.PostCodeTitle}>Post Code</Text>
+        {isEditing ? (
+          <View style={styles.editPostCodeContainer}>
+            <TextInput
+              style={styles.PostCodeInput}
+              value={PostCode}
+              onChangeText={setPostCode}
+            />
+            <TouchableOpacity onPress={handleSavePostCode}>
+              <Text style={styles.saveButton}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Text style={styles.PostCodeText}>{PostCode}</Text>
+        )}
+      </View>
 
       <View style={styles.membershipContainer}>
         <Text style={styles.membershipTitle}>Membership</Text>
@@ -92,6 +139,43 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "grey",
     marginBottom: 20,
+  },
+  PostCodeContainer: {
+    padding: 20,
+    alignItems: "center",
+  },
+  PostCodeTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  PostCodeText: {
+    fontSize: 16,
+    color: "grey",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  editPostCodeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  PostCodeInput: {
+    borderWidth: 1,
+    borderColor: "grey",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    flex: 1,
+  },
+  saveButton: {
+    backgroundColor: "#FFD700",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginLeft: 10,
+    color: "white",
+    fontWeight: "bold",
   },
   membershipContainer: {
     padding: 20,

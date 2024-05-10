@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { AddFeedback } from "../../../../database";
 
 const GiveFeedback = () => {
   const [rating, setRating] = useState(0);
@@ -19,14 +20,35 @@ const GiveFeedback = () => {
     setRating(rate);
   };
 
-  const handleSubmitFeedback = () => {
-    // Submit feedback logic goes here
-    Alert.alert(
-      "Thank you for your feedback!",
-      "",
-      [{ text: "OK", onPress: () => navigation.navigate("CustomerHome") }],
-      { cancelable: false }
-    );
+  const handleSubmitFeedback = async () => {
+    try {
+      const customerId = 1; // Replace with actual customer ID
+      const restaurantId = 1; // Replace with actual restaurant ID
+
+      // Add feedback to the database with message
+      const data = await AddFeedback(
+        customerId,
+        restaurantId,
+        rating,
+        feedback
+      );
+
+      // Show success message
+      Alert.alert(
+        "Thank you for your feedback!",
+        "",
+        [
+          {
+            text: "OK",
+            onPress: () => navigation.navigate("CustomerHome"),
+          },
+        ],
+        { cancelable: false }
+      );
+    } catch (error) {
+      console.error("Error adding feedback:", error.message);
+      Alert.alert("Error", "Failed to add feedback. Please try again later.");
+    }
   };
 
   return (

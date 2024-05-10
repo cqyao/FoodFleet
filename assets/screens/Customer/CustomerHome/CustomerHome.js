@@ -112,7 +112,7 @@ const HomeButton = () => {
   const navigation = useNavigation();
 
   const handleHomePress = () => {
-    navigation.navigate("Home");
+    navigation.navigate("CustomerHome");
   };
 
   return (
@@ -331,8 +331,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   motorcycleImage: {
-    width: 35,
-    height: 35,
+    width: 50,
+    height: 50,
     resizeMode: "contain",
   },
   menuBar: {

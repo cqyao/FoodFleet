@@ -20,9 +20,18 @@ const CreateCustomerAccount = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleCreateAccount = async() => {
-    await CreateCustomer(firstName, lastName, address, state, postcode, city, 
-                          email, phoneNumber, password)
+  const handleCreateAccount = async () => {
+    await CreateCustomer(
+      firstName,
+      lastName,
+      address,
+      state,
+      postcode,
+      city,
+      email,
+      phoneNumber,
+      password
+    );
     navigation.navigate("Login");
   };
 
@@ -95,7 +104,22 @@ const CreateCustomerAccount = ({ navigation }) => {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={() => handleCreateAccount(firstName, lastName, address, state, postcode, city, email, phoneNumber, password)}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          handleCreateAccount(
+            firstName,
+            lastName,
+            address,
+            state,
+            postcode,
+            city,
+            email,
+            phoneNumber,
+            password
+          )
+        }
+      >
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -121,7 +145,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    marginVertical: 10,
+    marginVertical: 5,
     borderWidth: 1,
     padding: 10,
     borderRadius: 30,

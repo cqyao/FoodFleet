@@ -15,26 +15,26 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleCustomerLogin = async() => {
+  const handleCustomerLogin = async () => {
     // TODO: Implement actual login logic
-    tempCust = await CustomerLogin(email, password)
+    tempCust = await CustomerLogin(email, password);
     if (!tempCust) {
-      console.log("No such user")
+      console.log("No such user");
     } else {
-      setUserId(tempCust.id)
-      navigation.navigate("CustomerHome")
+      setUserId(tempCust.id);
+      navigation.navigate("CustomerHome");
     }
   };
 
-  const handleRestaurantLogin = async() => {
+  const handleRestaurantLogin = async () => {
     // TODO: Implement actual login logic
     //console.log(email, password)
-    tempRest = await RestaurantLogin(email, password)
+    tempRest = await RestaurantLogin(email, password);
     if (!tempRest) {
-      console.log("No such user")
+      console.log("No such user");
     } else {
-      setUserId(tempRest.id)
-      navigation.navigate("RestaurantMain")
+      setUserId(tempRest.id);
+      navigation.navigate("RestaurantMain");
       setEmail("");
       setPassword("");
     }
@@ -66,10 +66,16 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button} onPress={() => handleCustomerLogin(email, password)}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleCustomerLogin(email, password)}
+      >
         <Text style={styles.buttonText}>Sign In Customer</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={ () => handleRestaurantLogin(email, password)}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleRestaurantLogin(email, password)}
+      >
         <Text style={styles.buttonText}>Sign In Restaurant</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
