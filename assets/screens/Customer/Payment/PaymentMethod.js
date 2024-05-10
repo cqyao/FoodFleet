@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -14,12 +14,11 @@ import { UserContext } from "../../../../context/UserContext";
 const PaymentMethod = () => {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0); // Default to the first card
   const navigation = useNavigation();
+  const {user, setUser } = useContext(UserContext);
 
-  const cards = [
-    { lastFourDigits: "1234", default: true },
 
-    // Add more cards here
-  ];
+
+  
 
   const handleSelectCard = (index) => {
     setSelectedCardIndex(index);
@@ -32,7 +31,7 @@ const PaymentMethod = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Payment Method</Text>
-      {cards.map((card, index) => (
+      {user.paymentMethods.map((card, index) => (
         <TouchableOpacity
           key={index}
           style={styles.cardContainer}
@@ -43,7 +42,7 @@ const PaymentMethod = () => {
             style={styles.cardIcon}
           />
           <Text style={styles.cardText}>
-            MasterCard **** {card.lastFourDigits}
+            MasterCard {card.cardNumber}
           </Text>
           {selectedCardIndex === index && (
             <Text style={styles.defaultText}>Default</Text>

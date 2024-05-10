@@ -1,18 +1,18 @@
 import React, {useEffect, useContext, useState} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import MenuItem from '../../../Components/MenuItem';
-import { UserContext } from '../../../context/UserContext';
+import { UserContext } from '../../../../context/UserContext'
 import { GetRestaurant, GetMenus } from '../../../../database';
 
 const RestaurantProfile = ({ navigation }) => {
-  const { userId, setUserId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [ name, setName ] = useState('');
   const [ category, setCategory ] = useState('');
   const [ menu, setMenu ] = useState([]);
 
   useEffect(() => {
     const fetchMenu = async() => {
-      const dish = await GetMenus(userId)
+      const dish = await GetMenus(user.id)
       console.log(dish)
       setMenu(dish);
     }
@@ -21,7 +21,7 @@ const RestaurantProfile = ({ navigation }) => {
 
   useEffect(() => {
     const fetchRestaurant = async() => {
-      const rest = await GetRestaurant(userId)
+      const rest = await GetRestaurant(user)
       setName(rest.name);
       setCategory(rest.category);
     }
@@ -29,7 +29,7 @@ const RestaurantProfile = ({ navigation }) => {
   })
 
   const logout = () => {
-    setUserId(null);
+    setUser(null);
     navigation.navigate('Login')
   }
 
@@ -52,9 +52,9 @@ const RestaurantProfile = ({ navigation }) => {
           style={styles.logo}
         />
       </View>
-      <Text style={styles.restaurantName}>{name}</Text>
+      <Text style={styles.restaurantName}>{user.name}</Text>
       <View style={styles.ratingContainer}>
-        <Text style={styles.ratingText}>⭐ 4.6 (200+ ratings)  {category} $$</Text>
+        <Text style={styles.ratingText}>⭐ 4.6 (200+ ratings)  {user.category} $$</Text>
         <Text style={styles.hoursText}>Open until 10:00 PM</Text>
       </View>
       <ScrollView>

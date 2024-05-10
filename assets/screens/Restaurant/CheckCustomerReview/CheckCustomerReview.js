@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'rea
 import React, {useContext, useState, useEffect } from 'react'
 import RatingItem from '../../../Components/RatingItem'
 import { GetRestaurantRatings, GetRestaurant } from '../../../../database';
-import { UserContext } from '../../../context/UserContext';
+import { UserContext } from '../../../../context/UserContext';
 
 const RestaurantFeedback = () => {
     const { userId, setUserId } = useContext(UserContext);

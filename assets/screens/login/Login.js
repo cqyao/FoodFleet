@@ -7,11 +7,11 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { RestaurantLogin, CustomerLogin } from "../../../database";
-import { UserContext } from "../../context/UserContext";
+import { RestaurantLogin, CustomerLogin, GetMenus, GetPaymentMethods } from "../../../database";
+import { UserContext } from "../../../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
-  const { userId, setUserId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +21,9 @@ const LoginScreen = ({ navigation }) => {
     if (!tempCust) {
       console.log("No such user");
     } else {
-      setUserId(tempCust.id);
+      tempCust.paymentMethods = await GetPaymentMethods(tempCust.id)
+      console.log(tempCust)
+      setUser(tempCust);
       navigation.navigate("CustomerHome");
     }
   };
@@ -33,7 +35,8 @@ const LoginScreen = ({ navigation }) => {
     if (!tempRest) {
       console.log("No such user");
     } else {
-      setUserId(tempRest.id);
+      console.log(tempRest)
+      setUser(tempRest);
       navigation.navigate("RestaurantMain");
       setEmail("");
       setPassword("");

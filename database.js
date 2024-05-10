@@ -65,7 +65,7 @@ const AddCustomerPaymentMethod = async function(customerId, cardNumber, ccv, exp
 }
 
 
-const CustomerLogin = async function(emailAddress, password) {
+export const CustomerLogin = async function(emailAddress, password) {
 	const { data, error } = await supabase
 	.from('Customers')
 	.select('*')
@@ -89,6 +89,16 @@ const GetCustomer = async function(customerId) {
 	return data[0]
 }
 
+
+//Done
+export const GetPaymentMethods = async function(customerId) {  	
+	const { data, error } = await supabase
+	.from('CustomerPaymentMethods')
+	.select('*')
+	.eq("customerId", customerId);
+	
+	return data
+}
 
 
 
