@@ -1,4 +1,3 @@
-// Payment.js
 import React, { useState, useContext, useEffect } from "react";
 import {
   View,
@@ -17,30 +16,28 @@ import {
   MakeOrder,
   GetPaymentMethods,
   GetCartItems,
-  GetDish,
+  GetDish
 } from "../../../../database";
 
-const Payment = ({ selectedCardNumber }) => {
-  // selectedCardNumber prop 받음
+const Payment = ({ route }) => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([])
   var subtotal = 0;
   var deliveryFee = '5';
   var serviceFee = '3';
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchItems = async() => {
       const items = await GetCartItems(user.cartId);
       setCartItems(items);
     };
     fetchItems();
-  }, []); // useEffect 두 번째 인자 수정
-
-  for (var i = 0; i < cartItems.length; i++) {
+  }), [];
+    
+  for (var i =0; i < cartItems.length; i++) {
     subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
   }
-
 
   if ( user.membership ) {
     var totalPrice = subtotal
@@ -49,6 +46,7 @@ const Payment = ({ selectedCardNumber }) => {
   } else {
     var totalPrice = subtotal + parseInt(serviceFee) + parseInt(deliveryFee);
   }
+  
 
   const handlePay = async () => {
     // handlePay 함수 구현
@@ -79,6 +77,7 @@ const Payment = ({ selectedCardNumber }) => {
   }
 
   const { itemName, sauceName, quantity, itemPrice } = route.params;
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -92,15 +91,15 @@ const Payment = ({ selectedCardNumber }) => {
       </View>
       <View style={styles.itemSection}>
         {cartItems !== 0 &&
-          cartItems.map((item) => (
-            <SelectedItem
-              key={item.id}
-              itemName={item.dish[0].name}
-              price={item.dish[0].price}
-              quantity={item.quantity}
-              description={item.dish[0].description}
-            />
-          ))}
+        cartItems.map((item) => (
+          <SelectedItem
+            key={item.id}
+            itemName = {item.dish[0].name}
+            price = {item.dish[0].price}
+            quantity = {item.quantity}
+            description = {item.dish[0].description}
+          />
+        ))}
       </View>
       <View style={styles.section}>
         
@@ -113,7 +112,7 @@ const Payment = ({ selectedCardNumber }) => {
             source={require("../../../../assets/screens/EveryImages/MasterCard.png")}
             style={styles.icon}
           />
-          <Text style={styles.textPrimary}>{selectedCardNumber}</Text>
+          <Text style={styles.textPrimary}>MasterCard 1234</Text>
         </View>
         <Image
           source={require("../../../../assets/screens/EveryImages/RightChevron.png")}
@@ -124,8 +123,8 @@ const Payment = ({ selectedCardNumber }) => {
         <Text style={styles.payButtonText}>Pay</Text>
       </TouchableOpacity>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
