@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -8,22 +8,10 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
+import { UserContext } from "../../../../context/UserContext";
 
 const Profile = ({ navigation }) => {
-  const [PostCode, setPostCode] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    // Load PostCode when component mounts
-    getPostCode();
-  }, []);
-
-  const getPostCode = async () => {
-    const savedPostCode = await retrievePostCode();
-    if (savedPostCode !== null) {
-      setPostCode(savedPostCode);
-    }
-  };
+  const {user, setUser} = useContext(UserContext);
 
   const handleSignUp = () => {
     navigation.navigate("MembershipPlan");
@@ -31,27 +19,24 @@ const Profile = ({ navigation }) => {
 
   const handleLogout = () => {
     navigation.navigate("Login");
+    console.log(user.id)
   };
 
-  const handleEditAddress = () => {
-    setIsEditing(true);
-  };
+  const Member = ({ isMember }) => {
+    let content
 
-  const handleSavePostCode = () => {
-    setIsEditing(false);
-    savePostCode(PostCode);
-  };
+    if (isMember) {
+      content = <Text>Thanks for being a member. {"\n"}You're currently enjoying zero delivery and service fees!</Text>
+    } else {
+      content = <Text>Currently not a member{"\n"}Join today for free delivery and zero service fees!</Text>
+    }
+    return <View>{content}</View>
+  }
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Profile</Text>
-        <TouchableOpacity onPress={handleEditAddress}>
-          <Image
-            source={require("../../EveryImages/Edit.png")}
-            style={styles.editIcon}
-          />
-        </TouchableOpacity>
       </View>
 
       <Image
@@ -59,33 +44,17 @@ const Profile = ({ navigation }) => {
         style={styles.profilePic}
       />
 
-      <Text style={styles.name}>Myunggyun Yu</Text>
+      <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
       <Text style={styles.age}>26</Text>
 
       <View style={styles.PostCodeContainer}>
         <Text style={styles.PostCodeTitle}>Post Code</Text>
-        {isEditing ? (
-          <View style={styles.editPostCodeContainer}>
-            <TextInput
-              style={styles.PostCodeInput}
-              value={PostCode}
-              onChangeText={setPostCode}
-            />
-            <TouchableOpacity onPress={handleSavePostCode}>
-              <Text style={styles.saveButton}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Text style={styles.PostCodeText}>{PostCode}</Text>
-        )}
+        <Text style={styles.PostCodeText}>{user.postcode}</Text>
       </View>
 
       <View style={styles.membershipContainer}>
         <Text style={styles.membershipTitle}>Membership</Text>
-        <Text style={styles.membershipStatus}>Currently no membership</Text>
-        <Text style={styles.membershipDetail}>
-          Join today for Free delivery and 0 Service Fee!
-        </Text>
+        <Member isMember={user.isMember} />
         <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
           <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
@@ -93,7 +62,7 @@ const Profile = ({ navigation }) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -148,7 +117,6 @@ const styles = StyleSheet.create({
   PostCodeText: {
     fontSize: 16,
     color: "grey",
-    marginBottom: 20,
     textAlign: "center",
   },
   editPostCodeContainer: {

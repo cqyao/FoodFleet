@@ -107,10 +107,10 @@ export const GetPaymentMethods = async function (customerId) {
 };
 
 //Done
-const CreateMembership = async function (customerId, restaurantId) {
+export const CreateMembership = async function (customerId) {
   const { data, error } = await supabase
-    .from("Memberships")
-    .insert([{ customerId: customerId, restaurantId: restaurantId }])
+    .from("Subscriptions")
+    .insert([{ customerId: customerId }])
     .select();
 
   return data;
