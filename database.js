@@ -332,10 +332,10 @@ export const CreateCart = async function (customerId, restaurantId) {
 };
 
 //Done
-export const AddToCart = async function (dishId, cartId) {
+export const AddToCart = async function (dishId, cartId, quantity) {
   const { data, error } = await supabase
     .from("CartEntries")
-    .insert([{ dishId: dishId, cartId: cartId }])
+    .insert([{ dishId: dishId, cartId: cartId, quantity: quantity }])
     .select();
 
   return data;
@@ -349,7 +349,6 @@ export const GetCartItems = async function (cartId) {
 
   for (let i = 0; i < data.length; i++) {
     data[i].dish = await GetDish(data[i].dishId);
-    console.log("data: ", data[i].dish);
   }
 
   return data;
