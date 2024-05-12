@@ -26,8 +26,8 @@ const Payment = ({ selectedCardNumber }) => {
   const { user, setUser } = useContext(UserContext);
   const [cartItems, setCartItems] = useState([]);
   var subtotal = 0;
-  var deliveryFee = 5;
-  var serviceFee = 3;
+  var deliveryFee = '5';
+  var serviceFee = '3';
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -41,10 +41,11 @@ const Payment = ({ selectedCardNumber }) => {
     subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
   }
 
-  if (user.membership) {
-    var totalPrice = subtotal;
-    var deliveryFee = 0;
-    var serviceFee = 0;
+
+  if ( user.membership ) {
+    var totalPrice = subtotal
+    var deliveryFee = '0'
+    var serviceFee = '0'
   } else {
     var totalPrice = subtotal + parseInt(serviceFee) + parseInt(deliveryFee);
   }
@@ -57,6 +58,27 @@ const Payment = ({ selectedCardNumber }) => {
     navigation.navigate("PaymentMethod");
   };
 
+  const Fee = ({ isMember }) => {
+    let content
+
+    if (isMember) {
+      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!</Text>
+    } else {
+      content = 
+      
+      <Text style={styles.fee}>
+        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>{"\n"}
+        Delivery fee: AU${deliveryFee}
+      {"\n"}Service fee: AU${serviceFee}
+      {"\n"}<Text style={styles.total}>Total {totalPrice}</Text>
+      {"\n"}
+      </Text>
+      
+    }
+    return <View>{content}</View>
+  }
+
+  const { itemName, sauceName, quantity, itemPrice } = route.params;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -81,13 +103,9 @@ const Payment = ({ selectedCardNumber }) => {
           ))}
       </View>
       <View style={styles.section}>
-        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>
-        <Text>{"\n"}</Text>
-        <Text style={styles.fee}>Delivery fee: AU${deliveryFee}</Text>
-        <Text>{"\n"}</Text>
-        <Text style={styles.fee}>Service fee: AU${serviceFee}</Text>
-        <Text>{"\n"}</Text>
-        <Text style={styles.total}>Total {totalPrice}</Text>
+        
+      <Fee isMember={user.isMember} />
+        
       </View>
       <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
         <View style={styles.cardContainer}>
@@ -172,6 +190,7 @@ const styles = StyleSheet.create({
   },
   subtotal: {
     fontSize: 16,
+    fontWeight: "600",
   },
   fee: {
     fontSize: 16,

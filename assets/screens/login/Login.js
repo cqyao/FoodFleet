@@ -29,6 +29,7 @@ const LoginScreen = ({ navigation }) => {
     } else {
       tempCust.paymentMethods = await GetPaymentMethods(tempCust.id);
       tempCust.restaurants = await GetRestaurants();
+      tempCust.isMember = tempCust.membership
       for (let i = 0; i < tempCust.restaurants.length; i++) {
         console.log(tempCust.restaurants[i].image_url);
         tempCust.restaurants[i].image = {

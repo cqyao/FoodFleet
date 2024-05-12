@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -8,13 +8,19 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import { UserContext } from "../../../../context/UserContext";
+import { CreateMembership } from "../../../../database";
 
 const MembershipPayment = ({ navigation }) => {
+  const {user, setUser} = useContext(UserContext);
   const handleCardPress = () => {
     navigation.navigate("PaymentMethod");
   };
 
   const handleStartMembership = () => {
+    CreateMembership(user.id)
+    user.isMember = true
+    console.log(user)
     Alert.alert(
       "Membership Started!",
       "Your membership has been successfully started!",
