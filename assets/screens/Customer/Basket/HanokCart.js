@@ -13,7 +13,7 @@ const HanokCart = () => {
       itemName: item.name,
       sauceName: sauce,
       quantity: quantity,
-      totalPrice: totalPrice,
+      itemPrice: totalPrice,
     });
     console.log(item.name, sauce, quantity, totalPrice);
   };

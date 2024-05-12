@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-const SelectedItem = ( itemName ) => {
+const SelectedItem = ( {itemName, price, quantity, description} ) => {
   return (
     <View style={styles.section}>
         <View>
-          <Text style={styles.header}>Selected item: {itemName}</Text>
-          {/* <Text style={styles.description}>
-            Sauce: {sauceName} AU${totalPrice}
-          </Text> */}
+          <Text style={styles.header}>{itemName}</Text>
+          <Text>Price: ${price}</Text>
+          <Text>Quantity: {quantity}</Text>
+          {/* <Text>{description}</Text> */}
         </View>
     </View> 
   )

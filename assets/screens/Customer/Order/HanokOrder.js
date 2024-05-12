@@ -37,7 +37,7 @@ const HanokOrder = () => {
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const addToBasket = async () => {
-    await AddToCart(item.id, user.cartId);
+    await AddToCart(item.id, user.cartId, quantity);
     console.log("item added to cart", user.cartId, item);
     navigation.navigate("HanokCart", {
       item: item,

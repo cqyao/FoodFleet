@@ -22,7 +22,10 @@ import {
 const Payment = ({ route, selectedCardNumber }) => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([])
+  var subtotal = 0;
+  var deliveryFee = 5;
+  var serviceFee = 3;
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -30,7 +33,20 @@ const Payment = ({ route, selectedCardNumber }) => {
       setCartItems(items);
     };
     fetchItems();
-  }, []);
+  }), [];
+    
+  for (var i =0; i < cartItems.length; i++) {
+    subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
+  }
+
+  if ( user.membership ) {
+    var totalPrice = subtotal
+    var deliveryFee = 
+    var serviceFee = 0
+  } else {
+    var totalPrice = subtotal + parseInt(serviceFee) + parseInt(deliveryFee);
+  }
+  
 
   const handlePay = async () => {
     // handlePay 함수 구현
@@ -53,22 +69,24 @@ const Payment = ({ route, selectedCardNumber }) => {
           <Text style={styles.userPostCode}>Postcode</Text>
         </View>
       </View>
-      {/* <View style={styles.section}>
+      <View style={styles.itemSection}>
         {cartItems !== 0 &&
         cartItems.map((item) => (
           <SelectedItem
+            key={item.id}
             itemName = {item.dish[0].name}
-            // sauceName = {sauceName}
-            // totalPrice = {totalPrice}
+            price = {item.dish[0].price}
+            quantity = {item.quantity}
+            description = {item.dish[0].description}
           />
         ))}
-      </View> */}
+      </View>
       <View style={styles.section}>
-        <Text style={styles.subtotal}>Subtotal: AU${totalPrice}</Text>
+        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>
         <Text>{"\n"}</Text>
-        <Text style={styles.fee}>Delivery fee: AU$5</Text>
+        <Text style={styles.fee}>Delivery fee: AU${deliveryFee}</Text>
         <Text>{"\n"}</Text>
-        <Text style={styles.fee}>Service fee: AU$3</Text>
+        <Text style={styles.fee}>Service fee: AU${serviceFee}</Text>
         <Text>{"\n"}</Text>
         <Text style={styles.total}>Total {totalPrice}</Text>
       </View>
@@ -108,6 +126,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
     flexWrap: "wrap", // Allow text to wrap to next line
+  },
+  itemSection: {
+    flexDirection: "column",
+    alignItems: "left",
+    paddingLeft: 10,
   },
   locationContainer: {
     flexDirection: "row",

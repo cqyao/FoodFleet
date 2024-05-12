@@ -332,10 +332,10 @@ export const CreateCart = async function (customerId, restaurantId) {
 };
 
 //Done
-export const AddToCart = async function (dishId, cartId) {
+export const AddToCart = async function (dishId, cartId, quantity) {
   const { data, error } = await supabase
     .from("CartEntries")
-    .insert([{ dishId: dishId, cartId: cartId }])
+    .insert([{ dishId: dishId, cartId: cartId, quantity: quantity }])
     .select();
 
   return data;
