@@ -349,7 +349,6 @@ export const GetCartItems = async function (cartId) {
 
   for (let i = 0; i < data.length; i++) {
     data[i].dish = await GetDish(data[i].dishId);
-    console.log("data: ", data[i].dish);
   }
 
   return data;

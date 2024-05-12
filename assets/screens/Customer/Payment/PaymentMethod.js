@@ -10,18 +10,19 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { AddCustomerPaymentMethod } from "../../../../database";
 import { UserContext } from "../../../../context/UserContext";
+import Payment from "./Payment";
 
 const PaymentMethod = () => {
   const [selectedCardIndex, setSelectedCardIndex] = useState(0); // Default to the first card
+  const [selectedCardNumber, setSelectedCardNumber] = useState("");
+
   const navigation = useNavigation();
-  const {user, setUser } = useContext(UserContext);
-
-
-
-  
+  const { user, setUser } = useContext(UserContext);
 
   const handleSelectCard = (index) => {
     setSelectedCardIndex(index);
+    const selectedCard = user.paymentMethods[index];
+    setSelectedCardNumber(selectedCard ? selectedCard.cardNumber : "");
   };
 
   const handleAddPaymentMethod = () => {
@@ -41,9 +42,7 @@ const PaymentMethod = () => {
             source={require("../../../../assets/screens/EveryImages/MasterCard.png")} // Replace with your actual card icon path
             style={styles.cardIcon}
           />
-          <Text style={styles.cardText}>
-            MasterCard {card.cardNumber}
-          </Text>
+          <Text style={styles.cardText}>MasterCard {card.cardNumber}</Text>
           {selectedCardIndex === index && (
             <Text style={styles.defaultText}>Default</Text>
           )}
@@ -55,6 +54,7 @@ const PaymentMethod = () => {
       >
         <Text style={styles.addCardText}>Add Payment Method</Text>
       </TouchableOpacity>
+      <Payment selectedCardNumber={selectedCardNumber} />
     </ScrollView>
   );
 };

@@ -16,24 +16,21 @@ import {
   MakeOrder,
   GetPaymentMethods,
   GetCartItems,
-  GetDish
+  GetDish,
 } from "../../../../database";
 
-const Payment = ({ route }) => {
+const Payment = ({ route, selectedCardNumber }) => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  const [cartItems, setCartItems] = useState([])
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async() => {
+    const fetchItems = async () => {
       const items = await GetCartItems(user.cartId);
       setCartItems(items);
-      console.log(items)
     };
     fetchItems();
-  }), [];
-    
-  
+  }, []);
 
   const handlePay = async () => {
     // handlePay 함수 구현
@@ -43,8 +40,8 @@ const Payment = ({ route }) => {
     navigation.navigate("PaymentMethod");
   };
 
-  const { itemName, sauceName, quantity, totalPrice } = route.params;
-  
+  const { itemName, sauceName, totalPrice } = route.params;
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -81,7 +78,9 @@ const Payment = ({ route }) => {
             source={require("../../../../assets/screens/EveryImages/MasterCard.png")}
             style={styles.icon}
           />
-          <Text style={styles.textPrimary}>MasterCard 1234</Text>
+          <Text style={styles.textPrimary}>
+            MasterCard {selectedCardNumber}
+          </Text>
         </View>
         <Image
           source={require("../../../../assets/screens/EveryImages/RightChevron.png")}
@@ -92,8 +91,8 @@ const Payment = ({ route }) => {
         <Text style={styles.payButtonText}>Pay</Text>
       </TouchableOpacity>
     </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
