@@ -38,10 +38,11 @@ const HanokMenu = () => {
           style={styles.menuItem}
           onPress={() => handleMenuItemPress(item)}
         >
-          <Image source={item.imageUrl} style={styles.itemImage} />
-          <Text style={styles.itemTitle}>{item.title}</Text>
-          <Text style={styles.itemPrice}>{item.price}</Text>
+          <Image source={{uri : item.image_url}} style={styles.itemImage} />
+          <Text style={styles.itemTitle}>{item.name}</Text>
+          <Text style={styles.itemPrice}>${item.price}</Text>
           <Text style={styles.itemDescription}>{item.description}</Text>
+          <Text style={styles.itemDescription}>{item.menuName}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>

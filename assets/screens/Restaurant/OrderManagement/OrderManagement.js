@@ -69,8 +69,6 @@ const OrderManagement = () => {
       </View>
 
       <ScrollView>
-        {/*Create new array with filtered orders only and create new component for each */}
-
         {filteredOrders !== 0 &&
           filteredOrders.map((order) => (
             //<Text>{order.total}</Text>

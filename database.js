@@ -172,7 +172,7 @@ export const GetRestaurants = async function () {
   // 이미지 URL을 절대 경로로 변환
   const formattedRestaurants = data.map((restaurant) => ({
     ...restaurant,
-    image_url: `../../../../../${restaurant.image_url}`, // 상대 경로에서 절대 경로로 변환
+    //image_url: `../../../../../${restaurant.image_url}`, // 상대 경로에서 절대 경로로 변환
   }));
 
   return formattedRestaurants;
@@ -246,13 +246,13 @@ const SearchRestaurant = async function (name) {
 };
 
 //Done
-const GetDish = async function (dishId) {
+export const GetDish = async function (dishId) {
   const { data, error } = await supabase
     .from("Dishes")
     .select("*")
     .eq("id", dishId);
 
-  return data[0];
+  return data;
 };
 
 //Done
@@ -349,6 +349,7 @@ export const GetCartItems = async function (cartId) {
 
   for (let i = 0; i < data.length; i++) {
     data[i].dish = await GetDish(data[i].dishId);
+    console.log("data: ", data[i].dish);
   }
 
   return data;

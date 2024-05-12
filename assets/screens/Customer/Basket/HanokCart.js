@@ -10,11 +10,12 @@ const HanokCart = () => {
   const handlePayment = () => {
     navigation.navigate("Payment", {
       // Pass data to Payment screen
-      itemName: item.title,
+      itemName: item.name,
       sauceName: sauce,
       quantity: quantity,
       totalPrice: totalPrice,
     });
+    console.log(item.name, sauce, quantity, totalPrice);
   };
 
   return (
@@ -24,11 +25,11 @@ const HanokCart = () => {
         style={styles.logo}
       />
 
-      <Image source={item.imageUrl} style={styles.productImage} />
+      {/* <Image source={item.imageUrl} style={styles.productImage} /> */}
 
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>Hanok</Text>
-        <Text style={styles.description}>{item.title}</Text>
+        <Text style={styles.description}>{item.name}</Text>
         <Text style={styles.description}>Sauce: {sauce}</Text>
         <Text style={styles.description}>Quantity: {quantity}</Text>
         {/* Modified */}

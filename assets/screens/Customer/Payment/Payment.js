@@ -10,25 +10,30 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserContext";
+import SelectedItem from "../../../Components/SelectedItem";
 
 import {
   MakeOrder,
   GetPaymentMethods,
   GetCartItems,
+  GetDish
 } from "../../../../database";
 
-const Payment = async ({ route }) => {
+const Payment = ({ route }) => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-
-
-  var cartItems = await GetCartItems(user.cartId);
-  console.log("Cart items:", cartItems);
-
+  const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
-
-  }, []);
+    const fetchItems = async() => {
+      const items = await GetCartItems(user.cartId);
+      setCartItems(items);
+      //console.log(items)
+    };
+    fetchItems();
+  }), [];
+    
+  
 
   const handlePay = async () => {
     // handlePay 함수 구현
@@ -39,7 +44,7 @@ const Payment = async ({ route }) => {
   };
 
   const { itemName, sauceName, quantity, totalPrice } = route.params;
-
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -48,19 +53,19 @@ const Payment = async ({ route }) => {
             source={require("../../../../assets/screens/EveryImages/Location.png")}
             style={styles.icon}
           />
-          <Text style={styles.userPostCode}>{user.postCode}</Text>
+          <Text style={styles.userPostCode}>Postcode</Text>
         </View>
       </View>
-
       <View style={styles.section}>
-        <View>
-          <Text style={styles.header}>Selected item: {itemName}</Text>
-          <Text style={styles.description}>
-            Sauce: {sauceName} AU${totalPrice}
-          </Text>
-        </View>
+        {cartItems !== 0 &&
+        cartItems.map((item) => (
+          <SelectedItem
+            itemName = {item.dish[0].name}
+            // sauceName = {sauceName}
+            // totalPrice = {totalPrice}
+          />
+        ))}
       </View>
-
       <View style={styles.section}>
         <Text style={styles.subtotal}>Subtotal: AU${totalPrice}</Text>
         <Text>{"\n"}</Text>
@@ -70,7 +75,6 @@ const Payment = async ({ route }) => {
         <Text>{"\n"}</Text>
         <Text style={styles.total}>Total {totalPrice}</Text>
       </View>
-
       <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
         <View style={styles.cardContainer}>
           <Image
@@ -84,13 +88,12 @@ const Payment = async ({ route }) => {
           style={styles.icon}
         />
       </TouchableOpacity>
-
       <TouchableOpacity style={styles.payButton} onPress={handlePay}>
         <Text style={styles.payButtonText}>Pay</Text>
       </TouchableOpacity>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {

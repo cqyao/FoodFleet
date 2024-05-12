@@ -18,12 +18,12 @@ const GenerateReport = () => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [report, setReport] = useState([]);
-  const { userId, setUserId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   
   
   const fetchReport = async() => {
     console.log("Report Generated!")
-    const entry = await GetRestaurantOrdersWithDate(userId, from.toISOString().split('T')[0], to.toISOString().split('T')[0])
+    const entry = await GetRestaurantOrdersWithDate(user.id, from.toISOString().split('T')[0], to.toISOString().split('T')[0])
     setReport(entry);
     console.log(from, to)
   }

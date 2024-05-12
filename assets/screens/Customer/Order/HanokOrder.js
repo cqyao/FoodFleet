@@ -37,17 +37,15 @@ const HanokOrder = () => {
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const addToBasket = async () => {
-    // Logic to add the item to basket goes here
-
     await AddToCart(item.id, user.cartId);
     console.log("item added to cart", user.cartId, item);
-
     navigation.navigate("HanokCart", {
       item: item,
       sauce: selectedSauce,
       quantity: quantity, // Ensure that quantity is passed correctly
       totalPrice: totalPrice.toFixed(2),
     });
+    console.log(item, selectedSauce)
   };
 
   return (

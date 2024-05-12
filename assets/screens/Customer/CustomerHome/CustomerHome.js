@@ -52,7 +52,7 @@ const CustomerHome = () => {
   const CategoryItem = ({ title, image }) => (
     <View style={styles.categoryItem}>
       <Image source={image} style={styles.categoryImage} />
-      <Text style={styles.categoryTitle} numberOfLines={1} ellipsizeMode="tail">
+      <Text style={styles.categoryTitle} ellipsizeMode="tail">
         {title}
       </Text>
     </View>
@@ -81,6 +81,7 @@ const CustomerHome = () => {
 
     return (
       <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
+        
         <Image source={{ uri: image_url }} style={styles.restaurantImage} />
         <Text style={styles.restaurantName}>{name}</Text>
         <Text style={styles.restaurantType}>{type}</Text>
@@ -150,7 +151,7 @@ const CustomerHome = () => {
         const fetchedRestaurants = await GetRestaurants();
         const formattedRestaurants = fetchedRestaurants.map((restaurant) => ({
           ...restaurant,
-          image_url: restaurant.image_url[0], // 배열의 첫 번째 요소를 사용
+          //image_url: restaurant.image_url[0], // 배열의 첫 번째 요소를 사용
         }));
         setRestaurants(formattedRestaurants);
       } catch (error) {
@@ -202,7 +203,7 @@ const CustomerHome = () => {
         data={categoriesData}
         renderItem={({ item }) => <CategoryItem {...item} />}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 50 }}
       />
 
       <View style={styles.sectionHeader}>
@@ -227,7 +228,7 @@ const CustomerHome = () => {
               rating={restaurant.rating}
               isFreeDelivery={restaurant.isFreeDelivery}
               deliveryTime={restaurant.deliveryTime}
-              imageUrl={restaurant.imageUrl}
+              image_url={restaurant.image_url}
             />
           ))
         }
@@ -309,8 +310,8 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     marginTop: 10,
-    flex: 1,
     textAlign: "center",
+    color: "black",
   },
   restaurantItem: {
     marginBottom: 15,
@@ -318,7 +319,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#e0e0e0",
   },
   restaurantImage: {
-    width: 100,
+    width: "100",
     height: 180,
   },
   restaurantName: {
