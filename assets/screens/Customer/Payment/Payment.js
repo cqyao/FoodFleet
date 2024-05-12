@@ -28,7 +28,7 @@ const Payment = ({ route }) => {
     const fetchItems = async() => {
       const items = await GetCartItems(user.cartId);
       setCartItems(items);
-      //console.log(items)
+      console.log(items)
     };
     fetchItems();
   }), [];
@@ -56,7 +56,7 @@ const Payment = ({ route }) => {
           <Text style={styles.userPostCode}>Postcode</Text>
         </View>
       </View>
-      <View style={styles.section}>
+      {/* <View style={styles.section}>
         {cartItems !== 0 &&
         cartItems.map((item) => (
           <SelectedItem
@@ -65,7 +65,7 @@ const Payment = ({ route }) => {
             // totalPrice = {totalPrice}
           />
         ))}
-      </View>
+      </View> */}
       <View style={styles.section}>
         <Text style={styles.subtotal}>Subtotal: AU${totalPrice}</Text>
         <Text>{"\n"}</Text>
