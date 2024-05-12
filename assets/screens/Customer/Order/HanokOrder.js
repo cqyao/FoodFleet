@@ -45,7 +45,7 @@ const HanokOrder = () => {
       quantity: quantity, // Ensure that quantity is passed correctly
       totalPrice: totalPrice.toFixed(2),
     });
-    console.log(item, selectedSauce)
+    console.log(item, selectedSauce);
   };
 
   return (
