@@ -1,32 +1,31 @@
-import React, {useEffect, useContext, useState} from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, {useEffect, useContext, useState, useCallback} from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import MenuItem from '../../../Components/MenuItem';
 import { UserContext } from '../../../../context/UserContext'
-import { GetRestaurant, GetMenus } from '../../../../database';
+import { GetMenus } from '../../../../database';
 
 const RestaurantProfile = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
-  const [ name, setName ] = useState('');
-  const [ category, setCategory ] = useState('');
   const [ menu, setMenu ] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchMenu = async() => {
+    const dish = await GetMenus(user.id)
+    console.log(dish)
+    setMenu(dish);
+  }
 
   useEffect(() => {
-    const fetchMenu = async() => {
-      const dish = await GetMenus(user.id)
-      console.log(dish)
-      setMenu(dish);
-    }
-    fetchMenu();
+      fetchMenu();
   }, []);
 
-  useEffect(() => {
-    const fetchRestaurant = async() => {
-      const rest = await GetRestaurant(user)
-      setName(rest.name);
-      setCategory(rest.category);
-    }
-    fetchRestaurant();
-  })
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchMenu();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const logout = () => {
     setUser(null);
@@ -39,7 +38,12 @@ const RestaurantProfile = ({ navigation }) => {
   
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
         <TouchableOpacity onPress={edit}>

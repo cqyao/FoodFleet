@@ -13,8 +13,8 @@ import { UserContext } from "../../../../context/UserContext"
 import ReportCard from "../../../Components/ReportCard";
 
 const GenerateReport = () => {
-  const [from, setFrom] = useState(new Date());
-  const [to, setTo] = useState(new Date());
+  const [from, setFrom] = useState(new Date('2001-05-15T00:00:00'));
+  const [to, setTo] = useState(new Date('2024-05-20T12:00:00'));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [report, setReport] = useState([]);
