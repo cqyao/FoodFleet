@@ -28,8 +28,9 @@ const RestaurantProfile = ({ navigation }) => {
   }, []);
 
   const logout = () => {
-    setUser(null);
     navigation.navigate('Login')
+    //setUser(null); Currently causes error with user being null. 
+    //Clearing login fields should be good enough
   }
 
   const edit = () => {

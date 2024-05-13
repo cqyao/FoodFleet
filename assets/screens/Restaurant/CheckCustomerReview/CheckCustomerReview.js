@@ -5,22 +5,15 @@ import { GetRestaurantRatings, GetRestaurant } from '../../../../database';
 import { UserContext } from '../../../../context/UserContext';
 
 const RestaurantFeedback = () => {
-    const { userId, setUserId } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [ reviews, setReviews ] = useState([])
-    const [name, setName] = useState('');
 
     useEffect(() => {
         const fetchReview = async() => {
-            const review = await GetRestaurantRatings(userId)
+            const review = await GetRestaurantRatings(user.id)
             setReviews(review)
         }
-        const fetchName = async() => {
-            const rest = await GetRestaurant(userId)
-            const tempName = rest.name
-            setName(tempName)
-        }
         fetchReview();
-        fetchName();
     });
 
     return (
@@ -32,7 +25,7 @@ const RestaurantFeedback = () => {
         >
         <View style={[styles.topContainer, {alignItems: "center"}]}>
             <Text style={styles.header}>
-                {name}
+                {user.name}
             </Text>
             <Text style={styles.ratingHeader}>
                 3.2
@@ -65,14 +58,10 @@ const RestaurantFeedback = () => {
                     rating={review.rating}
                 />
             ))}
-            
         </ScrollView>
         </View>
         
     )
-
-  
-  
 }
 
 
