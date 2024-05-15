@@ -72,7 +72,7 @@ const CustomerHome = () => {
     const handlePress = async () => {
       user.restaurantId = id;
       var cart = await CreateCart(user.id, user.restaurantId);
-      user.cartId = cart.id;
+      user.cartId = cart[0].id;
       user.menus = await GetMenus(user.restaurantId);
 
       console.log("Selected restaurant:", id);

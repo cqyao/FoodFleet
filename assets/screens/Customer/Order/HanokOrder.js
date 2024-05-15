@@ -9,13 +9,12 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserContext";
-import { AddToCart } from "../../../../database";
+import {AddToCart} from "../../../../database";
 
-const HanokOrder = () => {
+const HanokOrder = ({navigation}) => {
   const [selectedSauce, setSelectedSauce] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(89); // Initial price for 1 item
-  const navigation = useNavigation();
   const route = useRoute();
   const { item } = route.params; // Extracting the item from route params
   const { user, setUser } = useContext(UserContext);
@@ -37,15 +36,13 @@ const HanokOrder = () => {
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const addToBasket = async () => {
-    await AddToCart(item.id, user.cartId, quantity);
-    console.log("item added to cart", user.cartId, item);
+    await AddToCart(item.id, user.cartId, quantity)
     navigation.navigate("HanokCart", {
       item: item,
       sauce: selectedSauce,
       quantity: quantity, // Ensure that quantity is passed correctly
       totalPrice: totalPrice.toFixed(2),
     });
-    console.log(item, selectedSauce);
   };
 
   return (

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import OrderCard from "../../../Components/OrderCard";
@@ -16,36 +17,58 @@ import { UserContext } from "../../../../context/UserContext";
 const OrderManagement = () => {
   const [activeCategory, setActiveCategory] = useState("In Preparation");
   const [orders, setOrders] = useState([]);
-  const { userId, setUserId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [refreshing, setRefreshing] = useState(false);
 
   // Changes the category to filter by
   const changeCategory = (category) => {
     setActiveCategory(category);
   };
 
+  const fetchOrder = async () => {
+    const order = await GetRestaurantOrders(user.id);
+    if (order !== null) {
+      setOrders(order);
+    }
+  };
+
   // Gets restaurant orders equal to parameter
   // Needs to change to active restaurant instead of hard coded
   useEffect(() => {
-    const fetchOrder = async () => {
-      const order = await GetRestaurantOrders(userId);
-      if (order !== null) {
-        setOrders(order);
-      }
-    };
     fetchOrder();
   });
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchOrder();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   // Filter orders by active category only
   const filteredOrders = orders.filter(
     (order) => order.status === activeCategory
   );
 
+  const incomingOrders = orders.filter(
+    (order) => order.status === "Incoming"
+  );
+
   return (
-    <View style={[styles.container, { flexDirection: "column" }]}>
+    <ScrollView 
+      style={[styles.container, { flexDirection: "column" }]}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={{ alignItems: "center" }}>
-        {/* <ScrollView horizontal={true}>
-                    <IncomingOrder key={1} id={1}></IncomingOrder>
-                </ScrollView> */}
+        <ScrollView horizontal={true}>
+          {incomingOrders !== 0 &&
+            incomingOrders.map((order) => (
+              <IncomingOrder key={order.id} order={order} />
+          ))}
+        </ScrollView>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             style={styles.navButton}
@@ -67,15 +90,14 @@ const OrderManagement = () => {
           </TouchableOpacity>
         </View>
       </View>
-
       <ScrollView>
         {filteredOrders !== 0 &&
           filteredOrders.map((order) => (
             //<Text>{order.total}</Text>
-            <OrderCard key={order.id} id={order.id} />
+            <OrderCard key={order.id} order={order} />
           ))}
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 };
 

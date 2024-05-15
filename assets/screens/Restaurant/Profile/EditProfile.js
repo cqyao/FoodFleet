@@ -2,10 +2,10 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, {useState, useContext, useEffect} from 'react'
 import { TextInput } from 'react-native-gesture-handler'
 import { UserContext } from '../../../../context/UserContext';
-import { GetRestaurant, UpdateRestaurant} from '../../../../database';
+import { UpdateRestaurant} from '../../../../database';
 
 const EditProfile = ( {navigation} ) => {
-  const {userId, setUserId } = useContext(UserContext);
+  const {user, setUser } = useContext(UserContext);
 
   const [name, setName] = useState(name);
   const [postcode, setPostcode] = useState(postcode);
@@ -14,7 +14,7 @@ const EditProfile = ( {navigation} ) => {
   const [category, setCategory] = useState('');
 
   const handleEdit = async() => {
-    await UpdateRestaurant(userId, name, postcode, number, email, category)
+    await UpdateRestaurant(user.id, name, postcode, number, email, category)
     navigation.navigate("RestaurantMain")
   }
 

@@ -33,12 +33,13 @@ const Payment = ({ selectedCardNumber }) => {
     const fetchItems = async () => {
       const items = await GetCartItems(user.cartId);
       setCartItems(items);
+      console.log("Cart items: ", items[0].dish.price)
     };
     fetchItems();
   }, []); // useEffect 두 번째 인자 수정
 
   for (var i = 0; i < cartItems.length; i++) {
-    subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
+    subtotal += cartItems[i].dish.price * cartItems[i].quantity;
   }
 
 
@@ -78,7 +79,7 @@ const Payment = ({ selectedCardNumber }) => {
     return <View>{content}</View>
   }
 
-  const { itemName, sauceName, quantity, itemPrice } = route.params;
+  //const { itemName, sauceName, quantity, itemPrice } = route.params;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -95,10 +96,10 @@ const Payment = ({ selectedCardNumber }) => {
           cartItems.map((item) => (
             <SelectedItem
               key={item.id}
-              itemName={item.dish[0].name}
-              price={item.dish[0].price}
+              itemName={item.dish.name}
+              price={item.dish.price}
               quantity={item.quantity}
-              description={item.dish[0].description}
+              description={item.dish.description}
             />
           ))}
       </View>

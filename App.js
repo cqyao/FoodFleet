@@ -51,6 +51,7 @@ import RestaurantProfile from "./assets/screens/Restaurant/Profile/RestaurantPro
 import CreateRestaurantPage from "./assets/screens/Restaurant/Signup/CreateRestaurantAccount";
 import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
 import EditProfile from "./assets/screens/Restaurant/Profile/EditProfile";
+import AddDishPage from "./assets/screens/Restaurant/Profile/AddDishPage"
 
 const Stack = createStackNavigator();
 
@@ -230,6 +231,11 @@ const App = () => (
           name="RestaurantProfile"
           component={RestaurantProfile}
           options={{ title: "RestaurantProfile" }}
+        />
+        <Stack.Screen
+          name="AddDish"
+          component={AddDishPage}
+          options = {{ title: "AddDishPage" }}
         />
         <Stack.Screen
           name="EditProfile"
