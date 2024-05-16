@@ -1,4 +1,3 @@
-// Payment.js
 import React, { useState, useContext, useEffect } from "react";
 import {
   View,
@@ -20,14 +19,13 @@ import {
   GetDish,
 } from "../../../../database";
 
-const Payment = ({ selectedCardNumber }) => {
-  // selectedCardNumber prop 받음
+const Payment = () => {
   const navigation = useNavigation();
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [cartItems, setCartItems] = useState([]);
   var subtotal = 0;
-  var deliveryFee = '5';
-  var serviceFee = '3';
+  var deliveryFee = "5";
+  var serviceFee = "3";
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -36,17 +34,16 @@ const Payment = ({ selectedCardNumber }) => {
       console.log("Cart items: ", items[0].dish.price)
     };
     fetchItems();
-  }, []); // useEffect 두 번째 인자 수정
+  }, []);
 
   for (var i = 0; i < cartItems.length; i++) {
     subtotal += cartItems[i].dish.price * cartItems[i].quantity;
   }
 
-
-  if ( user.membership ) {
-    var totalPrice = subtotal
-    var deliveryFee = '0'
-    var serviceFee = '0'
+  if (user.membership) {
+    var totalPrice = subtotal;
+    var deliveryFee = "0";
+    var serviceFee = "0";
   } else {
     var totalPrice = subtotal + parseInt(serviceFee) + parseInt(deliveryFee);
   }
@@ -59,27 +56,9 @@ const Payment = ({ selectedCardNumber }) => {
     navigation.navigate("PaymentMethod");
   };
 
-  const Fee = ({ isMember }) => {
-    let content
+  const selectedCardNumber =
+    user.paymentMethods[user.selectedCardIndex]?.cardNumber || "";
 
-    if (isMember) {
-      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!</Text>
-    } else {
-      content = 
-      
-      <Text style={styles.fee}>
-        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>{"\n"}
-        Delivery fee: AU${deliveryFee}
-      {"\n"}Service fee: AU${serviceFee}
-      {"\n"}<Text style={styles.total}>Total {totalPrice}</Text>
-      {"\n"}
-      </Text>
-      
-    }
-    return <View>{content}</View>
-  }
-
-  //const { itemName, sauceName, quantity, itemPrice } = route.params;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -92,6 +71,7 @@ const Payment = ({ selectedCardNumber }) => {
         </View>
       </View>
       <View style={styles.itemSection}>
+
         {cartItems !== 0 &&
           cartItems.map((item) => (
             <SelectedItem
@@ -104,9 +84,7 @@ const Payment = ({ selectedCardNumber }) => {
           ))}
       </View>
       <View style={styles.section}>
-        
-      <Fee isMember={user.isMember} />
-        
+        <Fee isMember={user.isMember} />
       </View>
       <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
         <View style={styles.cardContainer}>
@@ -141,7 +119,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
-    flexWrap: "wrap", // Allow text to wrap to next line
+    flexWrap: "wrap",
   },
   itemSection: {
     flexDirection: "column",
@@ -176,18 +154,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
-    flex: 1, // Allow text to take full width
+    flex: 1,
   },
   description: {
     fontSize: 16,
     color: "grey",
     marginBottom: 5,
-    flex: 1, // Allow text to take full width
+    flex: 1,
   },
   price: {
     fontSize: 16,
     fontWeight: "bold",
-    flex: 1, // Allow text to take full width
+    flex: 1,
   },
   subtotal: {
     fontSize: 16,
