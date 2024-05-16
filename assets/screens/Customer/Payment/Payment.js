@@ -1,4 +1,3 @@
-// Payment.js
 import React, { useState, useContext, useEffect } from "react";
 import {
   View,
@@ -20,10 +19,9 @@ import {
   GetDish,
 } from "../../../../database";
 
-const Payment = ({ selectedCardNumber }) => {
-  // selectedCardNumber prop 받음
+const Payment = () => {
   const navigation = useNavigation();
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [cartItems, setCartItems] = useState([]);
   var subtotal = 0;
   var deliveryFee = 5;
@@ -35,7 +33,7 @@ const Payment = ({ selectedCardNumber }) => {
       setCartItems(items);
     };
     fetchItems();
-  }, []); // useEffect 두 번째 인자 수정
+  }, []);
 
   for (var i = 0; i < cartItems.length; i++) {
     subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
@@ -57,6 +55,9 @@ const Payment = ({ selectedCardNumber }) => {
     navigation.navigate("PaymentMethod");
   };
 
+  const selectedCardNumber =
+    user.paymentMethods[user.selectedCardIndex]?.cardNumber || "";
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.section}>
@@ -69,16 +70,15 @@ const Payment = ({ selectedCardNumber }) => {
         </View>
       </View>
       <View style={styles.itemSection}>
-        {cartItems !== 0 &&
-          cartItems.map((item) => (
-            <SelectedItem
-              key={item.id}
-              itemName={item.dish[0].name}
-              price={item.dish[0].price}
-              quantity={item.quantity}
-              description={item.dish[0].description}
-            />
-          ))}
+        {cartItems.map((item) => (
+          <SelectedItem
+            key={item.id}
+            itemName={item.dish[0].name}
+            price={item.dish[0].price}
+            quantity={item.quantity}
+            description={item.dish[0].description}
+          />
+        ))}
       </View>
       <View style={styles.section}>
         <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
-    flexWrap: "wrap", // Allow text to wrap to next line
+    flexWrap: "wrap",
   },
   itemSection: {
     flexDirection: "column",
@@ -157,18 +157,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
-    flex: 1, // Allow text to take full width
+    flex: 1,
   },
   description: {
     fontSize: 16,
     color: "grey",
     marginBottom: 5,
-    flex: 1, // Allow text to take full width
+    flex: 1,
   },
   price: {
     fontSize: 16,
     fontWeight: "bold",
-    flex: 1, // Allow text to take full width
+    flex: 1,
   },
   subtotal: {
     fontSize: 16,

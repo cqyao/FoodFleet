@@ -7,23 +7,20 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserContext";
 
 const PaymentMethod = () => {
-  const { user } = useContext(UserContext);
-  const [selectedCardIndex, setSelectedCardIndex] = useState(0); // Default to the first card
+  const { user, setUser } = useContext(UserContext);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(
+    user.selectedCardIndex
+  ); // Initialize from user context
 
   const navigation = useNavigation();
 
   const handleSelectCard = (index) => {
     setSelectedCardIndex(index);
-    console.log(user.paymentMethods[index]?.cardNumber); // Log the selected card number
-    moveCardToTop(index); // Move the selected card to the top
-  };
-
-  const handleAddPaymentMethod = () => {
-    navigation.navigate("AddPaymentMethod");
+    moveCardToTop(index);
   };
 
   const moveCardToTop = (index) => {
@@ -33,12 +30,15 @@ const PaymentMethod = () => {
       ...user.paymentMethods.slice(0, index),
       ...user.paymentMethods.slice(index + 1),
     ];
-    // Update the context with the new payment methods order
-    // setUser({...user, paymentMethods: updatedPaymentMethods});
+    setUser({
+      ...user,
+      paymentMethods: updatedPaymentMethods,
+      selectedCardIndex: 0,
+    });
   };
 
   const renderCard = (card, index) => {
-    const isSelected = selectedCardIndex === index;
+    const isSelected = index === 0;
     return (
       <TouchableOpacity
         key={index}
@@ -46,11 +46,13 @@ const PaymentMethod = () => {
         onPress={() => handleSelectCard(index)}
       >
         <Image
-          source={require("../../../../assets/screens/EveryImages/MasterCard.png")} // Replace with your actual card icon path
+          source={require("../../../../assets/screens/EveryImages/MasterCard.png")}
           style={styles.cardIcon}
         />
-        <Text style={styles.cardText}>MasterCard {card.cardNumber}</Text>
-        {isSelected && <Text style={styles.defaultText}>Default</Text>}
+        <View style={styles.cardInfo}>
+          <Text style={styles.cardText}>MasterCard {card.cardNumber}</Text>
+          {isSelected && <Text style={styles.defaultText}>Default</Text>}
+        </View>
       </TouchableOpacity>
     );
   };
@@ -61,7 +63,7 @@ const PaymentMethod = () => {
       {user.paymentMethods.map(renderCard)}
       <TouchableOpacity
         style={styles.addCardButton}
-        onPress={handleAddPaymentMethod}
+        onPress={() => navigation.navigate("AddPaymentMethod")}
       >
         <Text style={styles.addCardText}>Add Payment Method</Text>
       </TouchableOpacity>
@@ -89,7 +91,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#e0e0e0",
   },
   selectedCard: {
-    backgroundColor: "#f0f0f0", // Color for selected card
+    backgroundColor: "#e0e0f8",
+    borderColor: "#007bff",
+    borderWidth: 2,
+    borderRadius: 5,
   },
   cardIcon: {
     width: 40,
@@ -97,14 +102,16 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginRight: 10,
   },
+  cardInfo: {
+    flexDirection: "column",
+    flex: 1,
+  },
   cardText: {
     fontSize: 18,
-    flex: 1,
   },
   defaultText: {
     fontSize: 16,
     color: "green",
-    marginLeft: 10,
   },
   addCardButton: {
     flexDirection: "row",

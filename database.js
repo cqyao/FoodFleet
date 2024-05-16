@@ -126,7 +126,7 @@ const GetMembership = async function (customerId) {
   return data;
 };
 
-const AddFeedback = async function (customerId, restaurantId, rating) {
+export const AddFeedback = async function (customerId, restaurantId, rating) {
   const { data, error } = await supabase
     .from("Ratings")
     .insert([
@@ -236,7 +236,7 @@ const GetRestaurantsByCategory = async function (category) {
   return data;
 };
 
-const SearchRestaurant = async function (name) {
+export const SearchRestaurant = async function (name) {
   const { data, error } = await supabase
     .from("Restaurants")
     .select("*")
