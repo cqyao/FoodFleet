@@ -108,7 +108,8 @@ const GetCustomer = async function (customerId) {
 };
 
 
-const AddFeedback = async function (customerId, restaurantId, rating, message) {
+
+export const AddFeedback = async function (customerId, restaurantId, rating, message) {
   const { data, error } = await supabase
     .from("Ratings")
     .insert([
@@ -222,7 +223,7 @@ const GetRestaurantsByCategory = async function (category) {
   return data;
 };
 
-const SearchRestaurant = async function (name) {
+export const SearchRestaurant = async function (name) {
   const { data, error } = await supabase
     .from("Restaurants")
     .select("*")
