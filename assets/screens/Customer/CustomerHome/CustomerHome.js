@@ -94,16 +94,16 @@ const CustomerHome = () => {
     );
   };
 
-  const HomeButton = () => {
+  const CartButton = () => {
     const navigation = useNavigation();
 
-    const handleHomePress = () => {
-      navigation.navigate("CustomerHome");
+    const handleCartPress = () => {
+      navigation.navigate("MainCart");
     };
 
     return (
-      <TouchableOpacity style={styles.iconContainer} onPress={handleHomePress}>
-        <Ionicons name="home-outline" size={24} color="black" />
+      <TouchableOpacity style={styles.iconContainer} onPress={handleCartPress}>
+        <Ionicons name="cart-outline" size={24} color="black" />
       </TouchableOpacity>
     );
   };
@@ -137,10 +137,7 @@ const CustomerHome = () => {
         style={styles.iconContainer}
         onPress={handleMotorcyclePress}
       >
-        <Image
-          source={require("../../../../assets/screens/EveryImages/motorcycle.png")}
-          style={styles.motorcycleImage}
-        />
+      <Ionicons name="car-outline" size={24} color="black" />
       </TouchableOpacity>
     );
   };
@@ -178,7 +175,7 @@ const CustomerHome = () => {
         <Text style={styles.locationText}>Wollongong</Text>
       </View>
 
-      <Text style={styles.greetingText}>Good Morning, Jacob</Text>
+      <Text style={styles.greetingText}>Good Morning, {user.firstName}</Text>
 
       <TouchableOpacity onPress={handleSearchPress}>
         <View style={styles.searchContainer}>
@@ -236,7 +233,7 @@ const CustomerHome = () => {
 
       <View style={styles.menuBar}>
         <MotorcycleImage />
-        <HomeButton />
+        <CartButton />
         <ProfileIcon />
       </View>
     </View>
