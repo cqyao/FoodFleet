@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,11 @@ import {
   TextInput,
 } from "react-native";
 import { UserContext } from "../../../../context/UserContext";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const Profile = ({ navigation }) => {
   const {user, setUser} = useContext(UserContext);
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleSignUp = () => {
     navigation.navigate("MembershipPlan");
@@ -22,9 +24,18 @@ const Profile = ({ navigation }) => {
     console.log(user.id)
   };
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    Member({ isMember: user.isMember });
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+    }, []);
+
   const Member = ({ isMember }) => {
     let content
 
+    console.log(isMember)
     if (isMember) {
       content = <Text>Thanks for being a member. {"\n"}You're currently enjoying zero delivery and service fees!</Text>
     } else {
@@ -34,7 +45,15 @@ const Profile = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      refreshControl={
+        <RefreshControl 
+          refreshing={refreshing} 
+          onRefresh={onRefresh}
+        />
+      }
+    >
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Profile</Text>
       </View>
@@ -62,7 +81,7 @@ const Profile = ({ navigation }) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

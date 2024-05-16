@@ -31,12 +31,13 @@ const Payment = () => {
     const fetchItems = async () => {
       const items = await GetCartItems(user.cartId);
       setCartItems(items);
+      console.log("Cart items: ", items[0].dish.price)
     };
     fetchItems();
   }, []);
 
   for (var i = 0; i < cartItems.length; i++) {
-    subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
+    subtotal += cartItems[i].dish.price * cartItems[i].quantity;
   }
 
   if (user.membership) {
@@ -70,15 +71,17 @@ const Payment = () => {
         </View>
       </View>
       <View style={styles.itemSection}>
-        {cartItems.map((item) => (
-          <SelectedItem
-            key={item.id}
-            itemName={item.dish[0].name}
-            price={item.dish[0].price}
-            quantity={item.quantity}
-            description={item.dish[0].description}
-          />
-        ))}
+
+        {cartItems !== 0 &&
+          cartItems.map((item) => (
+            <SelectedItem
+              key={item.id}
+              itemName={item.dish.name}
+              price={item.dish.price}
+              quantity={item.quantity}
+              description={item.dish.description}
+            />
+          ))}
       </View>
       <View style={styles.section}>
         <Fee isMember={user.isMember} />

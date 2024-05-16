@@ -8,13 +8,7 @@ const HanokCart = () => {
   const { item, sauce, totalPrice, quantity } = route.params; // Extracting the item, sauce, totalPrice, and quantity from route params
 
   const handlePayment = () => {
-    navigation.navigate("Payment", {
-      // Pass data to Payment screen
-      itemName: item.name,
-      sauceName: sauce,
-      quantity: quantity,
-      itemPrice: totalPrice,
-    });
+    navigation.navigate("Payment");
     console.log(item.name, sauce, quantity, totalPrice);
   };
 
