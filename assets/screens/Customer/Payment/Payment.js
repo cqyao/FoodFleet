@@ -24,8 +24,8 @@ const Payment = () => {
   const { user } = useContext(UserContext);
   const [cartItems, setCartItems] = useState([]);
   var subtotal = 0;
-  var deliveryFee = 5;
-  var serviceFee = 3;
+  var deliveryFee = "5";
+  var serviceFee = "3";
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -41,8 +41,8 @@ const Payment = () => {
 
   if (user.membership) {
     var totalPrice = subtotal;
-    var deliveryFee = 0;
-    var serviceFee = 0;
+    var deliveryFee = "0";
+    var serviceFee = "0";
   } else {
     var totalPrice = subtotal + parseInt(serviceFee) + parseInt(deliveryFee);
   }
@@ -81,13 +81,7 @@ const Payment = () => {
         ))}
       </View>
       <View style={styles.section}>
-        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>
-        <Text>{"\n"}</Text>
-        <Text style={styles.fee}>Delivery fee: AU${deliveryFee}</Text>
-        <Text>{"\n"}</Text>
-        <Text style={styles.fee}>Service fee: AU${serviceFee}</Text>
-        <Text>{"\n"}</Text>
-        <Text style={styles.total}>Total {totalPrice}</Text>
+        <Fee isMember={user.isMember} />
       </View>
       <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
         <View style={styles.cardContainer}>
@@ -172,6 +166,7 @@ const styles = StyleSheet.create({
   },
   subtotal: {
     fontSize: 16,
+    fontWeight: "600",
   },
   fee: {
     fontSize: 16,
