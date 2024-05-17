@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,12 +9,24 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { AddFeedback } from "../../../../database";
+import { UserContext } from "../../../../context/UserContext";
+
+import { AddFeedback, GetCartItems } from "../../../../database";
 
 const GiveFeedback = () => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [cartItems, setCartItems] = useState([]);
   const navigation = useNavigation();
+
+  const { user } = useContext(UserContext);
+  useEffect(() => {
+    const fetchItems = async () => {
+      const items = await GetCartItems(user.cartId);
+      setCartItems(items);
+    };
+    fetchItems();
+  }, []);
 
   const handleRating = (rate) => {
     setRating(rate);
@@ -22,8 +34,8 @@ const GiveFeedback = () => {
 
   const handleSubmitFeedback = async () => {
     try {
-      const customerId = 1; // Replace with actual customer ID
-      const restaurantId = 1; // Replace with actual restaurant ID
+      const customerId = user.id; // 실제 고객 ID
+      const restaurantId = cartItems[0]?.dish[0]?.restaurantId;
 
       // Add feedback to the database with message
       const data = await AddFeedback(

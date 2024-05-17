@@ -1,4 +1,3 @@
-// CustomerHome.js
 import React, { useContext, useState, useEffect } from "react";
 import {
   View,
@@ -8,17 +7,18 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 import { UserContext } from "../../../../context/UserContext";
 import { GetRestaurants, CreateCart, GetMenus } from "../../../../database";
 
 const CustomerHome = () => {
   const navigation = useNavigation();
+  const route = useRoute(); // Use useRoute to get route params
   const { user, setUser } = useContext(UserContext);
   const [restaurants, setRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
   const categoriesData = [
     {
@@ -38,16 +38,33 @@ const CustomerHome = () => {
     },
     {
       id: "4",
-      title: "Asian food",
-      image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
+      title: "Fast food",
+      image: require("../../../../assets/screens/EveryImages/Pizza.png"),
     },
     {
       id: "5",
-      title: "Asian food",
-      image: require("../../../../assets/screens/EveryImages/AsianFood.png"),
+      title: "Desserts",
+      image: require("../../../../assets/screens/EveryImages/Food.png"),
     },
     // Add more category data here.
   ];
+
+  useEffect(() => {
+    if (route.params?.nearbyRestaurants) {
+      setFilteredRestaurants(route.params.nearbyRestaurants);
+    } else {
+      const fetchRestaurants = async () => {
+        try {
+          const fetchedRestaurants = await GetRestaurants();
+          setRestaurants(fetchedRestaurants);
+        } catch (error) {
+          console.error("Error fetching restaurants:", error);
+        }
+      };
+
+      fetchRestaurants();
+    }
+  }, [route.params?.nearbyRestaurants]);
 
   const CategoryItem = ({ title, image }) => (
     <View style={styles.categoryItem}>
@@ -67,8 +84,6 @@ const CustomerHome = () => {
     deliveryTime,
     image_url,
   }) => {
-    const navigation = useNavigation();
-
     const handlePress = async () => {
       user.restaurantId = id;
       var cart = await CreateCart(user.id, user.restaurantId);
@@ -81,7 +96,6 @@ const CustomerHome = () => {
 
     return (
       <TouchableOpacity style={styles.restaurantItem} onPress={handlePress}>
-        
         <Image source={{ uri: image_url }} style={styles.restaurantImage} />
         <Text style={styles.restaurantName}>{name}</Text>
         <Text style={styles.restaurantType}>{type}</Text>
@@ -109,8 +123,6 @@ const CustomerHome = () => {
   };
 
   const ProfileIcon = () => {
-    const navigation = useNavigation();
-
     const handleProfilePress = () => {
       navigation.navigate("Profile");
     };
@@ -126,8 +138,6 @@ const CustomerHome = () => {
   };
 
   const MotorcycleImage = () => {
-    const navigation = useNavigation();
-
     const handleMotorcyclePress = () => {
       navigation.navigate("AlmostThere");
     };
@@ -142,23 +152,6 @@ const CustomerHome = () => {
     );
   };
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const fetchedRestaurants = await GetRestaurants();
-        const formattedRestaurants = fetchedRestaurants.map((restaurant) => ({
-          ...restaurant,
-          //image_url: restaurant.image_url[0], // 배열의 첫 번째 요소를 사용
-        }));
-        setRestaurants(formattedRestaurants);
-      } catch (error) {
-        console.error("Error fetching restaurants:", error);
-      }
-    };
-
-    fetchRestaurants();
-  }, []);
-
   const handleMorePress = () => {
     navigation.navigate("CategoriesMain");
   };
@@ -167,12 +160,11 @@ const CustomerHome = () => {
     navigation.navigate("Search");
   };
 
-
   return (
     <View style={styles.container}>
       <View style={styles.locationContainer}>
         <Ionicons name="location-outline" size={24} color="black" />
-        <Text style={styles.locationText}>{user.city}</Text>
+        <Text style={styles.locationText}>{user.postcode}</Text>
       </View>
 
       <Text style={styles.greetingText}>Good Morning, {user.firstName}</Text>
@@ -198,32 +190,19 @@ const CustomerHome = () => {
       />
 
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Nearby Restaurants</Text>
+        <Text style={styles.sectionTitle}>Restaurants</Text>
         <TouchableOpacity>
           <Text style={styles.seeAllText}>See All</Text>
         </TouchableOpacity>
       </View>
 
       <FlatList
-        data={restaurants}
+        data={
+          filteredRestaurants.length > 0 ? filteredRestaurants : restaurants
+        }
         renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
         keyExtractor={(item) => item.id}
-      /> 
-      {/* <ScrollView>
-        {
-          user.restaurants !== 0 &&
-          user.restaurants.map((restaurant) => (
-            <RestaurantItem
-              name={restaurant.name}
-              type = {restaurant.type}
-              rating={restaurant.rating}
-              isFreeDelivery={restaurant.isFreeDelivery}
-              deliveryTime={restaurant.deliveryTime}
-              image_url={restaurant.image_url}
-            />
-          ))
-        }
-      </ScrollView> */}
+      />
 
       <View style={styles.menuBar}>
         <MotorcycleImage />
@@ -294,6 +273,7 @@ const styles = StyleSheet.create({
   categoryItem: {
     alignItems: "center",
     marginRight: 15,
+    marginBottom: 50,
   },
   categoryImage: {
     width: 70,
@@ -311,7 +291,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#e0e0e0",
   },
   restaurantImage: {
-    width: "100",
+    width: "100%",
     height: 180,
   },
   restaurantName: {
