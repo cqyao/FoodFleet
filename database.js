@@ -126,14 +126,27 @@ const GetMembership = async function (customerId) {
   return data;
 };
 
-export const AddFeedback = async function (customerId, restaurantId, rating) {
+export const AddFeedback = async function (
+  customerId,
+  restaurantId,
+  rating,
+  feedback
+) {
   const { data, error } = await supabase
     .from("Ratings")
     .insert([
-      { customerId: customerId, restaurantId: restaurantId, rating: rating },
+      {
+        customerId: customerId,
+        restaurantId: restaurantId,
+        rating: rating,
+        feedback: feedback,
+      },
     ])
     .select();
-
+  if (error) {
+    console.error("Error adding feedback:", error.message);
+    throw error;
+  }
   return data;
 };
 
@@ -216,13 +229,17 @@ const GetRestaurantRatings = async function (restaurantId) {
 };
 
 //Done
-const GetNearbyRestaurants = async function (postcode) {
+export const GetNearbyRestaurants = async function (
+  postcode,
+  distance,
+  rating
+) {
   const { data, error } = await supabase
     .from("Restaurants")
     .select("*")
-    .gt("postcode", postcode - 5)
-    .lt("postcode", postcode + 5);
-
+    .gt("postcode", postcode - distance)
+    .lt("postcode", postcode + distance)
+    .gte("rating", rating);
   return data;
 };
 
@@ -292,22 +309,40 @@ const GetRestOrdersById = async function (orderId) {
   return data[0];
 };
 
-//Done
-const MakeOrder = async function (paymentMethodId, total, cartId) {
-  const { data, error } = await supabase
-    .from("Orders")
-    .insert([
-      { paymentMethodId: paymentMethodId, total: total, cartId: cartId },
-    ])
-    .select();
+export const MakeOrder = async function (
+  paymentMethodId,
+  total,
+  cartId,
+  restaurantId,
+  status = "Pending"
+) {
+  try {
+    const { data, error } = await supabase
+      .from("Orders")
+      .insert([{ paymentMethodId, total, cartId, restaurantId, status }])
+      .select();
 
-  const { data2, error2 } = await supabase
-    .from("Carts")
-    .update({ status: "Purchased" })
-    .eq("id", cartId)
-    .select();
+    if (error) {
+      console.error("Order creation error:", error);
+      return { error };
+    }
 
-  return data2;
+    const { data: data2, error: error2 } = await supabase
+      .from("Carts")
+      .update({ status: "Purchased" })
+      .eq("id", cartId)
+      .select();
+
+    if (error2) {
+      console.error("Cart update error:", error2);
+      return { error: error2 };
+    }
+
+    return { data, data2 };
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return { error: err };
+  }
 };
 
 //Done

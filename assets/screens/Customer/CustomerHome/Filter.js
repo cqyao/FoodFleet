@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import Slider from "@react-native-community/slider"; // Slider import 수정
+import Slider from "@react-native-community/slider";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { UserContext } from "../../../../context/UserContext"; // Import UserContext
+import { GetNearbyRestaurants } from "../../../../database"; // Import GetNearbyRestaurants function
 
 const Filter = () => {
   const [distance, setDistance] = useState(3);
   const [rating, setRating] = useState(0);
+  const { user } = useContext(UserContext); // Use UserContext to get user information
+  const navigation = useNavigation(); // Use useNavigation
 
-  const handleSave = () => {
-    // 여기에 필터 저장 로직을 구현하세요.
-    console.log(
-      "Filters saved with distance:",
-      distance,
-      "and rating:",
-      rating
-    );
+  const handleSave = async () => {
+    try {
+      const postcode = user.postcode; // Get the user's postcode from UserContext
+      const data = await GetNearbyRestaurants(postcode, distance, rating);
+      console.log("Nearby Restaurants:", data);
+      navigation.navigate("CustomerHome", { nearbyRestaurants: data }); // Pass data to CustomerHome
+    } catch (error) {
+      console.error("Error getting nearby restaurants:", error.message);
+      Alert.alert(
+        "Error",
+        "Failed to get nearby restaurants. Please try again later."
+      );
+    }
   };
 
   const handleRating = (rate) => {
@@ -131,7 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   slider: {
-    marginTop: 10, // Slider에 상단 여백 추가
+    marginTop: 10,
   },
   starRating: {
     flexDirection: "row",

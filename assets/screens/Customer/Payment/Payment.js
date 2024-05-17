@@ -19,13 +19,38 @@ import {
   GetDish,
 } from "../../../../database";
 
+const Fee = ({ isMember, subtotal, deliveryFee, serviceFee, totalPrice }) => {
+  let content;
+
+  if (isMember) {
+    content = (
+      <Text style={styles.fee}>
+        Your membership gives you free delivery and zero service fees!
+      </Text>
+    );
+  } else {
+    content = (
+      <Text style={styles.fee}>
+        <Text style={styles.subtotal}>Subtotal: AU${subtotal.toFixed(2)}</Text>
+        {"\n"}
+        Delivery fee: AU${deliveryFee}
+        {"\n"}Service fee: AU${serviceFee}
+        {"\n"}
+        <Text style={styles.total}>Total: AU${totalPrice.toFixed(2)}</Text>
+        {"\n"}
+      </Text>
+    );
+  }
+  return <View>{content}</View>;
+};
+
 const Payment = () => {
   const navigation = useNavigation();
   const { user } = useContext(UserContext);
   const [cartItems, setCartItems] = useState([]);
   var subtotal = 0;
-  var deliveryFee = "5";
-  var serviceFee = "3";
+  var deliveryFee = 5;
+  var serviceFee = 3;
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -39,16 +64,51 @@ const Payment = () => {
     subtotal += cartItems[i].dish[0].price * cartItems[i].quantity;
   }
 
+  let totalPrice = user.membership
+    ? subtotal
+    : subtotal + deliveryFee + serviceFee;
+
   if (user.membership) {
-    var totalPrice = subtotal;
-    var deliveryFee = "0";
-    var serviceFee = "0";
-  } else {
-    var totalPrice = subtotal + parseInt(serviceFee) + parseInt(deliveryFee);
+    deliveryFee = 0;
+    serviceFee = 0;
   }
 
   const handlePay = async () => {
-    // handlePay 함수 구현
+    try {
+      const paymentMethodId = user.paymentMethods[user.selectedCardIndex].id;
+      const restaurantId = cartItems[0]?.dish[0]?.restaurantId; // Assuming all items are from the same restaurant
+      const status = "Incoming";
+
+      console.log("Payment Method ID:", paymentMethodId);
+      console.log("Total Price:", totalPrice);
+      console.log("Cart ID:", user.cartId);
+      console.log("Restaurant ID:", restaurantId);
+      console.log("Status:", status);
+
+      const orderResult = await MakeOrder(
+        paymentMethodId,
+        totalPrice,
+        user.cartId,
+        restaurantId,
+        status
+      );
+      console.log("Order Result:", orderResult);
+
+      if (orderResult?.error) {
+        Alert.alert(
+          "Error",
+          `There was an error processing your order: ${orderResult.error.message}`
+        );
+      } else if (orderResult?.data2) {
+        Alert.alert("Success", "Your order has been placed successfully!");
+        navigation.navigate("PreparingOrder");
+      } else {
+        Alert.alert("Error", "Unexpected response from the server.");
+      }
+    } catch (error) {
+      console.log("Unexpected Error:", error);
+      Alert.alert("Error", `An unexpected error occurred: ${error.message}`);
+    }
   };
 
   const goToPaymentMethod = () => {
@@ -81,7 +141,13 @@ const Payment = () => {
         ))}
       </View>
       <View style={styles.section}>
-        <Fee isMember={user.isMember} />
+        <Fee
+          isMember={user.membership}
+          subtotal={subtotal}
+          deliveryFee={deliveryFee}
+          serviceFee={serviceFee}
+          totalPrice={totalPrice}
+        />
       </View>
       <TouchableOpacity style={styles.section} onPress={goToPaymentMethod}>
         <View style={styles.cardContainer}>
