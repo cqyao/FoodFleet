@@ -20,10 +20,10 @@ describe('#GetCustomer(1)', () => {
 })
 
 
-describe('#GetRestaurant(1)', () => {
+describe('#GetRestaurant(2)', () => {
   it('Resolves with restaurant id', () => {
     return getRestaurant().then(result => {
-      assert.equal(result.id, 1)
+      assert.equal(result.id, 2)
     })
   })
 })

@@ -26,7 +26,7 @@ const OrderCard = ({ order }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.cardText}>{order.id}</Text>
+      <Text style={styles.cardText}>Order #{order.id}</Text>
       <Text style={styles.cardText}>Customer: {customer.firstName} {customer.lastName}</Text>
       <Text style={styles.cardText}>Status: {order.status}</Text>
       <Text style={styles.cardText}>Total: ${order.total}</Text>

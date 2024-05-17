@@ -172,20 +172,14 @@ const CustomerHome = () => {
     <View style={styles.container}>
       <View style={styles.locationContainer}>
         <Ionicons name="location-outline" size={24} color="black" />
-        <Text style={styles.locationText}>Wollongong</Text>
+        <Text style={styles.locationText}>{user.city}</Text>
       </View>
 
       <Text style={styles.greetingText}>Good Morning, {user.firstName}</Text>
 
-      <TouchableOpacity onPress={handleSearchPress}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Search for lunch"
-            style={styles.searchInput}
-            editable={false}
-          />
+      <TouchableOpacity onPress={handleSearchPress} style={styles.searchContainer}>
+          <Text style={styles.searchInput}>Search</Text>
           <Ionicons name="search" size={24} color="grey" />
-        </View>
       </TouchableOpacity>
 
       <View style={styles.sectionTitleContainer}>
@@ -261,6 +255,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   searchContainer: {
+    backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f0f0f0",

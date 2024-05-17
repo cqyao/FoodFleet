@@ -562,8 +562,6 @@ export {
   GetCustomer,
   CreateCustomer,
   CustomerLogin,
-  SearchRestaurant,
-  AddFeedback,
   AddCustomerPaymentMethod,
 };
 // export others

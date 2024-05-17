@@ -430,17 +430,11 @@ class DatabaseTests
 		return await GetCustomer(1);
 	}
 	async runTest2() {
-		return await GetRestaurant(1);
+		return await GetRestaurant(2);
 	}
 }
 module.exports = {DatabaseTests};
 
-// export functions for Restaurant
-export { CreateRestaurant, RestaurantLogin, GetRestaurantRatings, GetRestaurantOrders, GetRestOrdersById, GetRestaurant, GetMenus };
-// export functions for Customer
-export { GetCustomer, CreateCustomer }
-// export others
-export { GetRestaurantCarts }
 
 
 
