@@ -1,28 +1,59 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
+import { Subscribe } from "../../../../database";
+import { UserContext } from "../../../../context/UserContext";
 
 const MembershipPlan = ({ navigation }) => {
   const [selectedPlan, setSelectedPlan] = useState("monthly");
+  const {user, setUser} = useContext(UserContext)
+  var monthlyDate = new Date();
+  var yearlyDate = new Date();
+  let addMonthly = 6;
+  let addAnnually = 12;
+  monthlyDate.setMonth(monthlyDate.getMonth() + addMonthly)
+  yearlyDate.setMonth(yearlyDate.getMonth() + addAnnually)
+  let monthDate = monthlyDate.toISOString().split('T')[0]
+  let annualDate = yearlyDate.toISOString().split('T')[0]
 
   // Sample data for the plans
   const plans = {
     monthly: {
       price: "$10 Per month",
-      startDate: "04/04/2024",
+      startDate: monthDate,
+      type: "monthly",
     },
     annual: {
       price: "$100 Per year",
-      startDate: "04/04/2024",
+      startDate: annualDate,
+      type: "annually",
     },
+  };
+
+  const handleCardPress = () => {
+    navigation.navigate("PaymentMethod");
   };
 
   const handleSelectPlan = (plan) => {
     setSelectedPlan(plan);
+    console.log(plan)
   };
 
-  const handlePayment = () => {
-    navigation.navigate("MembershipPayment");
-    // Payment logic goes here if needed
+  const handlePay = () => {
+    //CreateMembership(user.id)
+    Subscribe(user.id, plans[selectedPlan].type)
+    user.isMember = true
+    console.log(user)
+    Alert.alert(
+      "Membership Started!",
+      "Your membership has been successfully started!",
+      [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("Profile"),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -54,8 +85,20 @@ const MembershipPlan = ({ navigation }) => {
       <Text style={styles.startDate}>
         Start Date: {plans[selectedPlan].startDate}
       </Text>
-      <TouchableOpacity style={styles.paymentButton} onPress={handlePayment}>
-        <Text style={styles.paymentText}>Payment</Text>
+      {/* Payment Methods */}
+      <TouchableOpacity style={styles.paymentMethod} onPress={handleCardPress}>
+        <Image
+          source={require("../../EveryImages/MasterCard.png")}
+          style={styles.cardIcon}
+        />
+        <Text style={styles.cardText}>MasterCard 1234</Text>
+        <Image
+          source={require("../../EveryImages/RightChevron.png")}
+          style={styles.chevronIcon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.paymentButton} onPress={handlePay}>
+        <Text style={styles.paymentText}>Pay</Text>
       </TouchableOpacity>
     </View>
   );
@@ -109,12 +152,34 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: "80%",
     alignItems: "center",
-    marginBottom: 20,
+    marginVertical: 20,
   },
   paymentText: {
     fontSize: 18,
     color: "white",
     fontWeight: "bold",
+  },
+  paymentMethod: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  cardIcon: {
+    width: 40,
+    height: 40,
+    resizeMode: "contain",
+  },
+  cardText: {
+    flex: 1,
+    fontSize: 18,
+    marginLeft: 10,
+  },
+  chevronIcon: {
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
   },
 });
 

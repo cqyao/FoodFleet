@@ -108,14 +108,16 @@ const CustomerHome = () => {
     );
   };
 
-  const HomeButton = () => {
-    const handleHomePress = () => {
-      navigation.navigate("CustomerHome");
+  const CartButton = () => {
+    const navigation = useNavigation();
+
+    const handleCartPress = () => {
+      navigation.navigate("MainCart");
     };
 
     return (
-      <TouchableOpacity style={styles.iconContainer} onPress={handleHomePress}>
-        <Ionicons name="home-outline" size={24} color="black" />
+      <TouchableOpacity style={styles.iconContainer} onPress={handleCartPress}>
+        <Ionicons name="cart-outline" size={24} color="black" />
       </TouchableOpacity>
     );
   };
@@ -145,10 +147,7 @@ const CustomerHome = () => {
         style={styles.iconContainer}
         onPress={handleMotorcyclePress}
       >
-        <Image
-          source={require("../../../../assets/screens/EveryImages/motorcycle.png")}
-          style={styles.motorcycleImage}
-        />
+      <Ionicons name="car-outline" size={24} color="black" />
       </TouchableOpacity>
     );
   };
@@ -168,17 +167,11 @@ const CustomerHome = () => {
         <Text style={styles.locationText}>{user.postcode}</Text>
       </View>
 
-      <Text style={styles.greetingText}>Good Morning, Jacob</Text>
+      <Text style={styles.greetingText}>Good Morning, {user.firstName}</Text>
 
-      <TouchableOpacity onPress={handleSearchPress}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Search for lunch"
-            style={styles.searchInput}
-            editable={false}
-          />
+      <TouchableOpacity onPress={handleSearchPress} style={styles.searchContainer}>
+          <Text style={styles.searchInput}>Search</Text>
           <Ionicons name="search" size={24} color="grey" />
-        </View>
       </TouchableOpacity>
 
       <View style={styles.sectionTitleContainer}>
@@ -213,7 +206,7 @@ const CustomerHome = () => {
 
       <View style={styles.menuBar}>
         <MotorcycleImage />
-        <HomeButton />
+        <CartButton />
         <ProfileIcon />
       </View>
     </View>
@@ -241,6 +234,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   searchContainer: {
+    backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f0f0f0",

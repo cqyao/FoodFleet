@@ -32,7 +32,6 @@ import AddPaymentMethod from "./assets/screens/Customer/Payment/AddPaymentMethod
 import Payment from "./assets/screens/Customer/Payment/Payment";
 import PaymentMethod from "./assets/screens/Customer/Payment/PaymentMethod";
 
-import MembershipPayment from "./assets/screens/Customer/Profile/MembershipPayment";
 import MembershipPlan from "./assets/screens/Customer/Profile/MembershipPlan";
 import Profile from "./assets/screens/Customer/Profile/Profile";
 
@@ -200,11 +199,6 @@ const App = () => (
           name="PaymentMethod"
           component={PaymentMethod}
           options={{ title: "PaymentMethod" }}
-        />
-        <Stack.Screen
-          name="MembershipPayment"
-          component={MembershipPayment}
-          options={{ title: "MembershipPayment" }}
         />
         <Stack.Screen
           name="MembershipPlan"

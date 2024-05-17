@@ -35,11 +35,17 @@ const Profile = ({ navigation }) => {
   const Member = ({ isMember }) => {
     let content
 
-    console.log(isMember)
     if (isMember) {
-      content = <Text>Thanks for being a member. {"\n"}You're currently enjoying zero delivery and service fees!</Text>
+      content = <Text style={{textAlign: "center"}}>Thanks for being a member. {"\n"}You're currently enjoying zero delivery and service fees!</Text>
     } else {
-      content = <Text>Currently not a member{"\n"}Join today for free delivery and zero service fees!</Text>
+      content =
+        <View style={{alignItems:"center"}}>
+          <Text style={{textAlign:"center"}}>Currently not a member{"\n"}Join today for free delivery and zero service fees!</Text>
+          <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+            <Text style={styles.signUpText}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      
     }
     return <View>{content}</View>
   }
@@ -57,14 +63,14 @@ const Profile = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Profile</Text>
       </View>
-
+      {/* Profile picture */}
       <Image
-        source={require("../../EveryImages/smile.png")}
+        source={{uri: user.profile_picture}}
         style={styles.profilePic}
       />
 
       <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
-      <Text style={styles.age}>26</Text>
+      <Text style={styles.email}>{user.emailAddress}</Text>
 
       <View style={styles.PostCodeContainer}>
         <Text style={styles.PostCodeTitle}>Post Code</Text>
@@ -74,9 +80,7 @@ const Profile = ({ navigation }) => {
       <View style={styles.membershipContainer}>
         <Text style={styles.membershipTitle}>Membership</Text>
         <Member isMember={user.isMember} />
-        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-          <Text style={styles.signUpText}>Sign up</Text>
-        </TouchableOpacity>
+        
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
   },
-  age: {
+  email: {
     fontSize: 18,
     textAlign: "center",
     color: "grey",
@@ -186,7 +190,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 30,
     marginVertical: 10,
-    width: "100%",
+    width: "50%",
     alignItems: "center",
   },
   signUpText: {

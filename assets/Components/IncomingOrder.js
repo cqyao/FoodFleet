@@ -4,10 +4,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
-  GetRestaurantOrders,
   GetCustomer,
-  GetRestaurantCarts,
-  GetRestOrdersById,
   GetCartById,
   UpdateOrder,
 } from "../../database";
@@ -35,9 +32,9 @@ const IncomingOrder = ({ order }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.cardText}>{customer.id}</Text>
       <Text style={styles.cardText}>Customer: {customer.firstName} {customer.lastName}</Text>
-      <Text style={styles.cardText}>Status: {order.status}</Text>
+      <Text>Address: {customer.address}</Text>
+      <Text>Phone: {customer.phoneNumber}</Text>
       <Text style={styles.cardText}>Total: ${order.total}</Text>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity style={[styles.accept]} onPress={acceptPress}>

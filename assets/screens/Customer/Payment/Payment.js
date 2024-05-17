@@ -52,6 +52,26 @@ const Payment = () => {
   var deliveryFee = 5;
   var serviceFee = 3;
 
+  const Fee = ({ isMember }) => {
+    let content
+
+    if (isMember) {
+      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!</Text>
+    } else {
+      content = 
+      
+      <Text style={styles.fee}>
+        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>{"\n"}
+        Delivery fee: AU${deliveryFee}
+      {"\n"}Service fee: AU${serviceFee}
+      {"\n"}<Text style={styles.total}>Total {totalPrice}</Text>
+      {"\n"}
+      </Text>
+      
+    }
+    return <View>{content}</View>
+  }
+
   useEffect(() => {
     const fetchItems = async () => {
       const items = await GetCartItems(user.cartId);
