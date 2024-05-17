@@ -14,6 +14,7 @@ import { AddToCart } from "../../../../database";
 const HanokMenu = () => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
+  console.log(user)
 
   const handleMenuItemPress = (item) => {
     console.log(user);

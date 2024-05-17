@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { GetRestaurantRatings, GetCustomer } from '../../database';  // Make sure this path is correct
 
 const RatingItem = ({ customerId, message, rating }) => {
-    const [cust, setCust] = useState('');
+    const [name, setName] = useState('');
 
     useEffect(() => {
         const fetchRating = async () => {
             const cust = await GetCustomer(customerId)
-            setCust(cust.firstName + " " + cust.lastName);
+            setName(cust[0].firstName + " " + cust[0].lastName);
         };
 
         fetchRating();
@@ -47,7 +47,7 @@ const RatingItem = ({ customerId, message, rating }) => {
                     style={styles.avatar}
                     source={{uri: 'https://links.papareact.com/wru'}} 
                 />
-                <Text style={styles.name}>{cust}</Text>
+                <Text style={styles.name}>{name}</Text>
             </View>
             <View style={{flexDirection: "row"}}>
                 {starArray}

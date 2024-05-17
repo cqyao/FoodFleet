@@ -13,19 +13,23 @@ import { UserContext } from "../../../../context/UserContext"
 import ReportCard from "../../../Components/ReportCard";
 
 const GenerateReport = () => {
-  const [from, setFrom] = useState(new Date());
-  const [to, setTo] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [from, setFrom] = useState(new Date('2001-05-15T00:00:00'));
+  const [to, setTo] = useState(new Date('2024-05-20T12:00:00'));
   const [show, setShow] = useState(false);
   const [report, setReport] = useState([]);
   const { user, setUser } = useContext(UserContext);
+  var totalProfit = 0;
   
   
   const fetchReport = async() => {
     console.log("Report Generated!")
     const entry = await GetRestaurantOrdersWithDate(user.id, from.toISOString().split('T')[0], to.toISOString().split('T')[0])
     setReport(entry);
-    console.log(from, to)
+    console.log(entry)
+  }
+
+  for (let i = 0; i < report.length; i++) {
+    totalProfit += report[i].total;
   }
 
   const onChangeFrom = (event, selectedDate) => {
@@ -77,6 +81,7 @@ const GenerateReport = () => {
         }
         
       </View>
+      <Text style={styles.profitText}>Total profit for selected period: ${totalProfit}</Text>
     </SafeAreaView>
   );
 };
@@ -121,6 +126,11 @@ const styles = StyleSheet.create({
   rangeText: {
     fontSize: 20,
     fontWeight: "bold"
+  },
+  profitText: {
+    marginTop: 10,
+    marginLeft: 20,
+    fontSize: 20,
   }
 });
 

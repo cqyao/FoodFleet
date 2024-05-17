@@ -1,3 +1,6 @@
+// Todo: Click "Accept" => Create new order with same details but change status to "In Preparation"
+// then, delete old order.
+
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -5,39 +8,42 @@ import {
   GetCustomer,
   GetRestaurantCarts,
   GetRestOrdersById,
+  GetCartById,
+  UpdateOrder,
 } from "../../database";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const IncomingOrder = ({ id }) => {
-  const [total, setTotal] = useState("");
-  const [message, setMessage] = useState("");
-  const [cust, setCust] = useState("");
-  const [status, setStatus] = useState("");
+const IncomingOrder = ({ order }) => {
+  const [customer, setCustomer] = useState("");
+
   useEffect(() => {
     const fetchOrder = async () => {
-      const order = await GetRestOrdersById(id);
-      const cart = await GetRestaurantCarts(order.cartId);
-      const cust = await GetCustomer(cart.customerId);
-
-      setTotal(order.total);
-      setMessage(order.message);
-      setCust(cust.firstName + " " + cust.lastName);
-      setStatus(order.status);
+      var cart = await GetCartById(order.cartId)
+      var customer = await GetCustomer(cart[0].customerId)
+      setCustomer(customer[0])
     };
     fetchOrder();
-  }, [id]);
+  }, []);
+
+  const acceptPress = async() => {
+    await UpdateOrder(order.id, "In Preparation");
+  };
+
+  const rejectPress = async() => {
+    await UpdateOrder(order.id, "Cancelled");
+  };
 
   return (
     <View style={styles.card}>
-      <Text style={styles.cardText}>{id}</Text>
-      <Text style={styles.cardText}>Customer: {cust}</Text>
-      <Text style={styles.cardText}>Status: {status}</Text>
-      <Text style={styles.cardText}>Total: ${total}</Text>
+      <Text style={styles.cardText}>{customer.id}</Text>
+      <Text style={styles.cardText}>Customer: {customer.firstName} {customer.lastName}</Text>
+      <Text style={styles.cardText}>Status: {order.status}</Text>
+      <Text style={styles.cardText}>Total: ${order.total}</Text>
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity style={[styles.accept]}>
+        <TouchableOpacity style={[styles.accept]} onPress={acceptPress}>
             <Text>Accept</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reject}>
+        <TouchableOpacity style={styles.reject} onPress={rejectPress}>
             <Text>Reject</Text>
         </TouchableOpacity>
       </View>

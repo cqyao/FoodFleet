@@ -1,32 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { UserContext } from '../../../../context/UserContext';
+
 
 const RestaurantMain = ( {navigation} ) => {
-      const navOrder = () => {
-        // Submit the data or navigate to next screen
-        console.log("Go to Order Management")
-        navigation.navigate('Order Management')
-      };
-      const navFeedback = () => {
-        // Submit the data or navigate to next screen
-        console.log("Go to Feedback")
-        navigation.navigate('CheckCustomerReview')
-      };
-      const navRevenue = () => {
-        // Submit the data or navigate to next screen
-        console.log("Go to Revenue Report")
-        navigation.navigate('GenerateReport')
-      };
-      const navProfile = () => {
-        // Submit the data or navigate to next screen
-        console.log("Go to profile")
-        navigation.navigate('Restaurant Profile')
-      };
+  const {user, setUser} = useContext(UserContext);
+
+  const navOrder = () => {
+    // Submit the data or navigate to next screen
+    console.log("Go to Order Management")
+    navigation.navigate('Order Management')
+  };
+  const navFeedback = () => {
+    // Submit the data or navigate to next screen
+    console.log("Go to Feedback")
+    navigation.navigate('CheckCustomerReview')
+  };
+  const navRevenue = () => {
+    // Submit the data or navigate to next screen
+    console.log("Go to Revenue Report")
+    navigation.navigate('GenerateReport')
+  };
+  const navProfile = () => {
+    // Submit the data or navigate to next screen
+    console.log("Go to profile")
+    navigation.navigate('Restaurant Profile')
+  };
 
   return (
     <ScrollView style={styles.container}>
       <Image
-        source={{ uri: 'https://links.papareact.com/wru' }} // Replace with your image path
+        source={{ uri: user.image_url }} // Replace with your image path
         style={styles.logo}
         resizeMode="contain"
       />

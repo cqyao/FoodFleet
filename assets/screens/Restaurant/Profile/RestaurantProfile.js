@@ -1,45 +1,55 @@
-import React, {useEffect, useContext, useState} from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, {useEffect, useContext, useState, useCallback} from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import MenuItem from '../../../Components/MenuItem';
 import { UserContext } from '../../../../context/UserContext'
-import { GetRestaurant, GetMenus } from '../../../../database';
+import { GetMenus, AddDish } from '../../../../database';
 
 const RestaurantProfile = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
-  const [ name, setName ] = useState('');
-  const [ category, setCategory ] = useState('');
   const [ menu, setMenu ] = useState([]);
+  const [ refreshing, setRefreshing ] = useState(false)
+  
+
+  const fetchMenu = async() => {
+    const dish = await GetMenus(user.id)
+    console.log(dish)
+    setMenu(dish);
+  }
 
   useEffect(() => {
-    const fetchMenu = async() => {
-      const dish = await GetMenus(user.id)
-      console.log(dish)
-      setMenu(dish);
-    }
-    fetchMenu();
+      fetchMenu();
   }, []);
 
-  useEffect(() => {
-    const fetchRestaurant = async() => {
-      const rest = await GetRestaurant(user)
-      setName(rest.name);
-      setCategory(rest.category);
-    }
-    fetchRestaurant();
-  })
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchMenu();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const logout = () => {
-    setUser(null);
     navigation.navigate('Login')
+    //setUser(null); Currently causes error with user being null. 
+    //Clearing login fields should be good enough
   }
 
   const edit = () => {
     navigation.navigate('EditProfile')
   }
+
+  const addDish = async() => {
+    navigation.navigate("AddDish")
+  }
   
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
         <TouchableOpacity onPress={edit}>
@@ -48,7 +58,7 @@ const RestaurantProfile = ({ navigation }) => {
       </View>
       <View style={styles.logoContainer}>
         <Image
-          source={{ uri: 'https://links.papareact.com/gn7' }}
+          source={{ uri: user.image_url }}
           style={styles.logo}
         />
       </View>
@@ -61,7 +71,6 @@ const RestaurantProfile = ({ navigation }) => {
         {
           menu !== 0 &&
           menu.map((dish) => (
-          //title, price, description, imageUrl
             <MenuItem
               key={dish.id}
               id={dish.id}
@@ -72,10 +81,14 @@ const RestaurantProfile = ({ navigation }) => {
             />
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-        <Text style={styles.logoutButtonText}>Logout</Text>
-        {/* Logout icon would go here */}
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.addButton} onPress={addDish}>
+          <Text style={styles.addButtonText}>
+            Add Dish
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -151,9 +164,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 200,
     alignSelf: "center",
-    marginTop: 10
+    marginTop: 10,
+
   },
   logoutButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  addButton: {
+    borderColor: 'gold',
+    borderWidth: 5,
+    borderRadius: 25,
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 120,
+    alignSelf: "center",
+    marginTop: 10
+  },
+  addButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
