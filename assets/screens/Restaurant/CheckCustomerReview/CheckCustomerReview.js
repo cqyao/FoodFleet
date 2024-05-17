@@ -54,7 +54,7 @@ const RestaurantFeedback = () => {
                 <RatingItem
                     key={review.id}
                     customerId={review.customerId}
-                    message={review.message}
+                    message={review.feedback}
                     rating={review.rating}
                 />
             ))}
