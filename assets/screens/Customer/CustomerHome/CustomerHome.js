@@ -86,8 +86,6 @@ const CustomerHome = () => {
   }) => {
     const handlePress = async () => {
       user.restaurantId = id;
-      var cart = await CreateCart(user.id, user.restaurantId);
-      user.cartId = cart[0].id;
       user.menus = await GetMenus(user.restaurantId);
 
       console.log("Selected restaurant:", id);
@@ -174,41 +172,46 @@ const CustomerHome = () => {
           <Ionicons name="search" size={24} color="grey" />
       </TouchableOpacity>
 
-      <View style={styles.sectionTitleContainer}>
-        <Text style={styles.sectionTitle}>Categories</Text>
-        <TouchableOpacity onPress={handleMorePress}>
-          <Text style={styles.moreText}>More</Text>
-        </TouchableOpacity>
-      </View>
-
-      <FlatList
+      <View>
+        <View style={styles.sectionTitleContainer}>
+          <Text style={styles.sectionTitle}>Categories</Text>
+          <TouchableOpacity onPress={handleMorePress}>
+            <Text style={styles.moreText}>More</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
         horizontal
         data={categoriesData}
         renderItem={({ item }) => <CategoryItem {...item} />}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 50 }}
-      />
-
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Restaurants</Text>
-        <TouchableOpacity>
-          <Text style={styles.seeAllText}>See All</Text>
-        </TouchableOpacity>
+        />
       </View>
 
-      <FlatList
+      <View>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Restaurants</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAllText}>See All</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
         data={
           filteredRestaurants.length > 0 ? filteredRestaurants : restaurants
         }
         renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
         keyExtractor={(item) => item.id}
-      />
-
-      <View style={styles.menuBar}>
-        <MotorcycleImage />
-        <CartButton />
-        <ProfileIcon />
+        style={{height: "50%"}}
+        />
+        <View>
+        <View style={styles.menuBar}>
+          <MotorcycleImage />
+          <CartButton />
+          <ProfileIcon />
+        </View>
       </View>
+      </View>
+
+      
     </View>
   );
 };
@@ -234,7 +237,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   searchContainer: {
-    backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
     color: "green",
     fontWeight: "bold",
   },
-  sectionHeader: {
+  sectionHeader: { // Restaurants header
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -273,15 +275,15 @@ const styles = StyleSheet.create({
   categoryItem: {
     alignItems: "center",
     marginRight: 15,
-    marginBottom: 50,
   },
   categoryImage: {
     width: 70,
     height: 70,
     borderRadius: 35,
+    
   },
   categoryTitle: {
-    marginTop: 10,
+    marginVertical: 10,
     textAlign: "center",
     color: "black",
   },

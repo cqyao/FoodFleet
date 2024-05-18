@@ -1,77 +1,51 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import React, {useContext, useEffect, useState} from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { UserContext } from "../../../../context/UserContext";
+import { GetCartItems } from "../../../../database";
+import SelectedItem from "../../../Components/SelectedItem";
 
-const MainCart = ({ navigation }) => {
-  const [restaurants, setRestaurants] = useState([
-    {
-      id: "1",
-      name: "Hanok",
-      itemQuantity: 1,
-      address: "2/6 Daisy St",
-      image: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
-    },
-    {
-      id: "2",
-      name: "Hungry Jacks",
-      itemQuantity: 1,
-      address: "2/6 Daisy St",
-      image: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
-    },
-    {
-      id: "3",
-      name: "Burger King",
-      itemQuantity: 1,
-      address: "2/6 Daisy St",
-      image: require("../../../../assets/screens/EveryImages/HanokLogo.png"),
-    },
-    // Add more restaurant data here
-  ]);
+const MainCart = () => {
+  const navigation = useNavigation();
+  const {user, setUser} = useContext(UserContext);
+  const [cartItems, setCartItems] = useState([]);
+  const restId = 30;
 
-  const handleDelete = (id) => {
-    const updatedRestaurants = restaurants.filter(
-      (restaurant) => restaurant.id !== id
-    );
-    setRestaurants(updatedRestaurants);
+  const handlePayment = () => {
+    navigation.navigate("Payment");
   };
 
-  const handleNavigation = () => {
-    navigation.navigate("HanokCart");
-  };
+  useEffect(() => {
+    const fetchCart = async() => {
+      const items = await GetCartItems(user.cartId);
+      setCartItems(items);
+    }
+    fetchCart();
+  })
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>CART</Text>
+      
 
-      {restaurants.map((restaurant) => (
-        <TouchableOpacity
-          key={restaurant.id}
-          style={styles.card}
-          onPress={handleNavigation}
-        >
-          <Image source={restaurant.image} style={styles.logo} />
-          <View style={styles.details}>
-            <Text style={styles.title}>{restaurant.name}</Text>
-            <Text>{restaurant.itemQuantity} Item</Text>
-            <Text>Address: {restaurant.address}</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={() => handleDelete(restaurant.id)}
-          >
-            <Image
-              source={require("../../../../assets/screens/EveryImages/trash.png")} // Replace with your trash icon
-              style={styles.trashIcon}
+      <View style={styles.detailsContainer}>
+        <Text style={styles.title}>Cart</Text>
+        <View style={styles.itemSection}>
+
+        {cartItems !== 0 &&
+          cartItems.map((item) => (
+            <SelectedItem
+              key={item.id}
+              itemName={item.dish.name}
+              price={item.dish.price}
+              quantity={item.quantity}
+              description={item.dish.description}
             />
-          </TouchableOpacity>
-        </TouchableOpacity>
-      ))}
-
-      {/* Bottom tab navigation placeholders */}
-      <View style={styles.bottomNav}>
-        <View style={styles.navIcon}></View>
-        <View style={styles.navIcon}></View>
-        <View style={styles.navIcon}></View>
+          ))}
       </View>
+      </View>
+      <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
+        <Text style={styles.payText}>Pay</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -79,53 +53,60 @@ const MainCart = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 50,
-    marginBottom: 20,
-    marginLeft: 20,
-  },
-  card: {
-    flexDirection: "row",
-    backgroundColor: "#F0E68C",
-    borderRadius: 10,
-    padding: 20,
-    marginHorizontal: 20,
-    marginVertical: 10,
     alignItems: "center",
+    paddingTop: 50,
+    backgroundColor: "#F5F5F5", // Light gray background color
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 150,
+    height: 100,
     resizeMode: "contain",
+    marginBottom: 20,
   },
-  details: {
-    flex: 1,
-    marginLeft: 10,
+  productImage: {
+    width: 250,
+    height: 150,
+    resizeMode: "contain",
+    marginVertical: 20,
+  },
+  detailsContainer: {
+    width: "80%",
+    alignItems: "center",
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 5,
+    color: "#333333", // Dark gray text color
   },
-  deleteButton: {
-    // Style for delete button
+  description: {
+    fontSize: 18,
+    color: "#666666", // Medium gray text color
   },
-  trashIcon: {
-    width: 24,
-    height: 24,
+  price: {
+    fontSize: 22,
+    color: "#FFA500", // Orange text color
+    marginVertical: 10,
   },
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 20,
-    borderTopColor: "#ddd",
-    borderTopWidth: 1,
+  payButton: {
+    backgroundColor: "#FFD700", // Gold background color for Pay button
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    marginBottom: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
-  navIcon: {
-    // Placeholder style for navigation icons
+  payText: {
+    fontSize: 20,
+    color: "#FFFFFF", // White text color
+    fontWeight: "bold",
   },
 });
 

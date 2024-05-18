@@ -76,8 +76,8 @@ const Filter = () => {
         <Slider
           style={styles.slider}
           minimumValue={0}
-          maximumValue={10}
-          step={1}
+          maximumValue={50}
+          step={5}
           value={distance}
           onValueChange={(val) => setDistance(val)}
           minimumTrackTintColor="#1fb28a"

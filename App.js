@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { UserProvider } from "./context/UserContext"
 
-import HanokCart from "./assets/screens/Customer/Basket/HanokCart";
 import MainCart from "./assets/screens/Customer/Basket/MainCart";
 
 import BurgersCategory from "./assets/screens/Customer/Categories/BurgersCategory";
@@ -83,11 +82,6 @@ const App = () => (
         <Stack.Screen name="Order Management" component={OrderManagement} />
         <Stack.Screen name="Forgot Password" component={ForgotPassword} />
 
-        <Stack.Screen
-          name="HanokCart"
-          component={HanokCart}
-          options={{ title: "HanokCart" }}
-        />
         <Stack.Screen
           name="MainCart"
           component={MainCart}

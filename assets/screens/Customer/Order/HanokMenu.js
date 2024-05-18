@@ -9,15 +9,12 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserContext";
-import { AddToCart } from "../../../../database";
 
 const HanokMenu = () => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  console.log(user)
 
   const handleMenuItemPress = (item) => {
-    console.log(user);
     // Navigate to HanokOrder screen with the item as a parameter
     navigation.navigate("HanokOrder", { item });
   };
