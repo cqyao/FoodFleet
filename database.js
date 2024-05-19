@@ -512,12 +512,10 @@ const GetSubscription = async function (customerId) {
 };
 
 //Done
-const Subscribe = async function (customerId, subscriptionPlanId) {
+export const Subscribe = async function (customerId, type) {
   const { data, error } = await supabase
     .from("Subscriptions")
-    .insert([
-      { customerId: customerId, subscriptionPlanId: subscriptionPlanId },
-    ])
+    .insert([{ customerId: customerId, type: type }])
     .select();
 
   const { data2, error2 } = await supabase

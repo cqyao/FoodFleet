@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { CreateRestaurant } from "../../../../database";
 
-const CreateRestaurantPage = () => {
+const CreateRestaurantPage = ({navigation}) => {
   const [name, setName] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +27,7 @@ const CreateRestaurantPage = () => {
       password,
       category
     );
+    navigation.navigate("Login")
   };
 
   return (
