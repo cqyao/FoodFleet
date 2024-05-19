@@ -604,14 +604,7 @@ export {
   GetMenus,
 };
 // export functions for Customer
-export {
-  GetCustomer,
-  CreateCustomer,
-  CustomerLogin,
-  SearchRestaurant,
-  AddFeedback,
-  AddCustomerPaymentMethod,
-};
+export { GetCustomer, CreateCustomer, CustomerLogin, AddCustomerPaymentMethod };
 // export others
 export { GetRestaurantCarts };
 
