@@ -1,8 +1,8 @@
 // src/components/CreateCustomerAccount.test.js
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import CreateCustomerAccount from "../CreateCustomerAccount";
-import { CreateCustomer } from "../../../../../database";
+import CreateCustomerAccount from "../assets/screens/Customer/SignUp/CreateCustomerAccount";
+import { CreateCustomer } from "../database";
 
 jest.mock("../../../../database", () => ({
   CreateCustomer: jest.fn(),
