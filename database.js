@@ -95,8 +95,6 @@ const CustomerLogin = async function (emailAddress, password) {
   else return null;
 };
 
-
-
 //Done
 const GetCustomer = async function (customerId) {
   const { data, error } = await supabase
@@ -514,21 +512,20 @@ const GetSubscription = async function (customerId) {
 };
 
 //Done
-export const Subscribe = async function(customerId, type) {
-	const { data, error } = await supabase
-	.from("Subscriptions")
-	.insert([{ "customerId": customerId, "type": type }])
-	.select();
-	
-	
-	const { data2, error2 } = await supabase
-	.from("Customers")
-	.update({ "membership": true })
-	.eq("id", customerId)
-	.select();
-	
-	return data;
-}
+export const Subscribe = async function (customerId, type) {
+  const { data, error } = await supabase
+    .from("Subscriptions")
+    .insert([{ customerId: customerId, type: type }])
+    .select();
+
+  const { data2, error2 } = await supabase
+    .from("Customers")
+    .update({ membership: true })
+    .eq("id", customerId)
+    .select();
+
+  return data;
+};
 
 export const CreateMembership = async function (customerId) {
   const { data, error } = await supabase
@@ -605,12 +602,7 @@ export {
   GetMenus,
 };
 // export functions for Customer
-export {
-  GetCustomer,
-  CreateCustomer,
-  CustomerLogin,
-  AddCustomerPaymentMethod,
-};
+export { GetCustomer, CreateCustomer, CustomerLogin, AddCustomerPaymentMethod };
 // export others
 export { GetRestaurantCarts };
 
