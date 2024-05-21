@@ -7,10 +7,10 @@ Fixed Issues:
 Todo:
     Customer:
         Delivery tracking page is still fully static.
-        Payment methods displaying but not fully working yet.
-        Main cart needs linking.
-        Need a way to save items to cart without using route since it clears cart when exiting. Also doesn't allow user to go from home page to cart without error.
-        Search function not working.
-        Nearby restaurants not working.
-        Filters and categories not working.
-        Feedback and reviews non-existent.
+        FIXED - Payment methods displaying but not fully working yet.
+        FIXED - Main cart needs linking.
+        FIXED - Need a way to save items to cart without using route since it clears cart when exiting. Also doesn't allow user to go from home page to cart without error.
+        FIXED - Search function not working.
+        FIXED - Nearby restaurants not working.
+        FIXED = Filters and categories not working.
+        FIXED - Feedback and reviews non-existent.

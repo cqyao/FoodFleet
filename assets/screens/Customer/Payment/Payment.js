@@ -56,7 +56,7 @@ const Payment = () => {
     let content
 
     if (isMember) {
-      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!</Text>
+      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!{"\n"}<Text style={styles.total}>Total {totalPrice}</Text></Text>
     } else {
       content = 
       
@@ -147,7 +147,7 @@ const Payment = () => {
             source={require("../../../../assets/screens/EveryImages/Location.png")}
             style={styles.icon}
           />
-          <Text style={styles.userPostCode}>Postcode</Text>
+          <Text style={styles.userPostCode}>{user.postcode}</Text>
         </View>
       </View>
       <View style={styles.itemSection}>

@@ -409,10 +409,10 @@ export const UpdateOrder = async function (orderId, status) {
 };
 
 //Done
-export const CreateCart = async function (customerId, restaurantId) {
+export const CreateCart = async function (customerId) {
   const { data, error } = await supabase
     .from("Carts")
-    .insert([{ customerId: customerId, restaurantId: restaurantId }])
+    .insert([{ customerId: customerId }])
     .select();
 
   return data;

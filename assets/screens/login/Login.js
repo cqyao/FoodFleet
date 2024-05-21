@@ -10,10 +10,9 @@ import {
 import {
   RestaurantLogin,
   CustomerLogin,
-  GetMenus,
   GetPaymentMethods,
   GetRestaurants,
-  GetCustomerCarts,
+  CreateCart,
 } from "../../../database";
 import { UserContext } from "../../../context/UserContext";
 
@@ -28,6 +27,8 @@ const LoginScreen = ({ navigation }) => {
     if (!tempCust) {
       console.log("No such user");
     } else {
+      var cart = await CreateCart(tempCust.id);
+      tempCust.cartId = cart[0].id;
       tempCust.paymentMethods = await GetPaymentMethods(tempCust.id);
       tempCust.restaurants = await GetRestaurants();
       tempCust.isMember = tempCust.membership
