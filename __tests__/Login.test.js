@@ -1,19 +1,22 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import Login from "../assets/screens/Login/Login";
+import Login from "../assets/screens/Login/Login"; // 경로를 실제 파일 위치로 변경하세요.
+
 import { UserContext } from "../context/UserContext";
 import {
   CustomerLogin,
   RestaurantLogin,
   GetPaymentMethods,
   GetRestaurants,
-} from "../database";
+  CreateCart,
+} from "../database"; // 경로를 실제 파일 위치로 변경하세요.
 
 jest.mock("../database", () => ({
   CustomerLogin: jest.fn(),
   RestaurantLogin: jest.fn(),
   GetPaymentMethods: jest.fn(),
   GetRestaurants: jest.fn(),
+  CreateCart: jest.fn(),
 }));
 
 const navigation = {
@@ -43,7 +46,12 @@ describe("Login", () => {
   });
 
   it("calls CustomerLogin and navigates to CustomerHome on successful login", async () => {
-    CustomerLogin.mockResolvedValue({ id: 1, name: "Test Customer" });
+    CustomerLogin.mockResolvedValue({
+      id: 1,
+      name: "Test Customer",
+      membership: true,
+    });
+    CreateCart.mockResolvedValue([{ id: 1 }]);
     GetPaymentMethods.mockResolvedValue([]);
     GetRestaurants.mockResolvedValue([]);
 
@@ -62,6 +70,7 @@ describe("Login", () => {
         "test@example.com",
         "password123"
       );
+      expect(CreateCart).toHaveBeenCalledWith(1);
       expect(GetPaymentMethods).toHaveBeenCalledWith(1);
       expect(GetRestaurants).toHaveBeenCalled();
       expect(mockSetUser).toHaveBeenCalledWith(
