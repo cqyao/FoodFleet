@@ -1,9 +1,10 @@
+// src/components/CreateCustomerAccount.test.js
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import CreateCustomerAccount from "../assets/screens/Customer/SignUp/CreateCustomerAccount";
-import { CreateCustomer } from "../database";
+import { render, fireEvent } from "@testing-library/react-native";
+import CreateCustomerAccount from "../CreateCustomerAccount";
+import { CreateCustomer } from "../../../../../database";
 
-jest.mock("../database", () => ({
+jest.mock("../../../../database", () => ({
   CreateCustomer: jest.fn(),
 }));
 
@@ -47,20 +48,18 @@ describe("CreateCustomerAccount", () => {
 
     fireEvent.press(getByText("Next"));
 
-    await waitFor(() => {
-      expect(CreateCustomer).toHaveBeenCalledWith(
-        "John",
-        "Doe",
-        "123 Main St",
-        "NY",
-        "12345",
-        "New York",
-        "john.doe@example.com",
-        "1234567890",
-        "password123"
-      );
+    expect(CreateCustomer).toHaveBeenCalledWith(
+      "John",
+      "Doe",
+      "123 Main St",
+      "NY",
+      "12345",
+      "New York",
+      "john.doe@example.com",
+      "1234567890",
+      "password123"
+    );
 
-      expect(navigation.navigate).toHaveBeenCalledWith("Login");
-    });
+    expect(navigation.navigate).toHaveBeenCalledWith("Login");
   });
 });
