@@ -8,7 +8,7 @@ const MembershipPlan = ({ navigation }) => {
   const {user, setUser} = useContext(UserContext)
   var monthlyDate = new Date();
   var yearlyDate = new Date();
-  let addMonthly = 6;
+  let addMonthly = 1;
   let addAnnually = 12;
   monthlyDate.setMonth(monthlyDate.getMonth() + addMonthly)
   yearlyDate.setMonth(yearlyDate.getMonth() + addAnnually)
@@ -83,7 +83,7 @@ const MembershipPlan = ({ navigation }) => {
         {selectedPlan === "monthly" ? plans.monthly.price : plans.annual.price}
       </Text>
       <Text style={styles.startDate}>
-        Start Date: {plans[selectedPlan].startDate}
+        Next billing: {plans[selectedPlan].startDate}
       </Text>
       {/* Payment Methods */}
       <TouchableOpacity style={styles.paymentMethod} onPress={handleCardPress}>

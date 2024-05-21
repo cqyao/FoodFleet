@@ -56,7 +56,7 @@ const Payment = () => {
     let content
 
     if (isMember) {
-      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!{"\n"}<Text style={styles.total}>Total {totalPrice}</Text></Text>
+      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!{"\n"}<Text style={styles.total}>Total {totalPrice.toFixed(2)}</Text></Text>
     } else {
       content = 
       

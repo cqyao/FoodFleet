@@ -1,0 +1,20 @@
+name: CD
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment for deployment'
+        required: true
+        type: environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - run: echo Deploying ${{ github.ref }} branch to ${{ inputs.environment }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
