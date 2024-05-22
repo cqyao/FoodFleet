@@ -32,4 +32,5 @@ jobs:
 
       # Node js test suite cases
       - run: npm install
+      - run: npm build --if present
       - run: npm test
