@@ -14,15 +14,17 @@ jobs:
     environment: ${{ inputs.environment }}
 
     steps:
+      - name: Log
       - run: echo Deploying ${{ github.ref }} branch to ${{ inputs.environment }}
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}  
 
+      - name: Setup python
       - uses: actions/setup-python@v5
         with: 
           python-version: '3.12'
-
       - run: pip install pyyaml requests boto3
 
       - name: Run deployment script
+      - run: python --version
