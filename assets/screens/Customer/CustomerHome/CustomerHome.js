@@ -2,16 +2,15 @@ import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
   Image,
   FlatList,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "react-native-ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 import { UserContext } from "../../../../context/UserContext";
-import { GetRestaurants, CreateCart, GetMenus } from "../../../../database";
+import { GetRestaurants, GetMenus } from "../../../../database";
 
 const CustomerHome = () => {
   const navigation = useNavigation();
@@ -336,6 +335,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
+    backgroundColor: "red",
   },
 });
 
