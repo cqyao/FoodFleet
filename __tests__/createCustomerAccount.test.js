@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import CreateCustomerAccount from "../assets/screens/Customer/SignUp/CreateCustomerAccount";
+import CreateCustomerAccount from "./assets/screens/Customer/SignUp/CreateCustomerAccount";
 import { CreateCustomer } from "../database";
 
 jest.mock("../database", () => ({
