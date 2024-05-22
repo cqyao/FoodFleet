@@ -9,7 +9,7 @@ import {
   GetPaymentMethods,
   GetRestaurants,
   CreateCart,
-} from "../database"; // 경로를 실제 파일 위치로 변경하세요.
+} from "../database"; //  경로를 실제 파일 위치로 변경하세요.
 
 jest.mock("../database", () => ({
   CustomerLogin: jest.fn(),
