@@ -26,4 +26,3 @@ jobs:
       - run: pip install pyyaml requests boto3
 
       - name: Run deployment script
-      - run: ls
