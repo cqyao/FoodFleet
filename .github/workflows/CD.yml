@@ -14,10 +14,14 @@ jobs:
     environment: ${{ inputs.environment }}
 
     steps:
-      - name: Log
-        run: echo Deploying ${{ github.ref }} branch to ${{ inputs.environment }}
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}  
-
+        
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
 
