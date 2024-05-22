@@ -25,6 +25,3 @@ jobs:
         with: 
           python-version: '3.12'
       - run: pip install pyyaml requests boto3
-
-      - name: Run deployment script
-      - run: python --version
