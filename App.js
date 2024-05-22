@@ -2,7 +2,7 @@ import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { UserProvider } from "./context/UserContext"
+import { UserProvider } from "./context/UserContext";
 
 import MainCart from "./assets/screens/Customer/Basket/MainCart";
 
@@ -35,9 +35,9 @@ import MembershipPlan from "./assets/screens/Customer/Profile/MembershipPlan";
 import Profile from "./assets/screens/Customer/Profile/Profile";
 
 import CreateCustomerAccount from "./assets/screens/Customer/SignUp/CreateCustomerAccount";
-import CreateRestaurantAccount from "./assets/screens/Restaurant/Signup/CreateRestaurantAccount";
+import CreateRestaurantAccount from "./assets/screens/Restaurant/SignUp/CreateRestaurantAccount";
 
-import Login from "./assets/screens/Login/Login";
+import LoginScreen from "./assets/screens/Login/LoginScreen";
 import ForgotPassword from "./assets/screens/Login/ForgotPassword";
 import ResetPassword from "./assets/screens/Login/ResetPassword";
 import SignUpOption from "./assets/screens/Login/SignUpOption";
@@ -46,10 +46,10 @@ import GenerateReport from "./assets/screens/Restaurant/GenerateReport/GenerateR
 import RestaurantMain from "./assets/screens/Restaurant/Main/RestaurantMain";
 import OrderManagement from "./assets/screens/Restaurant/OrderManagement/OrderManagement";
 import RestaurantProfile from "./assets/screens/Restaurant/Profile/RestaurantProfile";
-import CreateRestaurantPage from "./assets/screens/Restaurant/Signup/CreateRestaurantAccount";
+
 import CheckCustomerReview from "./assets/screens/Restaurant/CheckCustomerReview/CheckCustomerReview";
 import EditProfile from "./assets/screens/Restaurant/Profile/EditProfile";
-import AddDishPage from "./assets/screens/Restaurant/Profile/AddDishPage"
+import AddDishPage from "./assets/screens/Restaurant/Profile/AddDishPage";
 
 const Stack = createStackNavigator();
 
@@ -58,9 +58,9 @@ const App = () => (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: "Login" }}
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{ title: "LoginScreen" }}
         />
         <Stack.Screen
           name="RestaurantMain"
@@ -223,18 +223,14 @@ const App = () => (
         <Stack.Screen
           name="AddDish"
           component={AddDishPage}
-          options = {{ title: "AddDishPage" }}
+          options={{ title: "AddDishPage" }}
         />
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
           options={{ title: "EditProfile" }}
         />
-        <Stack.Screen
-          name="CreateRestaurantPage"
-          component={CreateRestaurantPage}
-          options={{ title: "CreateRestaurantPage" }}
-        />
+
         <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
@@ -249,6 +245,11 @@ const App = () => (
           name="CreateCustomerAccount"
           component={CreateCustomerAccount}
           options={{ title: "CreateCustomerAccount" }}
+        />
+        <Stack.Screen
+          name="CreateRestaurantAccount"
+          component={CreateRestaurantAccount}
+          options={{ title: "CreateRestaurantAccount" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

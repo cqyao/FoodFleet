@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import Login from "../assets/screens/Login/Login"; // 경로를 실제 파일 위치로 변경하세요.
+import LoginScreen from "../assets/screens/Login/LoginScreen";
 
 import { UserContext } from "../context/UserContext";
 import {
@@ -25,7 +25,7 @@ const navigation = {
 
 const mockSetUser = jest.fn();
 
-describe("Login", () => {
+describe("LoginScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -33,7 +33,7 @@ describe("Login", () => {
   it("renders correctly", () => {
     const { getByPlaceholderText, getByText } = render(
       <UserContext.Provider value={{ user: null, setUser: mockSetUser }}>
-        <Login navigation={navigation} />
+        <LoginScreen navigation={navigation} />
       </UserContext.Provider>
     );
 
@@ -57,7 +57,7 @@ describe("Login", () => {
 
     const { getByPlaceholderText, getByText } = render(
       <UserContext.Provider value={{ user: null, setUser: mockSetUser }}>
-        <Login navigation={navigation} />
+        <LoginScreen navigation={navigation} />
       </UserContext.Provider>
     );
 
@@ -88,7 +88,7 @@ describe("Login", () => {
 
     const { getByPlaceholderText, getByText } = render(
       <UserContext.Provider value={{ user: null, setUser: mockSetUser }}>
-        <Login navigation={navigation} />
+        <LoginScreen navigation={navigation} />
       </UserContext.Provider>
     );
 
