@@ -27,4 +27,3 @@ jobs:
 
       - name: Run deployment script
       - run: ls
-      - run: python deploy.py
