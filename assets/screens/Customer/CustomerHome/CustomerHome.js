@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import Icon from "react-native-ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 import { UserContext } from "../../../../context/UserContext";
 import { GetRestaurants, GetMenus } from "../../../../database";
@@ -335,7 +335,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
-    backgroundColor: "red",
   },
 });
 
