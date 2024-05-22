@@ -24,4 +24,5 @@ jobs:
         with:
           python-version: '3.12'
       
-
+      - name: Deploy application
+        run: python deploy.py
