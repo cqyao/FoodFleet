@@ -61,7 +61,7 @@ describe("CreateRestaurantAccount", () => {
         "Fast Food"
       );
 
-      expect(navigation.navigate).toHaveBeenCalledWith("Login");
+      expect(navigation.navigate).toHaveBeenCalledWith("LoginScreen");
     });
   });
 });

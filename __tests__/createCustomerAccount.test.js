@@ -60,7 +60,7 @@ describe("CreateCustomerAccount", () => {
         "password123"
       );
 
-      expect(navigation.navigate).toHaveBeenCalledWith("Login");
+      expect(navigation.navigate).toHaveBeenCalledWith("LoginScreen");
     });
   });
 });
