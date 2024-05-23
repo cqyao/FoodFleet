@@ -35,7 +35,7 @@ const GiveFeedback = () => {
   const handleSubmitFeedback = async () => {
     try {
       const customerId = user.id; // 실제 고객 ID
-      const restaurantId = cartItems[0]?.dish[0]?.restaurantId;
+      const restaurantId = cartItems[0]?.dish.restaurantId;
 
       // Add feedback to the database with message
       const data = await AddFeedback(

@@ -99,7 +99,7 @@ const Payment = () => {
   const handlePay = async () => {
     try {
       const paymentMethodId = user.paymentMethods[user.selectedCardIndex].id;
-      const restaurantId = cartItems[0]?.dish[0]?.restaurantId; // Assuming all items are from the same restaurant
+      const restaurantId = cartItems[0]?.dish.restaurantId; // Assuming all items are from the same restaurant
       const status = "Incoming";
 
       console.log("Payment Method ID:", paymentMethodId);

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { GetRestaurantOrdersWithDate } from '../../../../database'
+import { GetRestaurantOrdersWithDate } from "../../../../database";
 import { UserContext } from "../../../../context/UserContext"
 import ReportCard from "../../../Components/ReportCard";
 

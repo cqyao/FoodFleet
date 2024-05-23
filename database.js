@@ -582,7 +582,7 @@ export const GetRestaurantOrdersWithDate = async function (
       );
     }
   }
-
+  
   return data;
 };
 
