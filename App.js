@@ -35,7 +35,7 @@ import MembershipPlan from "./assets/screens/Customer/Profile/MembershipPlan";
 import Profile from "./assets/screens/Customer/Profile/Profile";
 
 import CreateCustomerAccount from "./assets/screens/Customer/SignUp/CreateCustomerAccount";
-import CreateRestaurantAccount from "./assets/screens/Restaurant/Signup/CreateRestaurantAccount";
+import CreateRestaurantAccount from "./assets/screens/Restaurant/SignUp/CreateRestaurantAccount";
 
 import LoginScreen from "./assets/screens/Login/LoginScreen";
 import ForgotPassword from "./assets/screens/Login/ForgotPassword";
