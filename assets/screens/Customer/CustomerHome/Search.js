@@ -40,9 +40,9 @@ const Search = () => {
     const results = await SearchRestaurant(query);
     setSearchResults(results);
 
-    // 검색 결과가 Hanok이면 HanokMenu로 이동
+    // 검색 결과가 Hanok이면 Menu 이동
     if (query === "Hanok") {
-      navigation.navigate("HanokMenu");
+      navigation.navigate("Menu");
     }
   };
 

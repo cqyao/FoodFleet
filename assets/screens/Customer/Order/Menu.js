@@ -7,36 +7,36 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 import { UserContext } from "../../../../context/UserContext";
 
-const HanokMenu = () => {
+const Menu = () => {
   const navigation = useNavigation();
-  const { user, setUser } = useContext(UserContext);
+  const route = useRoute(); // Use useRoute to get route params
+  const { user } = useContext(UserContext);
+
+  const { restaurantLogo, restaurantName } = route.params;
 
   const handleMenuItemPress = (item) => {
-    // Navigate to HanokOrder screen with the item as a parameter
-    navigation.navigate("HanokOrder", { item });
+    // Navigate to Order screen with the item and restaurant details as parameters
+    navigation.navigate("Order", { item, restaurantLogo, restaurantName });
   };
 
   return (
     <ScrollView style={styles.container}>
       <Image
-        source={require("../../EveryImages/HanokLogo.png")} // Replace with the actual Hanok logo path
+        source={{ uri: restaurantLogo }} // Use the dynamic logo URL
         style={styles.logo}
       />
-      <Text style={styles.restaurantName}>Hanok</Text>
-      <Text style={styles.rating}>★ 4.6 (200+ ratings) Korean BBQ $$</Text>
-      <Text style={styles.timing}>Open until 10:00 PM</Text>
-      <Text style={styles.sectionTitle}>Most Popular</Text>
-
+      <Text style={styles.restaurantName}>{restaurantName}</Text>
+      <Text style={styles.restaurantName}>{user.restaurantId}</Text>
       {user.menus.map((item) => (
         <TouchableOpacity
           key={item.id}
           style={styles.menuItem}
           onPress={() => handleMenuItemPress(item)}
         >
-          <Image source={{uri : item.image_url}} style={styles.itemImage} />
+          <Image source={{ uri: item.image_url }} style={styles.itemImage} />
           <Text style={styles.itemTitle}>{item.name}</Text>
           <Text style={styles.itemPrice}>${item.price}</Text>
           <Text style={styles.itemDescription}>{item.description}</Text>
@@ -65,21 +65,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 8,
   },
-  rating: {
-    textAlign: "center",
-    color: "grey",
-  },
-  timing: {
-    textAlign: "center",
-    color: "grey",
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    paddingLeft: 20,
-    marginBottom: 10,
-  },
   menuItem: {
     padding: 20,
     borderBottomWidth: 1,
@@ -106,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HanokMenu;
+export default Menu;

@@ -43,7 +43,7 @@ const KoreanRestaurantItem = ({
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate("HanokMenu");
+    navigation.navigate("Menu");
   };
 
   return (

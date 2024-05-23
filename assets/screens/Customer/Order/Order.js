@@ -9,15 +9,16 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { UserContext } from "../../../../context/UserContext";
-import {AddToCart} from "../../../../database";
+import { AddToCart } from "../../../../database";
 
-const HanokOrder = ({navigation}) => {
+const Order = () => {
   const [selectedSauce, setSelectedSauce] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(89); // Initial price for 1 item
   const route = useRoute();
-  const { item } = route.params; // Extracting the item from route params
+  const { item, restaurantLogo, restaurantName } = route.params; // Extracting the item and restaurant details from route params
   const { user, setUser } = useContext(UserContext);
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Update the total price whenever quantity changes
@@ -25,45 +26,21 @@ const HanokOrder = ({navigation}) => {
     setTotalPrice(price * quantity);
   }, [quantity, item]);
 
-  const sauces = [
-    "Korean BBQ sauce",
-    "Korean chicken sauce",
-    "Spicy sauce",
-    "Sweet sauce",
-    "Salt & Sesame oil",
-  ];
-
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const addToBasket = async () => {
-    await AddToCart(item.id, user.cartId, quantity)
+    await AddToCart(item.id, user.cartId, quantity);
     navigation.navigate("MainCart");
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image
-        source={require("../../EveryImages/HanokLogo.png")} // Replace with actual logo path
+        source={{ uri: restaurantLogo }} // Use the dynamic logo URL
         style={styles.logo}
       />
-      <Text style={styles.title}>Hanok</Text>
-      <Text style={styles.rating}>★ 4.6 (200+ ratings) Korean BBQ $$</Text>
-      <Text style={styles.openingHours}>Open until 10:00 PM</Text>
-
-      <Text style={styles.sectionTitle}>Choose your sauce (Required)</Text>
-      {sauces.map((sauce, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.radioContainer}
-          onPress={() => setSelectedSauce(sauce)}
-        >
-          <View style={styles.radio}>
-            {selectedSauce === sauce && <View style={styles.selectedRadio} />}
-          </View>
-          <Text style={styles.sauce}>{sauce}</Text>
-        </TouchableOpacity>
-      ))}
-
+      <Text style={styles.title}>{restaurantName}</Text>
+     
       <View style={styles.quantityContainer}>
         <TouchableOpacity
           onPress={decrementQuantity}
@@ -83,7 +60,6 @@ const HanokOrder = ({navigation}) => {
       <TouchableOpacity style={styles.addToBasketButton} onPress={addToBasket}>
         <Text style={styles.addToBasketText}>
           Add {quantity} to basket AU${totalPrice.toFixed(2)}{" "}
-          {/* Fixed to 2 decimal places */}
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -93,59 +69,22 @@ const HanokOrder = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "white",
+    paddingVertical: 20,
   },
   logo: {
     width: 100,
     height: 100,
     resizeMode: "contain",
-    alignSelf: "center",
-    marginTop: 20,
+    marginBottom: 20,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  rating: {
-    textAlign: "center",
-    color: "grey",
-  },
-  openingHours: {
-    textAlign: "center",
-    color: "grey",
-    marginBottom: 10,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  radioContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 15,
-    marginLeft: 20,
-  },
-  radio: {
-    height: 24,
-    width: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 10,
-  },
-  selectedRadio: {
-    height: 12,
-    width: 12,
-    borderRadius: 6,
-    backgroundColor: "#000",
-  },
-  sauce: {
-    fontSize: 16,
+    marginBottom: 20,
   },
   quantityContainer: {
     flexDirection: "row",
@@ -174,7 +113,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
     marginHorizontal: 50,
-    marginBottom: 20,
+    marginTop: 20,
   },
   addToBasketText: {
     fontSize: 18,
@@ -183,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HanokOrder;
+export default Order;

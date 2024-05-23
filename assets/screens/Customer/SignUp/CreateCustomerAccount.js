@@ -32,7 +32,7 @@ const CreateCustomerAccount = ({ navigation }) => {
       phoneNumber,
       password
     );
-    navigation.navigate("Login");
+    navigation.navigate("LoginScreen");
   };
 
   return (

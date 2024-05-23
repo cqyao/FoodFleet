@@ -88,7 +88,10 @@ const CustomerHome = () => {
       user.menus = await GetMenus(user.restaurantId);
 
       console.log("Selected restaurant:", id);
-      navigation.navigate("HanokMenu");
+      navigation.navigate("Menu", {
+        restaurantLogo: image_url,
+        restaurantName: name,
+      });
     };
 
     return (
@@ -144,7 +147,7 @@ const CustomerHome = () => {
         style={styles.iconContainer}
         onPress={handleMotorcyclePress}
       >
-      <Ionicons name="car-outline" size={24} color="black" />
+        <Ionicons name="car-outline" size={24} color="black" />
       </TouchableOpacity>
     );
   };
@@ -166,9 +169,12 @@ const CustomerHome = () => {
 
       <Text style={styles.greetingText}>Good Morning, {user.firstName}</Text>
 
-      <TouchableOpacity onPress={handleSearchPress} style={styles.searchContainer}>
-          <Text style={styles.searchInput}>Search</Text>
-          <Ionicons name="search" size={24} color="grey" />
+      <TouchableOpacity
+        onPress={handleSearchPress}
+        style={styles.searchContainer}
+      >
+        <Text style={styles.searchInput}>Search</Text>
+        <Ionicons name="search" size={24} color="grey" />
       </TouchableOpacity>
 
       <View>
@@ -179,10 +185,10 @@ const CustomerHome = () => {
           </TouchableOpacity>
         </View>
         <FlatList
-        horizontal
-        data={categoriesData}
-        renderItem={({ item }) => <CategoryItem {...item} />}
-        keyExtractor={(item) => item.id}
+          horizontal
+          data={categoriesData}
+          renderItem={({ item }) => <CategoryItem {...item} />}
+          keyExtractor={(item) => item.id}
         />
       </View>
 
@@ -194,23 +200,21 @@ const CustomerHome = () => {
           </TouchableOpacity>
         </View>
         <FlatList
-        data={
-          filteredRestaurants.length > 0 ? filteredRestaurants : restaurants
-        }
-        renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
-        keyExtractor={(item) => item.id}
-        style={{height: "50%"}}
+          data={
+            filteredRestaurants.length > 0 ? filteredRestaurants : restaurants
+          }
+          renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
+          keyExtractor={(item) => item.id}
+          style={{ height: "50%" }}
         />
         <View>
-        <View style={styles.menuBar}>
-          <MotorcycleImage />
-          <CartButton />
-          <ProfileIcon />
+          <View style={styles.menuBar}>
+            <MotorcycleImage />
+            <CartButton />
+            <ProfileIcon />
+          </View>
         </View>
       </View>
-      </View>
-
-      
     </View>
   );
 };
@@ -262,7 +266,8 @@ const styles = StyleSheet.create({
     color: "green",
     fontWeight: "bold",
   },
-  sectionHeader: { // Restaurants header
+  sectionHeader: {
+    // Restaurants header
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -279,7 +284,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    
   },
   categoryTitle: {
     marginVertical: 10,

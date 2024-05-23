@@ -53,32 +53,37 @@ const Payment = () => {
   var serviceFee = 3;
 
   const Fee = ({ isMember }) => {
-    let content
+    let content;
 
     if (isMember) {
-      content = <Text style={styles.fee}>Your membership gives you free delivery and zero service fees!
-                    {"\n"}<Text style={styles.total}>Total {totalPrice.toFixed(2)}
-                          </Text>
-                </Text>
+      content = (
+        <Text style={styles.fee}>
+          Your membership gives you free delivery and zero service fees!
+          {"\n"}
+          <Text style={styles.total}>Total {totalPrice.toFixed(2)}</Text>
+        </Text>
+      );
     } else {
-      content =      
-      <Text style={styles.fee}>
-        <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>{"\n"}
-        Delivery fee: AU${deliveryFee}
-      {"\n"}Service fee: AU${serviceFee}
-      {"\n"}<Text style={styles.total}>Total {totalPrice.toFixed(2)}</Text>
-      {"\n"}
-      </Text>
-      
+      content = (
+        <Text style={styles.fee}>
+          <Text style={styles.subtotal}>Subtotal: AU${subtotal}</Text>
+          {"\n"}
+          Delivery fee: AU${deliveryFee}
+          {"\n"}Service fee: AU${serviceFee}
+          {"\n"}
+          <Text style={styles.total}>Total {totalPrice.toFixed(2)}</Text>
+          {"\n"}
+        </Text>
+      );
     }
-    return <View>{content}</View>
-  }
+    return <View>{content}</View>;
+  };
 
   useEffect(() => {
     const fetchItems = async () => {
       const items = await GetCartItems(user.cartId);
       setCartItems(items);
-      console.log("Cart items: ", items[0].dish.price)
+      console.log("Cart items: ", items[0].dish.price);
     };
     fetchItems();
   }, []);
@@ -99,7 +104,7 @@ const Payment = () => {
   const handlePay = async () => {
     try {
       const paymentMethodId = user.paymentMethods[user.selectedCardIndex].id;
-      const restaurantId = cartItems[0]?.dish[0]?.restaurantId; // Assuming all items are from the same restaurant
+      const restaurantId = user.restaurantId;
       const status = "Incoming";
 
       console.log("Payment Method ID:", paymentMethodId);
@@ -153,7 +158,6 @@ const Payment = () => {
         </View>
       </View>
       <View style={styles.itemSection}>
-
         {cartItems !== 0 &&
           cartItems.map((item) => (
             <SelectedItem

@@ -22,8 +22,8 @@ import Search from "./assets/screens/Customer/CustomerHome/Search";
 import AlmostThere from "./assets/screens/Customer/Order/AlmostThere";
 import Delivered from "./assets/screens/Customer/Order/Delivered";
 import GiveFeedback from "./assets/screens/Customer/Order/GiveFeedback";
-import HanokMenu from "./assets/screens/Customer/Order/HanokMenu";
-import HanokOrder from "./assets/screens/Customer/Order/HanokOrder";
+import Menu from "./assets/screens/Customer/Order/Menu";
+import Order from "./assets/screens/Customer/Order/Order";
 import PreparingOrder from "./assets/screens/Customer/Order/PreparingOrder";
 import Receipt from "./assets/screens/Customer/Order/Receipt";
 
@@ -160,14 +160,14 @@ const App = () => (
           options={{ title: "GiveFeedback" }}
         />
         <Stack.Screen
-          name="HanokMenu"
-          component={HanokMenu}
-          options={{ title: "HanokMenu" }}
+          name="Menu"
+          component={Menu}
+          options={{ title: "Menu" }}
         />
         <Stack.Screen
-          name="HanokOrder"
-          component={HanokOrder}
-          options={{ title: "HanokOrder" }}
+          name="Order"
+          component={Order}
+          options={{ title: "Order" }}
         />
         <Stack.Screen
           name="PreparingOrder"

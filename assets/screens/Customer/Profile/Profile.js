@@ -12,7 +12,7 @@ import { UserContext } from "../../../../context/UserContext";
 import { RefreshControl } from "react-native-gesture-handler";
 
 const Profile = ({ navigation }) => {
-  const {user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [refreshing, setRefreshing] = useState(false);
 
   const handleSignUp = () => {
@@ -20,8 +20,8 @@ const Profile = ({ navigation }) => {
   };
 
   const handleLogout = () => {
-    navigation.navigate("Login");
-    console.log(user.id)
+    navigation.navigate("LoginScreen");
+    console.log(user.id);
   };
 
   const onRefresh = React.useCallback(() => {
@@ -30,46 +30,50 @@ const Profile = ({ navigation }) => {
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-    }, []);
+  }, []);
 
   const Member = ({ isMember }) => {
-    let content
+    let content;
 
     if (isMember) {
-      content = <Text style={{textAlign: "center"}}>Thanks for being a member. {"\n"}You're currently enjoying zero delivery and service fees!</Text>
+      content = (
+        <Text style={{ textAlign: "center" }}>
+          Thanks for being a member. {"\n"}You're currently enjoying zero
+          delivery and service fees!
+        </Text>
+      );
     } else {
-      content =
-        <View style={{alignItems:"center"}}>
-          <Text style={{textAlign:"center"}}>Currently not a member{"\n"}Join today for free delivery and zero service fees!</Text>
+      content = (
+        <View style={{ alignItems: "center" }}>
+          <Text style={{ textAlign: "center" }}>
+            Currently not a member{"\n"}Join today for free delivery and zero
+            service fees!
+          </Text>
           <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
             <Text style={styles.signUpText}>Sign up</Text>
           </TouchableOpacity>
         </View>
-      
+      );
     }
-    return <View>{content}</View>
-  }
+    return <View>{content}</View>;
+  };
 
   return (
-    <ScrollView 
+    <ScrollView
       style={styles.container}
       refreshControl={
-        <RefreshControl 
-          refreshing={refreshing} 
-          onRefresh={onRefresh}
-        />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Profile</Text>
       </View>
       {/* Profile picture */}
-      <Image
-        source={{uri: user.profile_picture}}
-        style={styles.profilePic}
-      />
+      <Image source={{ uri: user.profile_picture }} style={styles.profilePic} />
 
-      <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
+      <Text style={styles.name}>
+        {user.firstName} {user.lastName}
+      </Text>
       <Text style={styles.email}>{user.emailAddress}</Text>
 
       <View style={styles.PostCodeContainer}>
@@ -80,7 +84,7 @@ const Profile = ({ navigation }) => {
       <View style={styles.membershipContainer}>
         <Text style={styles.membershipTitle}>Membership</Text>
         <Member isMember={user.isMember} />
-        
+
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>

@@ -27,7 +27,7 @@ const CreateRestaurantAccount = ({ navigation }) => {
       password,
       category
     );
-    navigation.navigate("Login");
+    navigation.navigate("LoginScreen");
   };
 
   return (
