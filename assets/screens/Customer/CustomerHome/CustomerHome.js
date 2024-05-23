@@ -10,7 +10,11 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 import { UserContext } from "../../../../context/UserContext";
-import { GetRestaurants, GetMenus } from "../../../../database";
+import {
+  GetRestaurants,
+  GetMenus,
+  GetRestaurantRatings,
+} from "../../../../database";
 
 const CustomerHome = () => {
   const navigation = useNavigation();
@@ -83,6 +87,26 @@ const CustomerHome = () => {
     deliveryTime,
     image_url,
   }) => {
+    const [restaurantRating, setRestaurantRating] = useState(null);
+
+    useEffect(() => {
+      const fetchRating = async () => {
+        try {
+          const ratings = await GetRestaurantRatings(id);
+          if (ratings && ratings.length > 0) {
+            const averageRating =
+              ratings.reduce((acc, cur) => acc + cur.rating, 0) /
+              ratings.length;
+            setRestaurantRating(averageRating);
+          }
+        } catch (error) {
+          console.error("Error fetching restaurant rating:", error);
+        }
+      };
+
+      fetchRating();
+    }, [id]);
+
     const handlePress = async () => {
       user.restaurantId = id;
       user.menus = await GetMenus(user.restaurantId);
@@ -100,7 +124,9 @@ const CustomerHome = () => {
         <Text style={styles.restaurantName}>{name}</Text>
         <Text style={styles.restaurantType}>{type}</Text>
         <View style={styles.restaurantInfo}>
-          <Text style={styles.restaurantRating}>⭐ {rating}</Text>
+          <Text style={styles.restaurantRating}>
+            ⭐ {restaurantRating ? restaurantRating.toFixed(1) : "N/A"}
+          </Text>
           {isFreeDelivery && <Text style={styles.deliveryText}>Free</Text>}
           <Text style={styles.deliveryTime}>{deliveryTime}</Text>
         </View>
@@ -174,7 +200,7 @@ const CustomerHome = () => {
         style={styles.searchContainer}
       >
         <Text style={styles.searchInput}>Search</Text>
-        <Ionicons name="search" size={24} color="grey" />
+        <Ionicons name="search" size={24} color="black" />
       </TouchableOpacity>
 
       <View>
@@ -192,7 +218,7 @@ const CustomerHome = () => {
         />
       </View>
 
-      <View>
+      <View style={styles.restaurantsContainer}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Restaurants</Text>
           <TouchableOpacity>
@@ -205,15 +231,14 @@ const CustomerHome = () => {
           }
           renderItem={({ item }) => <RestaurantItem {...item} id={item.id} />}
           keyExtractor={(item) => item.id}
-          style={{ height: "50%" }}
+          style={styles.restaurantList}
         />
-        <View>
-          <View style={styles.menuBar}>
-            <MotorcycleImage />
-            <CartButton />
-            <ProfileIcon />
-          </View>
-        </View>
+      </View>
+
+      <View style={styles.menuBar}>
+        <MotorcycleImage />
+        <CartButton />
+        <ProfileIcon />
       </View>
     </View>
   );
@@ -290,6 +315,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
   },
+  restaurantsContainer: {
+    flex: 1,
+  },
+  restaurantList: {
+    flexGrow: 0,
+  },
   restaurantItem: {
     marginBottom: 15,
     borderBottomWidth: 1,
@@ -326,19 +357,15 @@ const styles = StyleSheet.create({
   iconContainer: {
     paddingHorizontal: 20,
   },
-  motorcycleImage: {
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
   menuBar: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 20,
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
+    backgroundColor: "white",
   },
 });
 
