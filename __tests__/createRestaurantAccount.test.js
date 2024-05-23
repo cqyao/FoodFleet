@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import CreateRestaurantAccount from "../assets/screens/Restaurant/Signup/CreateRestaurantAccount";
-import { CreateRestaurant } from "../database";
+import { CreateRestaurant } from "../database"; //add
 
 jest.mock("../database", () => ({
   CreateRestaurant: jest.fn(),
