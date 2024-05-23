@@ -10,7 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 import { UserContext } from "../../../../context/UserContext";
-import { GetRestaurants, GetMenus } from "../../../../database";
+import { GetRestaurants, GetMenus, GetRestaurantRatings } from "../../../../database";
 
 const CustomerHome = () => {
   const navigation = useNavigation();
@@ -48,6 +48,20 @@ const CustomerHome = () => {
     // Add more category data here.
   ];
 
+  const Nearby = () => {
+    let content;
+    if (filteredRestaurants.length > 0) {
+      content = (
+        <Text style={styles.sectionTitle}>Nearby Restaurants</Text>
+      )
+    } else {
+      content = (
+        <Text style={styles.sectionTitle}>Restaurants</Text>
+      )
+    }
+    return <View>{content}</View>
+  }
+
   useEffect(() => {
     if (route.params?.nearbyRestaurants) {
       setFilteredRestaurants(route.params.nearbyRestaurants);
@@ -60,7 +74,6 @@ const CustomerHome = () => {
           console.error("Error fetching restaurants:", error);
         }
       };
-
       fetchRestaurants();
     }
   }, [route.params?.nearbyRestaurants]);
@@ -194,7 +207,7 @@ const CustomerHome = () => {
 
       <View>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Restaurants</Text>
+          <Nearby/>
           <TouchableOpacity>
             <Text style={styles.seeAllText}>See All</Text>
           </TouchableOpacity>
